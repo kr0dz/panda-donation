@@ -10,7 +10,8 @@
   <meta property="og:title" content="Apoyemos a nuestro amigo Panda" />
   <meta property="og:description" content="Ayúdanos a apoyar su tratamiento. Donación segura vía GoFundMe." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/cover.webp" />
+  <!-- Mejor con URL absoluta para que WhatsApp/Facebook tomen bien la imagen -->
+  <meta property="og:image" content="https://kr0dz.github.io/panda-donation/assets/cover.webp" />
 
   <style>
     :root{
@@ -64,7 +65,6 @@
       align-items:center;
       gap:12px;
       margin-bottom:16px;
-
       opacity:0;
       transform: translateY(10px);
       animation: enter .7s ease forwards;
@@ -99,7 +99,7 @@
       box-shadow: var(--shadow);
     }
 
-    /* Hero Image with gentle hover */
+    /* Hero Image with gentle hover + subtle parallax */
     .heroImg{
       width:100%;
       aspect-ratio: 16/10;
@@ -109,23 +109,54 @@
       background: rgba(0,0,0,.20);
       position:relative;
       transform: translateZ(0);
+      isolation:isolate;
     }
     .heroImg::after{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35));
+      background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.45));
       pointer-events:none;
       opacity:.9;
+      z-index:2;
     }
     .heroImg img{
       width:100%; height:100%;
       object-fit:cover;
       display:block;
-      transform: scale(1.03);
-      filter: saturate(1.03) contrast(1.02);
-      transition: transform .9s cubic-bezier(.2,.8,.2,1);
+      transform: scale(1.03) translateY(var(--imgShift, 0px));
+      filter: saturate(1.05) contrast(1.03);
+      transition: transform .9s cubic-bezier(.2,.8,.2,1), filter .3s ease;
+      will-change: transform;
+      z-index:1;
+      position:relative;
     }
-    .heroImg:hover img{ transform: scale(1.08); }
+    .heroImg:hover img{
+      transform: scale(1.08) translateY(var(--imgShift, 0px));
+      filter: saturate(1.08) contrast(1.06);
+    }
+
+    /* fallback message if image fails */
+    .imgFail{
+      position:absolute;
+      inset:0;
+      display:none;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      text-align:center;
+      color:rgba(255,255,255,.9);
+      font-weight:700;
+      z-index:3;
+    }
+    .imgFail code{
+      display:inline-block;
+      margin-top:8px;
+      padding:6px 10px;
+      border-radius:10px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.14);
+      font-weight:700;
+    }
 
     /* Titles */
     .title{
@@ -210,7 +241,6 @@
       background:#fff;color:#0b0b0b;border-radius:var(--radius);
       padding:18px;box-shadow: var(--shadow);
       border:1px solid rgba(0,0,0,.06);
-
       opacity:0;
       transform: translateY(12px);
       transition: opacity .7s ease, transform .7s ease;
@@ -232,11 +262,41 @@
     }
     .fadeUp.delay1{animation-delay:.05s}
     .fadeUp.delay2{animation-delay:.12s}
+
+    /* Toast (instead of alert) */
+    .toast{
+      position:fixed;
+      left:50%;
+      bottom:18px;
+      transform: translateX(-50%) translateY(10px);
+      background: rgba(0,0,0,.55);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      padding:10px 12px;
+      border-radius:12px;
+      font-weight:650;
+      opacity:0;
+      pointer-events:none;
+      transition: opacity .18s ease, transform .18s ease;
+      z-index:9999;
+      backdrop-filter: blur(8px);
+    }
+    .toast.show{
+      opacity:1;
+      transform: translateX(-50%) translateY(0);
+    }
+
+    /* Respect reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none!important;transition:none!important}
+      .bgGlow{display:none}
+    }
   </style>
 </head>
 
 <body>
   <div class="bgGlow"></div>
+  <div class="toast" id="toast">Link copiado ✅</div>
 
   <div class="wrap">
     <div class="top">
@@ -247,9 +307,14 @@
     <div class="layout">
       <!-- IZQUIERDA -->
       <div class="card fadeUp delay1">
-        <div class="heroImg">
-          <!-- RUTA GITHUB PAGES -->
-          <img src="assets/cover.jpg" alt="Foto de Panda" />
+        <div class="heroImg" id="hero">
+          <!-- ✅ Ruta correcta (mismo formato que el archivo real) -->
+          <img id="pandaImg" src="./assets/cover.webp" alt="Foto de Panda" />
+          <div class="imgFail" id="imgFail">
+            No se pudo cargar la imagen.<br>
+            Revisa que exista:
+            <br><code>assets/cover.webp</code>
+          </div>
         </div>
 
         <h1 class="title">Apoyemos a nuestro amigo Panda</h1>
@@ -327,12 +392,25 @@
     document.getElementById("fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(fund);
     document.getElementById("x").href = "https://twitter.com/intent/tweet?text=" + msg;
 
-    function copyLink(){
+    // Toast helper
+    const toast = document.getElementById("toast");
+    function showToast(text){
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(window.__toastTimer);
+      window.__toastTimer = setTimeout(()=> toast.classList.remove("show"), 1400);
+    }
+
+    async function copyLink(){
       const el = document.getElementById("fundLink");
-      el.select(); el.setSelectionRange(0, 99999);
-      navigator.clipboard.writeText(el.value)
-        .then(()=> alert("Link copiado ✅"))
-        .catch(()=> alert("No se pudo copiar. Copia manualmente el link."));
+      try{
+        await navigator.clipboard.writeText(el.value);
+        showToast("Link copiado ✅");
+      }catch(e){
+        // Fallback: select text
+        el.select(); el.setSelectionRange(0, 99999);
+        showToast("Copia manualmente el link");
+      }
     }
 
     // Reveal animation for the white section when it enters viewport
@@ -346,6 +424,25 @@
       });
     }, {threshold: 0.15});
     io.observe(target);
+
+    // Image error fallback
+    const img = document.getElementById("pandaImg");
+    img.addEventListener("error", () => {
+      document.getElementById("imgFail").style.display = "flex";
+    });
+
+    // Subtle parallax on hero (desktop only)
+    const hero = document.getElementById("hero");
+    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if(!prefersReduced && window.innerWidth > 920){
+      window.addEventListener("scroll", () => {
+        const rect = hero.getBoundingClientRect();
+        const viewH = window.innerHeight || 800;
+        const progress = Math.min(1, Math.max(0, (viewH - rect.top) / (viewH + rect.height)));
+        const shift = (progress - 0.5) * 10; // -5px to +5px
+        hero.style.setProperty("--imgShift", `${shift}px`);
+      }, {passive:true});
+    }
   </script>
 </body>
 </html>
