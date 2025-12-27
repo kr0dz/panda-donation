@@ -171,17 +171,6 @@ function renderKPIsAndProgress() {
   $("progressBar").style.width = pctClamped.toFixed(1) + "%";
 }
 
-function renderValidatedTable() {
-  if (!exists("tbodyValidadas")) return;
-
-  const tbody = $("tbodyValidadas");
-  tbody.innerHTML = "";
-
-  if (!validated.length) {
-    tbody.innerHTML = `<tr><td colspan="6" class="muted">Aún no hay donaciones validadas.</td></tr>`;
-    return;
-  }
-
   validated
     .slice()
     .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
