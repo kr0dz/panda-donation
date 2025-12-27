@@ -3,127 +3,132 @@
     <div class="cardX p-3 p-md-4 h-100">
       <div class="hero mb-3">
         <img src="assets/cover.webp" alt="Portada de la campaña">
-        <div class="trustBadge">
+        <a class="trustBadge trustBadgeLink" href="https://gofund.me/246906993" target="_blank" rel="noopener"
+          aria-label="Dona en GoFundMe (abre en una nueva pestaña)">
+          >
+          >
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4Z" stroke="#0b1220" stroke-width="1.5" />
-            <path d="M9.2 12.2l1.8 1.8 3.8-4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M9.2 12.2l1.8 1.8 3.8-4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round"
+              stroke-linejoin="round" />
           </svg>
-          <a href="https://gofund.me/246906993" target="_blank" rel="noopener">Dona en Go Fund me</a>
-        </div>
-      </div>
+          <span>Dona en GoFundMe</span>
+        </a>
 
-      <h1 class="title display-6 mb-2">Rifa solidaria — Apoyemos a Panda</h1>
-      <p class="muted mb-3" style="line-height:1.7">
-        Esta página existe para dar contexto y organizar la rifa de forma clara.
-        <b>La participación cuenta sólo con donación validada</b>.
-        Más abajo puedes ver premios, reglas, progreso y el top de donadores.
-      </p>
 
-      <div class="row g-2">
-        <div class="col-md-4">
-          <div class="kpi">
-            <div class="t">Meta</div>
-            <div class="v" id="goalLabel">$500,000 MXN</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="kpi">
-            <div class="t">Recaudado (validado)</div>
-            <div class="v" id="raisedLabel">$0 MXN</div>
-          </div>
-        </div>
-        <div class="col-md-4">
-          <div class="kpi">
-            <div class="t">Boletos (validados)</div>
-            <div class="v" id="ticketsLabel">0</div>
-          </div>
-        </div>
-      </div>
+        <h1 class="title display-6 mb-2">Rifa solidaria — Apoyemos a Panda</h1>
+        <p class="muted mb-3" style="line-height:1.7">
+          Esta página existe para dar contexto y organizar la rifa de forma clara.
+          <b>La participación cuenta sólo con donación validada</b>.
+          Más abajo puedes ver premios, reglas, progreso y el top de donadores.
+        </p>
 
-      <div class="mt-3">
-        <div class="d-flex align-items-center justify-content-between mb-1">
-          <div class="muted small">Progreso hacia la meta (según validaciones)</div>
-          <div class="muted small"><span id="pctLabel">0%</span></div>
-        </div>
-        <div class="progress" role="progressbar" aria-label="Progreso" style="height:12px; border-radius:999px;">
-          <div id="progressBar" class="progress-bar" style="width:0%"></div>
-        </div>
-        <div class="muted small mt-2">
-          El contador sube cuando se valida la evidencia. Así protegemos a todos los participantes.
-        </div>
-      </div>
-
-      <div class="divider"></div>
-
-      <div class="d-flex gap-2 flex-wrap" id="participar">
-        <!-- IMPORTANTE: este id debe coincidir con el del modal -->
-        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
-          Participar / Registrar donación
-        </button>
-        <a class="btn btn-outline-primary" href="#premios">Ver premios</a>
-        <a class="btn btn-outline-primary" href="#reglas">Reglas</a>
-        <a class="btn btn-outline-primary" href="#top">Top donadores</a>
-        <a class="btn btn-outline-primary" href="#share">Compartir</a>
-      </div>
-
-      <div class="mt-3 muted small">
-        Transparencia: el progreso y el ranking se calculan únicamente con donaciones validadas.
-      </div>
-    </div>
-  </div>
-
-  <div class="col-lg-5 fadeUp d2">
-    <div class="stickySide">
-      <div class="cardX p-3 p-md-4">
-        <h2 class="h5 mb-2" style="font-weight:900;">Cómo participar</h2>
-
-        <div class="soft p-3 mb-3">
-          <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
-            <div>
-              <div class="muted small mb-1">Donación por transferencia (BBVA)</div>
-              <div class="mono" style="font-weight:900; font-size:1.05rem;">4152 3145 6104 1529</div>
-              <div class="muted small mt-1">Titular: <b>Ramón Fabián Palacios García</b></div>
-              <div class="mt-2">
-                <span class="chip">Sugerencia concepto: <b>RIFA PANDA</b></span>
-              </div>
+        <div class="row g-2">
+          <div class="col-md-4">
+            <div class="kpi">
+              <div class="t">Meta</div>
+              <div class="v" id="goalLabel">$500,000 MXN</div>
             </div>
-            <button class="btn btn-outline-primary btn-sm" onclick="copyText('4152314561041529')">Copiar</button>
+          </div>
+          <div class="col-md-4">
+            <div class="kpi">
+              <div class="t">Recaudado (validado)</div>
+              <div class="v" id="raisedLabel">$0 MXN</div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="kpi">
+              <div class="t">Boletos (validados)</div>
+              <div class="v" id="ticketsLabel">0</div>
+            </div>
           </div>
         </div>
 
-        <div class="soft p-3 mb-3">
-          <div class="muted small mb-2"><b>Validación de evidencia</b></div>
-          <div class="small" style="line-height:1.7">
-            Envía tu comprobante y tu folio por WhatsApp: <b id="waLabel">—</b><br>
-            o por correo: <b id="emailLabel">—</b>
+        <div class="mt-3">
+          <div class="d-flex align-items-center justify-content-between mb-1">
+            <div class="muted small">Progreso hacia la meta (según validaciones)</div>
+            <div class="muted small"><span id="pctLabel">0%</span></div>
+          </div>
+          <div class="progress" role="progressbar" aria-label="Progreso" style="height:12px; border-radius:999px;">
+            <div id="progressBar" class="progress-bar" style="width:0%"></div>
+          </div>
+          <div class="muted small mt-2">
+            El contador sube cuando se valida la evidencia. Así protegemos a todos los participantes.
           </div>
         </div>
 
-        <div class="d-grid gap-2">
+        <div class="divider"></div>
+
+        <div class="d-flex gap-2 flex-wrap" id="participar">
+          <!-- IMPORTANTE: este id debe coincidir con el del modal -->
           <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
-            Abrir registro
+            Participar / Registrar donación
           </button>
-          <button class="btn btn-outline-primary" onclick="openShare()">
-            Compartir campaña
-          </button>
+          <a class="btn btn-outline-primary" href="#premios">Ver premios</a>
+          <a class="btn btn-outline-primary" href="#reglas">Reglas</a>
+          <a class="btn btn-outline-primary" href="#top">Top donadores</a>
+          <a class="btn btn-outline-primary" href="#share">Compartir</a>
         </div>
 
         <div class="mt-3 muted small">
-          Este sitio no cobra ni procesa pagos: organiza la rifa, registra participantes y muestra el progreso con validaciones.
+          Transparencia: el progreso y el ranking se calculan únicamente con donaciones validadas.
         </div>
       </div>
+    </div>
 
-      <div class="cardX p-3 p-md-4 mt-3">
-        <h2 class="h6 mb-2" style="font-weight:900;">Uso de los fondos</h2>
-        <div class="soft p-3">
-          <ul class="mb-0 small" style="line-height:1.7">
-            <li>Consultas y seguimiento médico</li>
-            <li>Estudios y tratamientos</li>
-            <li>Medicamentos</li>
-            <li>Traslados y logística</li>
-          </ul>
+    <div class="col-lg-5 fadeUp d2">
+      <div class="stickySide">
+        <div class="cardX p-3 p-md-4">
+          <h2 class="h5 mb-2" style="font-weight:900;">Cómo participar</h2>
+
+          <div class="soft p-3 mb-3">
+            <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+              <div>
+                <div class="muted small mb-1">Donación por transferencia (BBVA)</div>
+                <div class="mono" style="font-weight:900; font-size:1.05rem;">4152 3145 6104 1529</div>
+                <div class="muted small mt-1">Titular: <b>Ramón Fabián Palacios García</b></div>
+                <div class="mt-2">
+                  <span class="chip">Sugerencia concepto: <b>RIFA PANDA</b></span>
+                </div>
+              </div>
+              <button class="btn btn-outline-primary btn-sm" onclick="copyText('4152314561041529')">Copiar</button>
+            </div>
+          </div>
+
+          <div class="soft p-3 mb-3">
+            <div class="muted small mb-2"><b>Validación de evidencia</b></div>
+            <div class="small" style="line-height:1.7">
+              Envía tu comprobante y tu folio por WhatsApp: <b id="waLabel">—</b><br>
+              o por correo: <b id="emailLabel">—</b>
+            </div>
+          </div>
+
+          <div class="d-grid gap-2">
+            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+              Abrir registro
+            </button>
+            <button class="btn btn-outline-primary" onclick="openShare()">
+              Compartir campaña
+            </button>
+          </div>
+
+          <div class="mt-3 muted small">
+            Este sitio no cobra ni procesa pagos: organiza la rifa, registra participantes y muestra el progreso con
+            validaciones.
+          </div>
+        </div>
+
+        <div class="cardX p-3 p-md-4 mt-3">
+          <h2 class="h6 mb-2" style="font-weight:900;">Uso de los fondos</h2>
+          <div class="soft p-3">
+            <ul class="mb-0 small" style="line-height:1.7">
+              <li>Consultas y seguimiento médico</li>
+              <li>Estudios y tratamientos</li>
+              <li>Medicamentos</li>
+              <li>Traslados y logística</li>
+            </ul>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
