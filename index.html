@@ -6,7 +6,7 @@
   <title>Rifa solidaria — Apoyemos a Panda</title>
   <meta name="description" content="Rifa solidaria para apoyar a Panda. Participa con tu donación y entra al sorteo de estancias en hoteles." />
 
-  <!-- Open Graph (WhatsApp/Facebook) -->
+  <!-- Open Graph -->
   <meta property="og:title" content="Rifa solidaria — Apoyemos a Panda" />
   <meta property="og:description" content="1 boleto = $500 MXN. Premios: 2 noches Casa Azul, 2 noches Hotel Casa Morena, 1 noche en Guanajuato (por confirmar). Fechas: 14–15 febrero." />
   <meta property="og:type" content="website" />
@@ -21,23 +21,37 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-  <!-- Tu CSS -->
+  <!-- CSS -->
   <link rel="stylesheet" href="./css/styles.css">
 </head>
 
 <body>
   <!-- HEADER -->
-  <div id="mount-header"></div>
+  <div id="mount-headers"></div>
 
   <main class="py-4 pb-5">
     <div class="container-xxl">
 
       <!-- SECCIONES -->
-      <div id="mount-hero"></div>
-      <div id="mount-premios"></div>
-      <div id="mount-reglas"></div>
-      <div id="mount-top"></div>
-      <div id="mount-share"></div>
+      <section id="hero">
+        <div id="mount-hero"></div>
+      </section>
+
+      <section id="premios">
+        <div id="mount-premios"></div>
+      </section>
+
+      <section id="reglas">
+        <div id="mount-reglas"></div>
+      </section>
+
+      <section id="top">
+        <div id="mount-top"></div>
+      </section>
+
+      <section id="share">
+        <div id="mount-share"></div>
+      </section>
 
       <!-- FOOTER -->
       <div id="mount-footer"></div>
@@ -48,13 +62,13 @@
   <!-- MODAL -->
   <div id="mount-modal"></div>
 
-  <!-- Bootstrap JS (requerido para modal) -->
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-  <!-- 1) Cargar HTML parciales -->
+  <!-- Partials -->
   <script src="./js/partials.js"></script>
 
-  <!-- 2) Tu lógica (debe correr DESPUÉS de inyectar secciones) -->
+  <!-- Public script -->
   <script src="./js/script.js"></script>
 </body>
 </html>
