@@ -6,42 +6,47 @@
   <title>Rifa solidaria — Apoyemos a Panda</title>
   <meta name="description" content="Rifa solidaria para apoyar a Panda. Participa con tu donación y entra al sorteo de estancias en hoteles." />
 
+  <!-- Open Graph (WhatsApp/Facebook) -->
   <meta property="og:title" content="Rifa solidaria — Apoyemos a Panda" />
-  <meta property="og:description" content="Participa con tu donación. Premios: 2 noches en Casa Azul, 2 noches en Hotel Casa Morena, 1 noche en Guanajuato (por confirmar)." />
+  <meta property="og:description" content="1 boleto = $500 MXN. Premios: 2 noches Casa Azul, 2 noches Hotel Casa Morena, 1 noche en Guanajuato (por confirmar). Fechas: 14–15 febrero." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/cover.webp" />
+  <!-- IMPORTANTE: usa URL ABSOLUTA para WhatsApp -->
+  <meta property="og:image" content="https://kr0dz.github.io/panda-donation/assets/cover.webp" />
   <meta name="twitter:card" content="summary_large_image" />
 
+  <!-- Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
+      --bg0:#f7f8fb;
+      --bg1:#eef2ff;
       --ink:#0b1220;
-      --muted:#556278;
-      --bg:#f6f7fb;
+      --muted:#51607a;
+      --line:#e6eaf2;
       --card:#ffffff;
-      --line:#e7e9f2;
-      --primary:#1f4fff;
-      --primary2:#1436c9;
-      --success:#16a34a;
+      --primary:#1d4ed8;
+      --primary2:#153aa0;
+      --ok:#16a34a;
       --warn:#f59e0b;
-      --radius:18px;
-      --shadow:0 18px 55px rgba(15, 23, 42, .10);
+      --radius:20px;
+      --shadow: 0 16px 50px rgba(15, 23, 42, .10);
     }
     html{scroll-behavior:smooth}
     body{
-      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
       background:
-        radial-gradient(1000px 520px at 20% 0%, rgba(31,79,255,.09), transparent 60%),
-        radial-gradient(900px 520px at 80% 0%, rgba(22,163,74,.07), transparent 60%),
-        var(--bg);
-      overflow-x:hidden;
+        radial-gradient(1000px 600px at 15% 0%, rgba(29,78,216,.10), transparent 60%),
+        radial-gradient(900px 600px at 85% 0%, rgba(22,163,74,.06), transparent 60%),
+        linear-gradient(180deg, var(--bg1), var(--bg0));
     }
-    .container-xxl{max-width:1120px}
+    .container-xxl{max-width:1140px}
     .cardX{
       background:var(--card);
       border:1px solid var(--line);
@@ -49,131 +54,152 @@
       box-shadow:var(--shadow);
     }
     .soft{
-      background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.70));
       border:1px solid var(--line);
-      border-radius:var(--radius);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.82));
     }
     .pill{
       display:inline-flex; align-items:center; gap:.5rem;
       padding:.45rem .75rem;
-      border-radius:999px;
       border:1px solid var(--line);
+      border-radius:999px;
       background:#fff;
       color:var(--muted);
-      font-size:.875rem;
+      font-size:.9rem;
       white-space:nowrap;
     }
-    .pill .dot{width:10px;height:10px;border-radius:999px;background:var(--success)}
-    .hero-img{
+    .dot{width:10px;height:10px;border-radius:999px;background:var(--ok)}
+    .muted{color:var(--muted)}
+    .title{
+      font-weight:900;
+      letter-spacing:-.03em;
+      line-height:1.05;
+    }
+    .hero{
       border-radius: 22px;
       overflow:hidden;
       border:1px solid var(--line);
       background:#0b1220;
-      position:relative;
       aspect-ratio: 16/10;
+      position:relative;
+      transform: translateZ(0);
     }
-    .hero-img img{
-      width:100%; height:100%; object-fit:cover;
+    .hero img{
+      width:100%; height:100%;
+      object-fit:cover;
       display:block;
       transform: scale(1.02);
-      transition: transform 650ms cubic-bezier(.2,.8,.2,1);
       filter: saturate(1.02) contrast(1.02);
+      transition: transform .8s cubic-bezier(.2,.8,.2,1);
     }
-    .hero-img:hover img{transform: scale(1.06)}
-    .badgeTrust{
+    .hero:hover img{transform: scale(1.06)}
+    .trustBadge{
       position:absolute;
       left:14px; bottom:14px;
+      display:flex; align-items:center; gap:.55rem;
       background: rgba(255,255,255,.92);
-      border:1px solid rgba(231,233,242,.9);
-      border-radius: 999px;
-      padding: .38rem .65rem;
-      font-size: .86rem;
-      color: #0b1220;
-      display:flex; gap:.5rem; align-items:center;
-      backdrop-filter: blur(8px);
+      border:1px solid rgba(230,234,242,.9);
+      border-radius:999px;
+      padding:.35rem .65rem;
+      font-size:.9rem;
+      color:var(--ink);
+      backdrop-filter: blur(10px);
     }
-    .badgeTrust svg{width:18px;height:18px}
+    .trustBadge svg{width:18px;height:18px}
     .kpi{
       border:1px solid var(--line);
       border-radius: 16px;
       padding: 14px;
-      background: #fff;
+      background:#fff;
       height:100%;
     }
-    .kpi .t{font-size:.82rem;color:var(--muted)}
-    .kpi .v{font-weight:900; font-size:1.07rem}
-    .btn-primary{background:var(--primary);border-color:var(--primary)}
-    .btn-primary:hover{background:var(--primary2);border-color:var(--primary2)}
+    .kpi .t{font-size:.86rem;color:var(--muted)}
+    .kpi .v{font-weight:900}
+    .btn-primary{
+      background: var(--primary);
+      border-color: var(--primary);
+      font-weight:800;
+    }
+    .btn-primary:hover{background:var(--primary2); border-color:var(--primary2)}
     .btn-outline-primary{
-      border-color: rgba(31,79,255,.35);
+      border-color: rgba(29,78,216,.30);
       color: var(--primary);
+      font-weight:800;
     }
     .btn-outline-primary:hover{
-      background: rgba(31,79,255,.08);
-      border-color: rgba(31,79,255,.45);
+      background: rgba(29,78,216,.07);
+      border-color: rgba(29,78,216,.45);
       color: var(--primary2);
     }
-    .section-title{font-weight: 900; letter-spacing: -.02em;}
-    .sub{color:var(--muted); line-height:1.65}
     .divider{height:1px;background:var(--line); margin: 14px 0}
-    .prize-img{
-      border-radius: 16px;
+    .prizeImg{
+      border-radius: 18px;
       overflow:hidden;
       border:1px solid var(--line);
       background:#0b1220;
       aspect-ratio: 16/10;
     }
-    .prize-img img{width:100%;height:100%;object-fit:cover;display:block}
-    .fadeUp{opacity:0;transform:translateY(10px);animation:fadeUp 720ms ease forwards}
+    .prizeImg img{width:100%;height:100%;object-fit:cover;display:block}
+    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
+    .small{font-size:.92rem}
+    .stickySide{position:sticky; top:16px}
+    .fadeUp{opacity:0; transform: translateY(10px); animation: fadeUp .7s ease forwards;}
     .fadeUp.d1{animation-delay:.06s}
     .fadeUp.d2{animation-delay:.12s}
     .fadeUp.d3{animation-delay:.18s}
-    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
-    .mono{
-      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
-      font-size: .92rem;
-    }
-    .smallNote{font-size:.9rem;color:var(--muted)}
-    .table thead th{color:var(--muted);font-weight:650}
+    @keyframes fadeUp{to{opacity:1; transform: translateY(0)}}
     .winnerBox{
-      border:1px dashed rgba(31,79,255,.35);
-      background: rgba(31,79,255,.04);
-      border-radius: 16px;
+      border:1px dashed rgba(29,78,216,.35);
+      background: rgba(29,78,216,.04);
+      border-radius: 18px;
       padding: 14px;
     }
-    .stickySide{position: sticky; top: 16px;}
-    .progress{background:rgba(20,54,201,.10)}
-    .progress-bar{background:linear-gradient(90deg, var(--primary), #5b7cff)}
-    .shadow-sm2{box-shadow: 0 10px 26px rgba(15,23,42,.08)}
+    .table thead th{color:var(--muted); font-weight:700}
+    .chip{
+      display:inline-flex; align-items:center; gap:.4rem;
+      padding:.25rem .55rem;
+      border-radius:999px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-weight:800;
+      font-size:.85rem;
+      color:var(--muted);
+    }
+    .topbar{
+      border-bottom: 1px solid rgba(230,234,242,.7);
+      background: rgba(255,255,255,.65);
+      backdrop-filter: blur(10px);
+    }
   </style>
 </head>
 
 <body>
-  <header class="py-4">
+  <header class="topbar py-3">
     <div class="container-xxl">
-      <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-2">
         <div class="d-flex align-items-center gap-2 flex-wrap">
-          <span class="pill"><span class="dot"></span> Campaña solidaria + rifa</span>
-          <span class="pill">Premios: <b>14–15 Feb</b></span>
-          <span class="pill">1 boleto = <b>$500</b></span>
+          <span class="pill"><span class="dot"></span> Rifa solidaria</span>
+          <span class="pill">1 boleto = <b>$500 MXN</b></span>
+          <span class="pill">Fechas premio: <b>14–15 Feb</b></span>
         </div>
-        <div class="d-flex gap-2">
+        <div class="d-flex gap-2 flex-wrap">
           <a class="btn btn-outline-primary btn-sm" href="#premios">Premios</a>
+          <a class="btn btn-outline-primary btn-sm" href="#validadas">Validadas</a>
           <a class="btn btn-primary btn-sm" href="#participar">Participar</a>
         </div>
       </div>
     </div>
   </header>
 
-  <main class="pb-5">
+  <main class="py-4 pb-5">
     <div class="container-xxl">
 
       <div class="row g-4 align-items-stretch">
         <div class="col-lg-7 fadeUp d1">
           <div class="cardX p-3 p-md-4 h-100">
-            <div class="hero-img mb-3">
-              <img src="assets/cover.webp" alt="Panda — Rifa solidaria">
-              <div class="badgeTrust">
+            <div class="hero mb-3">
+              <img src="assets/cover.webp" alt="Portada de la campaña">
+              <div class="trustBadge">
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4Z" stroke="#0b1220" stroke-width="1.5"/>
                   <path d="M9.2 12.2l1.8 1.8 3.8-4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
@@ -182,32 +208,29 @@
               </div>
             </div>
 
-            <h1 class="section-title display-6 mb-2" style="letter-spacing:-.03em;">
-              Rifa solidaria — Apoyemos a Panda
-            </h1>
-
-            <p class="sub mb-3">
-              Esta página existe para que todo esté claro: <b>cómo donar</b>, <b>cómo entrar a la rifa</b>,
-              qué incluye cada premio y cómo se valida a los participantes.
-              <b>La participación cuenta sólo con donación validada</b> para evitar duplicados o fraudes.
+            <h1 class="title display-6 mb-2">Rifa solidaria — Apoyemos a Panda</h1>
+            <p class="muted mb-3" style="line-height:1.7">
+              Esta página existe para dar contexto y organizar la rifa de forma clara.
+              <b>La participación cuenta sólo con donación validada</b> (para evitar fraudes o duplicados).
+              Más abajo puedes ver: premios, reglas, progreso y lista de donaciones validadas.
             </p>
 
             <div class="row g-2">
               <div class="col-md-4">
                 <div class="kpi">
                   <div class="t">Meta</div>
-                  <div class="v" id="goalLabel">$0</div>
+                  <div class="v" id="goalLabel">$500,000 MXN</div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="kpi">
-                  <div class="t">Recaudado (validado)</div>
-                  <div class="v" id="raisedLabel">$0</div>
+                  <div class="t">Recaudado (validadas)</div>
+                  <div class="v" id="raisedLabel">$0 MXN</div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="kpi">
-                  <div class="t">Boletos (validados)</div>
+                  <div class="t">Boletos (validadas)</div>
                   <div class="v" id="ticketsLabel">0</div>
                 </div>
               </div>
@@ -215,25 +238,24 @@
 
             <div class="mt-3">
               <div class="d-flex align-items-center justify-content-between mb-1">
-                <div class="smallNote">Progreso hacia la meta (según validadas)</div>
-                <div class="smallNote"><span id="pctLabel">0%</span></div>
+                <div class="muted small">Progreso hacia la meta (según validadas)</div>
+                <div class="muted small"><span id="pctLabel">0%</span></div>
               </div>
               <div class="progress" role="progressbar" aria-label="Progreso" style="height:12px; border-radius:999px;">
                 <div id="progressBar" class="progress-bar" style="width:0%"></div>
               </div>
-              <div class="smallNote mt-2">
-                La barra sube conforme se validan comprobantes.
+              <div class="muted small mt-2">
+                El contador sube cuando se valida evidencia. Así protegemos a todos los participantes.
               </div>
             </div>
 
             <div class="divider"></div>
 
-            <div class="d-flex flex-wrap gap-2" id="participar">
-              <button class="btn btn-primary shadow-sm2" data-bs-toggle="modal" data-bs-target="#modalParticipar">
+            <div class="d-flex gap-2 flex-wrap" id="participar">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
                 Participar / Registrar donación
               </button>
               <a class="btn btn-outline-primary" href="#premios">Ver premios</a>
-              <a class="btn btn-outline-primary" href="#validadas">Donaciones validadas</a>
               <a class="btn btn-outline-primary" href="#reglas">Reglas</a>
             </div>
           </div>
@@ -242,59 +264,54 @@
         <div class="col-lg-5 fadeUp d2">
           <div class="stickySide">
             <div class="cardX p-3 p-md-4">
-              <h2 class="section-title h5 mb-2">Cómo participar</h2>
-              <p class="sub mb-3">
-                1) Realiza tu donación.<br>
-                2) Regístrala en el popup (se guarda en un Google Sheet).<br>
-                3) Envía tu comprobante para validación.
-              </p>
+              <h2 class="h5 mb-2" style="font-weight:900;">Cómo participar</h2>
 
               <div class="soft p-3 mb-3">
                 <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
                   <div>
-                    <div class="smallNote mb-1">Cuenta para donación (BBVA)</div>
-                    <div class="mono"><b id="acctDisplay">4152 3145 6104 1529</b></div>
-                    <div class="smallNote mt-1">Titular: <b>Ramón Fabián Palacios García</b></div>
+                    <div class="muted small mb-1">Donación por transferencia (BBVA)</div>
+                    <div class="mono" style="font-weight:900; font-size:1.05rem;">4152 3145 6104 1529</div>
+                    <div class="muted small mt-1">Titular: <b>Ramón Fabián Palacios García</b></div>
+                    <div class="mt-2">
+                      <span class="chip">Sugerencia concepto: <b>RIFA PANDA</b></span>
+                    </div>
                   </div>
-                  <button class="btn btn-outline-primary btn-sm" onclick="copyText(ACCOUNT_RAW)">Copiar</button>
-                </div>
-                <div class="divider"></div>
-                <div class="smallNote">
-                  Recomendación: en concepto escribe <b>RIFA PANDA</b> + tu nombre.
+                  <button class="btn btn-outline-primary btn-sm" onclick="copyText('4152314561041529')">Copiar</button>
                 </div>
               </div>
 
-              <div class="soft p-3">
-                <div class="smallNote mb-1">Envío de comprobante (evidencia)</div>
-                <div class="d-grid gap-2">
-                  <a class="btn btn-outline-primary" id="btnProofWA" target="_blank" rel="noopener">Enviar por WhatsApp</a>
-                  <a class="btn btn-outline-primary" href="mailto:hbcasamorena@gmail.com?subject=Validaci%C3%B3n%20Rifa%20Panda&body=Hola%2C%20adjunto%20mi%20comprobante%20para%20validar%20mi%20donaci%C3%B3n.%0A%0A-%20Nombre%3A%0A-%20Monto%3A%0A-%20Fecha%3A%0A-%20Folio%20(si%20ya%20lo%20tienes)%3A%0A">Enviar por correo</a>
-                </div>
-                <div class="smallNote mt-2">
-                  WhatsApp: <b id="contactLabel">+52 1 415 215 7587</b> · Correo: <b>hbcasamorena@gmail.com</b>
+              <div class="soft p-3 mb-3">
+                <div class="muted small mb-2"><b>Validación de evidencia</b></div>
+                <div class="small" style="line-height:1.7">
+                  Envía tu comprobante y nombre al WhatsApp:
+                  <b>+52 1 415 215 7587</b><br>
+                  o por correo: <b>hbcasamorena@gmail.com</b>
                 </div>
               </div>
 
-              <div class="mt-3 smallNote">
-                Este sitio no procesa pagos; organiza y valida participantes de forma clara.
+              <div class="d-grid gap-2">
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
+                  Abrir registro
+                </button>
+                <button class="btn btn-outline-primary" onclick="openShare()">
+                  Compartir campaña
+                </button>
+              </div>
+
+              <div class="mt-3 muted small">
+                Este sitio no cobra ni procesa pagos: organiza la rifa, registra participantes y muestra validadas.
               </div>
             </div>
 
             <div class="cardX p-3 p-md-4 mt-3">
-              <h2 class="section-title h6 mb-2">Compartir campaña</h2>
+              <h2 class="h6 mb-2" style="font-weight:900;">Uso de los fondos</h2>
               <div class="soft p-3">
-                <div class="d-flex gap-2 flex-wrap mb-2">
-                  <a class="btn btn-outline-primary" id="btnWA" target="_blank" rel="noopener">WhatsApp</a>
-                  <a class="btn btn-outline-primary" id="btnFB" target="_blank" rel="noopener">Facebook</a>
-                  <a class="btn btn-outline-primary" id="btnX" target="_blank" rel="noopener">X</a>
-                </div>
-                <div class="d-flex gap-2">
-                  <input id="shareLink" class="form-control" readonly>
-                  <button class="btn btn-primary" onclick="copyShare()">Copiar</button>
-                </div>
-                <div class="smallNote mt-2">
-                  WhatsApp toma la vista previa desde <b>og:image</b> (assets/cover.webp).
-                </div>
+                <ul class="mb-0 small" style="line-height:1.7">
+                  <li>Consultas y seguimiento médico</li>
+                  <li>Estudios y tratamientos</li>
+                  <li>Medicamentos</li>
+                  <li>Traslados y logística</li>
+                </ul>
               </div>
             </div>
 
@@ -306,65 +323,75 @@
         <div class="cardX p-3 p-md-4">
           <div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
             <div>
-              <h2 class="section-title h4 mb-1">Premios</h2>
-              <p class="sub mb-0">Estancias para <b>14–15 de febrero</b>. (El 3er premio está por confirmar).</p>
+              <h2 class="h4 mb-1" style="font-weight:900;">Premios</h2>
+              <p class="muted mb-0">Válidos para <b>14–15 de febrero</b>. (El 3er premio se confirma pronto.)</p>
             </div>
             <span class="pill">Premios reales · validación de ganador</span>
           </div>
 
-          <div class="row g-3 mt-1">
+          <div class="row g-3 mt-2">
             <div class="col-lg-4">
               <div class="soft p-3 h-100">
-                <div class="prize-img mb-3">
+                <div class="prizeImg mb-3">
                   <img src="casa-azul/0fe1beb8-b9a1-4331-ae35-9d547df79844.avif" alt="Casa Azul">
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                  <div class="smallNote">1er premio</div>
+                  <div class="muted small">1er premio</div>
                   <span class="badge text-bg-success">2 noches</span>
                 </div>
                 <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Casa Azul</h3>
-                <p class="sub mb-2">2 noches (14–15 feb). Sujeto a reglas de check-in del anfitrión.</p>
+                <p class="muted small mb-2">Estancia 2 noches (14–15 feb). Sujeto a políticas del anfitrión.</p>
                 <a class="btn btn-outline-primary w-100" target="_blank" rel="noopener"
-                   href="https://www.airbnb.mx/rooms/935670103045137368?viralityEntryPoint=1&s=76">
-                  Ver alojamiento
-                </a>
+                   href="https://www.airbnb.mx/rooms/935670103045137368?viralityEntryPoint=1&s=76">Ver alojamiento</a>
               </div>
             </div>
 
             <div class="col-lg-4">
               <div class="soft p-3 h-100">
-                <div class="prize-img mb-3">
+                <div class="prizeImg mb-3">
                   <img src="hotel-casa-morena/hotelcasamorena.avif" alt="Hotel Casa Morena">
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                  <div class="smallNote">2do premio</div>
+                  <div class="muted small">2do premio</div>
                   <span class="badge text-bg-primary">2 noches</span>
                 </div>
                 <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Hotel Casa Morena (San Miguel)</h3>
-                <p class="sub mb-2">2 noches (14–15 feb). Confirmación final al ganador.</p>
+                <p class="muted small mb-2">Estancia 2 noches (14–15 feb). Confirmación final al ganador.</p>
                 <a class="btn btn-outline-primary w-100" target="_blank" rel="noopener"
-                   href="https://www.airbnb.mx/rooms/1470676662423815389?viralityEntryPoint=1&s=76">
-                  Ver alojamiento
-                </a>
+                   href="https://www.airbnb.mx/rooms/1470676662423815389?viralityEntryPoint=1&s=76">Ver alojamiento</a>
               </div>
             </div>
 
             <div class="col-lg-4">
               <div class="soft p-3 h-100">
-                <div class="prize-img mb-3">
+                <div class="prizeImg mb-3">
                   <img src="casa-azul/2e5ec738-1fee-45f1-ab0b-895dc97f8cd0.avif" alt="Hotel Guanajuato (por confirmar)">
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
-                  <div class="smallNote">3er premio</div>
+                  <div class="muted small">3er premio</div>
                   <span class="badge text-bg-warning">1 noche</span>
                 </div>
                 <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Hotel en Guanajuato</h3>
-                <p class="sub mb-2">1 noche. Detalles por confirmar y se publican en cuanto quede listo.</p>
+                <p class="muted small mb-2">1 noche (por confirmar). Se publican detalles en cuanto esté listo.</p>
                 <button class="btn btn-outline-primary w-100" disabled>Por confirmar</button>
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
+      <section id="reglas" class="mt-4">
+        <div class="cardX p-3 p-md-4">
+          <h2 class="h4 mb-2" style="font-weight:900;">Reglas claras</h2>
+          <div class="soft p-3">
+            <ul class="mb-0 small" style="line-height:1.8">
+              <li><b>1 boleto = $500 MXN</b>. Boletos = <b>monto / 500</b> (redondeo hacia abajo).</li>
+              <li>La participación cuenta <b>cuando la donación está validada</b> (comprobante + datos).</li>
+              <li>El ganador debe <b>comprobar identidad</b> y coincidencia con comprobante.</li>
+              <li>Premios válidos para <b>14–15 de febrero</b>. (3er premio por confirmar.)</li>
+              <li>Si se detecta duplicado/fraude, se puede anular folio con evidencia.</li>
+            </ul>
+          </div>
         </div>
       </section>
 
@@ -372,13 +399,10 @@
         <div class="cardX p-3 p-md-4">
           <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
             <div>
-              <h2 class="section-title h4 mb-1">Donaciones validadas</h2>
-              <p class="sub mb-0">
-                Para evitar fraudes, aquí solo aparecen donaciones ya validadas.
-                Se recomienda mostrar nombre parcial + folio.
-              </p>
+              <h2 class="h4 mb-1" style="font-weight:900;">Donaciones validadas</h2>
+              <p class="muted mb-0">Esta lista se carga desde <span class="mono">data/validations.json</span>.</p>
             </div>
-            <span class="pill">Fuente: <b>data/validations.json</b></span>
+            <span class="pill">Transparencia</span>
           </div>
 
           <div class="divider"></div>
@@ -399,8 +423,8 @@
             </table>
           </div>
 
-          <div class="smallNote">
-            Los boletos se calculan con la regla: <b>floor(monto / 500)</b>.
+          <div class="muted small">
+            Privacidad sugerida: usa nombre abreviado (ej. “Luis G.”) y folio completo.
           </div>
         </div>
       </section>
@@ -409,24 +433,25 @@
         <div class="cardX p-3 p-md-4">
           <div class="row g-3">
             <div class="col-lg-7">
-              <h2 class="section-title h4 mb-1">Sorteo</h2>
-              <p class="sub">
-                Selección <b>ponderada por boletos</b>. Si alguien tiene 3 boletos, participa 3 veces.
+              <h2 class="h4 mb-1" style="font-weight:900;">Sorteo (ponderado por boletos)</h2>
+              <p class="muted mb-3" style="line-height:1.7">
+                Selección con probabilidad proporcional a boletos validados.
+                Recomendación: ejecutarlo en vivo (pantalla grabada) para mayor confianza.
               </p>
 
               <div class="soft p-3">
                 <div class="row g-2">
                   <div class="col-md-4">
-                    <div class="smallNote">Participantes</div>
+                    <div class="muted small">Participantes</div>
                     <div class="h5 mb-0" style="font-weight:900" id="participantsCount">0</div>
                   </div>
                   <div class="col-md-4">
-                    <div class="smallNote">Total boletos</div>
+                    <div class="muted small">Total boletos</div>
                     <div class="h5 mb-0" style="font-weight:900" id="ticketsTotal">0</div>
                   </div>
                   <div class="col-md-4">
-                    <div class="smallNote">Regla</div>
-                    <div class="h6 mb-0" style="font-weight:900">1 boleto = $500</div>
+                    <div class="muted small">Modo</div>
+                    <div class="h6 mb-0" style="font-weight:900">Ponderado</div>
                   </div>
                 </div>
 
@@ -439,38 +464,35 @@
                 </div>
 
                 <div class="mt-3 winnerBox" id="winnerBox">
-                  <div class="smallNote mb-1">Resultado</div>
-                  <div class="sub mb-0">Aún no se ha realizado el sorteo.</div>
-                </div>
-
-                <div class="smallNote mt-3">
-                  El sorteo agrega huella (hash) + hora ISO para transparencia.
+                  <div class="muted small mb-1">Resultado</div>
+                  <div class="muted mb-0">Aún no se ha realizado el sorteo.</div>
                 </div>
               </div>
             </div>
 
             <div class="col-lg-5">
-              <h2 class="section-title h5 mb-2" id="reglas">Reglas claras</h2>
+              <h2 class="h5 mb-2" style="font-weight:900;">Compartir</h2>
               <div class="soft p-3">
-                <ul class="mb-2">
-                  <li><b>Participa solo con donación validada.</b></li>
-                  <li><b>1 boleto por cada $500 MXN</b> (múltiplos; se redondea hacia abajo).</li>
-                  <li>Premios aplican para <b>14–15 febrero</b> (el 3er premio por confirmar).</li>
-                  <li>Para reclamar premio: identidad + comprobante deben coincidir.</li>
-                  <li>Donaciones con evidencia inconsistente pueden ser rechazadas.</li>
-                </ul>
-                <div class="smallNote">
-                  Recomendación de privacidad: muestra solo nombre parcial (ej. “Luis G.”) + folio.
+                <div class="d-flex gap-2 flex-wrap">
+                  <a class="btn btn-outline-primary" id="btnWA" target="_blank" rel="noopener">WhatsApp</a>
+                  <a class="btn btn-outline-primary" id="btnFB" target="_blank" rel="noopener">Facebook</a>
+                  <a class="btn btn-outline-primary" id="btnX" target="_blank" rel="noopener">X</a>
+                </div>
+                <div class="divider"></div>
+                <div class="d-flex gap-2">
+                  <input id="shareLink" class="form-control" readonly>
+                  <button class="btn btn-primary" onclick="copyShare()">Copiar</button>
+                </div>
+                <div class="muted small mt-2">
+                  WhatsApp toma la imagen desde <b>og:image</b>. Por eso es URL absoluta.
                 </div>
               </div>
 
               <div class="mt-3">
-                <h2 class="section-title h6 mb-2">Transparencia</h2>
-                <div class="soft p-3">
-                  <div class="smallNote mb-1">Validación</div>
-                  <div class="sub mb-0">
-                    El registro se guarda en un Google Sheet. La validación se hace al recibir comprobante por WhatsApp o correo.
-                  </div>
+                <h2 class="h6 mb-2" style="font-weight:900;">Contacto</h2>
+                <div class="soft p-3 small" style="line-height:1.7">
+                  Evidencia por WhatsApp: <b>+52 1 415 215 7587</b><br>
+                  Correo: <b>hbcasamorena@gmail.com</b>
                 </div>
               </div>
 
@@ -479,84 +501,107 @@
         </div>
       </section>
 
-      <footer class="py-4 smallNote text-center">
-        © <span id="year"></span> · Campaña solidaria
+      <footer class="py-4 muted small text-center">
+        © <span id="year"></span> — Rifa solidaria
       </footer>
 
     </div>
   </main>
 
-  <div class="modal fade" id="modalParticipar" tabindex="-1" aria-hidden="true">
+  <!-- Modal registro -->
+  <div class="modal fade" id="modalRegistro" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content" style="border-radius:18px;">
+      <div class="modal-content" style="border-radius:20px;">
         <div class="modal-header">
-          <h5 class="modal-title" style="font-weight:900;">Registrar donación</h5>
+          <h5 class="modal-title" style="font-weight:900;">Registrar donación (para asignar boletos)</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
           <div class="soft p-3 mb-3">
-            <div class="smallNote mb-1">Donación a BBVA</div>
-            <div class="mono"><b>4152 3145 6104 1529</b></div>
-            <div class="smallNote mt-1">Titular: <b>Ramón Fabián Palacios García</b></div>
+            <div class="muted small mb-1">Donación a BBVA</div>
+            <div class="mono" style="font-weight:900;">4152 3145 6104 1529</div>
+            <div class="muted small mt-1">Titular: <b>Ramón Fabián Palacios García</b></div>
           </div>
 
           <div class="mb-2">
             <label class="form-label">Nombre completo</label>
             <input class="form-control" id="fName" placeholder="Nombre y apellido">
           </div>
-          <div class="mb-2">
-            <label class="form-label">WhatsApp o correo</label>
-            <input class="form-control" id="fContact" placeholder="+52... o correo@...">
+
+          <div class="row g-2">
+            <div class="col-md-6">
+              <label class="form-label">WhatsApp</label>
+              <input class="form-control" id="fWhatsapp" placeholder="+52...">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label">Correo</label>
+              <input class="form-control" id="fEmail" placeholder="correo@...">
+            </div>
           </div>
-          <div class="mb-2">
+
+          <div class="mt-2 mb-2">
             <label class="form-label">Monto donado (MXN)</label>
-            <input class="form-control" id="fAmount" inputmode="decimal" placeholder="Ej. 500">
+            <input class="form-control" id="fAmount" inputmode="numeric" placeholder="Ej. 500, 1000, 1500">
+            <div class="muted small mt-1">Boletos = monto / 500 (ej. $1500 → 3 boletos)</div>
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label">Nota (opcional)</label>
+            <input class="form-control" id="fNote" placeholder="Ej. Transferencia realizada hoy, referencia ...">
+          </div>
+
+          <div class="form-check mt-2">
+            <input class="form-check-input" type="checkbox" id="fOk">
+            <label class="form-check-label small" for="fOk">
+              Confirmo que enviaré evidencia por WhatsApp (<b>+52 1 415 215 7587</b>) o correo (<b>hbcasamorena@gmail.com</b>).
+            </label>
           </div>
 
           <div class="soft p-3 mt-3">
-            <div class="smallNote mb-1">Después de registrar</div>
-            <div class="sub mb-0">
-              Envía tu comprobante a <b>WhatsApp: +52 1 415 215 7587</b> o <b>hbcasamorena@gmail.com</b> para validar.
+            <div class="muted small mb-1">Después de registrar</div>
+            <div class="small" style="line-height:1.7">
+              1) Envía tu comprobante por WhatsApp o correo.<br>
+              2) Se valida y se agrega a la lista de “donaciones validadas”.<br>
+              3) El sorteo se hace con base en esa lista.
             </div>
           </div>
+
+          <div class="mt-3" id="regResult" style="display:none;"></div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-outline-primary" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" id="btnSend" onclick="sendValidation()">Enviar</button>
+          <button class="btn btn-primary" id="btnSend" onclick="submitRegistration()">Registrar</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
     const GOAL_MXN = 500000;
     const TICKET_PRICE = 500;
 
-    const CONTACT_PHONE = "+52 1 415 215 7587";
+    const CONTACT_WA = "+52 1 415 215 7587";
     const CONTACT_EMAIL = "hbcasamorena@gmail.com";
-    const ACCOUNT_RAW = "4152314561041529";
-
-    const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyerNkgpCHk4OY-8HbJRKXxffTdeH5KM33WDwwDDMXheVsK9IwslPAgkEIq7SKZ0hd9/exec";
 
     const VALIDATIONS_JSON_PATH = "data/validations.json";
-    const SITE_URL = "";
 
-    const fallbackData = [
-      { id:"PANDA-0001", name:"Participante demo", amount:500, date:"2026-01-01", status:"Validado" }
-    ];
+    // Tu Web App (Apps Script)
+    const APPS_SCRIPT_WEBAPP = "https://script.google.com/macros/s/AKfycbyerNkgpCHk4OY-8HbJRKXxffTdeH5KM33WDwwDDMXheVsK9IwslPAgkEIq7SKZ0hd9/exec";
+
+    // Si quieres forzar URL al compartir (si no, usa la actual)
+    const SITE_URL = "";
 
     let validated = [];
     window.__raffleResult = null;
 
-    const mxn = (n)=> Number(n||0).toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
+    const mxn = (n)=> n.toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
     const clamp = (v,min,max)=> Math.min(max, Math.max(min,v));
 
     function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, (m)=>({
-        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
-      }[m]));
+      return String(s).replace(/[&<>"']/g, (m)=>( {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m] ));
     }
 
     function toast(msg){
@@ -565,12 +610,11 @@
       t.style.cssText = `
         position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
         background: rgba(11,18,32,.92); color: #fff; padding: 10px 12px;
-        border-radius: 999px; z-index: 9999; font-size: 14px;
-        box-shadow: 0 14px 40px rgba(0,0,0,.25);
+        border-radius: 999px; z-index: 9999; font-size: 14px; box-shadow: 0 14px 40px rgba(0,0,0,.25);
       `;
       document.body.appendChild(t);
-      setTimeout(()=>{ t.style.opacity="0"; t.style.transition="opacity .25s ease"; }, 1100);
-      setTimeout(()=> t.remove(), 1400);
+      setTimeout(()=>{ t.style.opacity="0"; t.style.transition="opacity .25s ease"; }, 1200);
+      setTimeout(()=> t.remove(), 1500);
     }
 
     function copyText(txt){
@@ -578,39 +622,32 @@
         .then(()=> toast("Copiado ✅"))
         .catch(()=> alert("No se pudo copiar. Copia manualmente."));
     }
-    function copyShare(){ copyText(document.getElementById("shareLink").value); }
 
-    function ticketsFromAmount(amount){
-      const a = Number(amount || 0);
-      if(!Number.isFinite(a) || a <= 0) return 0;
-      return Math.floor(a / TICKET_PRICE);
+    function openShare(){
+      location.hash = "#sorteo";
+      document.getElementById("shareLink").focus();
+    }
+
+    function copyShare(){
+      copyText(document.getElementById("shareLink").value);
     }
 
     async function loadValidated(){
       try{
         const res = await fetch(VALIDATIONS_JSON_PATH, {cache:"no-store"});
-        if(!res.ok) throw new Error("No JSON");
+        if(!res.ok) throw new Error("No validations.json");
         const data = await res.json();
-        if(!Array.isArray(data)) throw new Error("JSON must be array");
-        validated = data.map(x => ({
-          id: x.id || "-",
-          name: x.name || "-",
-          amount: Number(x.amount||0),
-          date: x.date || "-",
-          status: x.status || "Validado"
-        }));
+        if(!Array.isArray(data)) throw new Error("JSON debe ser array");
+        validated = data;
       }catch(e){
-        validated = fallbackData;
+        validated = [];
       }
       renderAll();
     }
 
     function renderAll(){
-      const rows = validated.map(r => ({...r, tickets: ticketsFromAmount(r.amount)}))
-                            .filter(r => r.tickets > 0);
-
-      const raised = rows.reduce((a,x)=> a + (Number(x.amount)||0), 0);
-      const tickets = rows.reduce((a,x)=> a + (Number(x.tickets)||0), 0);
+      const raised = validated.reduce((a,x)=> a + (Number(x.amount)||0), 0);
+      const tickets = validated.reduce((a,x)=> a + (Number(x.tickets)||0), 0);
       const pct = clamp((raised / GOAL_MXN) * 100, 0, 100);
 
       document.getElementById("goalLabel").textContent = mxn(GOAL_MXN);
@@ -620,100 +657,145 @@
       document.getElementById("pctLabel").textContent = `${pct.toFixed(1)}%`;
       document.getElementById("progressBar").style.width = `${pct}%`;
 
-      document.getElementById("participantsCount").textContent = rows.length.toLocaleString("es-MX");
+      document.getElementById("participantsCount").textContent = validated.length.toLocaleString("es-MX");
       document.getElementById("ticketsTotal").textContent = tickets.toLocaleString("es-MX");
 
       const tbody = document.getElementById("tbodyValidadas");
       tbody.innerHTML = "";
-      rows.slice().sort((a,b)=> (b.date||"").localeCompare(a.date||"")).forEach(row=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="mono"><b>${escapeHtml(row.id)}</b></td>
-          <td>${escapeHtml(row.name)}</td>
-          <td><b>${mxn(row.amount)}</b></td>
-          <td>${row.tickets}</td>
-          <td class="smallNote">${escapeHtml(row.date)}</td>
-          <td class="text-end"><span class="badge text-bg-success">${escapeHtml(row.status)}</span></td>
-        `;
-        tbody.appendChild(tr);
-      });
+
+      validated
+        .slice()
+        .sort((a,b)=> (b.date||"").localeCompare(a.date||""))
+        .forEach(row=>{
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+            <td class="mono"><b>${escapeHtml(row.id||"-")}</b></td>
+            <td>${escapeHtml(row.name||"-")}</td>
+            <td><b>${mxn(Number(row.amount)||0)}</b></td>
+            <td>${Number(row.tickets)||0}</td>
+            <td class="muted small">${escapeHtml(row.date||"-")}</td>
+            <td class="text-end"><span class="badge text-bg-success">${escapeHtml(row.status||"Validado")}</span></td>
+          `;
+          tbody.appendChild(tr);
+        });
 
       const url = SITE_URL || (location.origin + location.pathname);
       document.getElementById("shareLink").value = url;
 
-      const msg = encodeURIComponent("Rifa solidaria para apoyar a Panda. Participa aquí: " + url);
+      const msg = encodeURIComponent(
+        "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " + url
+      );
       document.getElementById("btnWA").href = "https://wa.me/?text=" + msg;
       document.getElementById("btnFB").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
       document.getElementById("btnX").href = "https://twitter.com/intent/tweet?text=" + msg;
-
-      const proofMsg = encodeURIComponent("Hola, quiero validar mi donación para la Rifa Panda. Adjunto mi comprobante.\n\n- Nombre:\n- Monto:\n- Fecha:\n- Folio (si ya lo tienes):");
-      document.getElementById("btnProofWA").href = "https://wa.me/5214152157587?text=" + proofMsg;
     }
 
-    async function sendValidation(){
+    // --- Registro a Google Sheets vía JSONP ---
+    function jsonp(url){
+      return new Promise((resolve, reject)=>{
+        const cb = "cb_" + Math.random().toString(36).slice(2);
+        const s = document.createElement("script");
+        const timer = setTimeout(()=>{
+          cleanup();
+          reject(new Error("timeout"));
+        }, 15000);
+
+        function cleanup(){
+          clearTimeout(timer);
+          delete window[cb];
+          s.remove();
+        }
+
+        window[cb] = (data)=>{
+          cleanup();
+          resolve(data);
+        };
+
+        s.src = url + (url.includes("?") ? "&" : "?") + "callback=" + cb;
+        s.onerror = ()=>{
+          cleanup();
+          reject(new Error("script error"));
+        };
+
+        document.body.appendChild(s);
+      });
+    }
+
+    async function submitRegistration(){
       const name = document.getElementById("fName").value.trim();
-      const contact = document.getElementById("fContact").value.trim();
-      const amountStr = document.getElementById("fAmount").value.trim();
+      const whatsapp = document.getElementById("fWhatsapp").value.trim();
+      const email = document.getElementById("fEmail").value.trim();
+      const amountRaw = document.getElementById("fAmount").value.trim();
+      const note = document.getElementById("fNote").value.trim();
+      const ok = document.getElementById("fOk").checked;
 
-      if(!name || !contact || !amountStr){
-        alert("Completa nombre, contacto y monto para continuar.");
-        return;
-      }
+      if(!name || !amountRaw) return alert("Completa nombre y monto.");
+      if(!ok) return alert("Confirma que enviarás evidencia por WhatsApp o correo.");
 
-      const amount = Number(amountStr.replace(",", "."));
-      if(!Number.isFinite(amount) || amount <= 0){
-        alert("Monto inválido. Ejemplo: 500");
-        return;
-      }
-
-      const isEmail = contact.includes("@");
-      const payload = {
-        name,
-        whatsapp: isEmail ? "" : contact,
-        email: isEmail ? contact : "",
-        amount
-      };
+      const amount = Number(String(amountRaw).replace(/[^\d.]/g,"")) || 0;
+      if(amount < TICKET_PRICE) return alert("El monto mínimo para 1 boleto es $500 MXN.");
 
       const btn = document.getElementById("btnSend");
-      const prev = btn.textContent;
+      btn.disabled = true;
+      btn.textContent = "Registrando...";
+
+      const qs =
+        "name=" + encodeURIComponent(name) +
+        "&whatsapp=" + encodeURIComponent(whatsapp) +
+        "&email=" + encodeURIComponent(email) +
+        "&amount=" + encodeURIComponent(String(amount)) +
+        "&note=" + encodeURIComponent(note);
+
+      const url = APPS_SCRIPT_WEBAPP + "?" + qs;
 
       try{
-        btn.disabled = true;
-        btn.textContent = "Enviando...";
+        const res = await jsonp(url);
+        if(!res || !res.ok) throw new Error(res && res.error ? res.error : "No se pudo registrar");
 
-        const res = await fetch(SHEETS_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        });
+        const boletos = Number(res.boletos || 0);
+        const folio = String(res.folio || "");
 
-        const text = await res.text();
-        let out;
-        try { out = JSON.parse(text); } catch { out = { ok:false, error:text || "Respuesta no válida" }; }
+        const msg =
+`✅ Registro recibido
+Folio: ${folio}
+Boletos: ${boletos}
 
-        if(!out.ok) throw new Error(out.error || "Error al registrar");
+Ahora envía tu comprobante para validar:
+WhatsApp: ${CONTACT_WA}
+Correo: ${CONTACT_EMAIL}
 
-        const tickets = (typeof out.boletos !== "undefined") ? out.boletos : ticketsFromAmount(amount);
-        const folio = out.folio ? `Folio: ${out.folio}` : "Registro recibido";
+Incluye tu folio en el mensaje.`;
 
-        toast(`✅ Registro enviado · ${folio} · Boletos: ${tickets}`);
+        const box = document.getElementById("regResult");
+        box.style.display = "block";
+        box.className = "soft p-3";
+        box.innerHTML = `
+          <div style="font-weight:900; font-size:1.05rem;">Registro recibido ✅</div>
+          <div class="muted small mt-1">Folio: <span class="mono"><b>${escapeHtml(folio)}</b></span></div>
+          <div class="muted small">Boletos: <b>${boletos}</b></div>
+          <div class="divider"></div>
+          <div class="small" style="line-height:1.7">
+            Envía tu comprobante para validar y participar en la lista pública:<br>
+            WhatsApp: <b>${escapeHtml(CONTACT_WA)}</b><br>
+            Correo: <b>${escapeHtml(CONTACT_EMAIL)}</b><br>
+            <span class="muted small">Incluye tu folio en el mensaje.</span>
+          </div>
+          <div class="mt-3 d-flex gap-2 flex-wrap">
+            <button class="btn btn-outline-primary btn-sm" onclick="copyText('${escapeHtml(msg).replace(/'/g,"&#039;")}')">Copiar mensaje</button>
+          </div>
+        `;
 
-        document.getElementById("fName").value = "";
-        document.getElementById("fContact").value = "";
-        document.getElementById("fAmount").value = "";
+        toast("Registro guardado en Google Sheets ✅");
 
-        const modalEl = document.getElementById("modalParticipar");
-        const modal = bootstrap.Modal.getInstance(modalEl);
-        if(modal) modal.hide();
-
-      }catch(e){
+      }catch(err){
         alert("No se pudo enviar el registro. Intenta de nuevo. Si persiste, manda tus datos por WhatsApp/correo junto con tu comprobante.");
       }finally{
         btn.disabled = false;
-        btn.textContent = prev;
+        btn.textContent = "Registrar";
       }
     }
 
+    // --- Sorteo ponderado ---
     function cryptoRandomInt(min, max){
       const range = max - min + 1;
       const maxRange = 0xFFFFFFFF;
@@ -730,7 +812,7 @@
     function simpleHash(str){
       let h1 = 0xdeadbeef ^ str.length;
       let h2 = 0x41c6ce57 ^ str.length;
-      for (let i=0, ch; i<str.length; i++){
+      for (let i = 0, ch; i < str.length; i++) {
         ch = str.charCodeAt(i);
         h1 = Math.imul(h1 ^ ch, 2654435761);
         h2 = Math.imul(h2 ^ ch, 1597334677);
@@ -741,18 +823,14 @@
     }
 
     function drawWinner(){
-      const rows = validated.map(r => ({...r, tickets: ticketsFromAmount(r.amount)}))
-                            .filter(r => r.tickets > 0);
-
-      if(!rows.length){
-        alert("Aún no hay donaciones validadas con boletos (monto >= 500).");
-        return;
-      }
+      if(!validated.length) return alert("Aún no hay donaciones validadas en validations.json.");
 
       const pool = [];
-      rows.forEach(p=>{
-        for(let i=0;i<p.tickets;i++) pool.push(p);
+      validated.forEach(p=>{
+        const t = Number(p.tickets)||0;
+        for(let i=0;i<t;i++) pool.push(p);
       });
+      if(!pool.length) return alert("No hay boletos asignados (tickets=0).");
 
       const idx = cryptoRandomInt(0, pool.length - 1);
       const w = pool[idx];
@@ -765,52 +843,46 @@
       box.innerHTML = `
         <div class="d-flex justify-content-between flex-wrap gap-2">
           <div>
-            <div class="smallNote">Ganador</div>
+            <div class="muted small">Ganador</div>
             <div class="h5 mb-1" style="font-weight:900">
               ${escapeHtml(w.name)} <span class="badge text-bg-primary ms-1">${escapeHtml(w.id)}</span>
             </div>
-            <div class="sub mb-0">Boletos: <b>${w.tickets}</b> · Donación: <b>${mxn(w.amount)}</b></div>
+            <div class="muted small mb-0">Boletos: <b>${Number(w.tickets)||0}</b> · Donación: <b>${mxn(Number(w.amount)||0)}</b></div>
           </div>
           <div class="text-end">
-            <div class="smallNote">Momento</div>
+            <div class="muted small">Momento</div>
             <div class="mono"><b>${escapeHtml(when)}</b></div>
           </div>
         </div>
         <div class="divider"></div>
-        <div class="smallNote mb-1">Huella de sorteo</div>
+        <div class="muted small mb-1">Huella del sorteo</div>
         <div class="mono"><b>${hash}</b></div>
       `;
 
-      window.__raffleResult = { winner:w, when, hash, poolSize: pool.length, index: idx };
+      window.__raffleResult = { winner:w, when, hash, poolSize:pool.length, index:idx };
       toast("Sorteo realizado ✅");
     }
 
     function resetResult(){
-      const box = document.getElementById("winnerBox");
-      box.innerHTML = `<div class="smallNote mb-1">Resultado</div><div class="sub mb-0">Aún no se ha realizado el sorteo.</div>`;
+      document.getElementById("winnerBox").innerHTML =
+        `<div class="muted small mb-1">Resultado</div><div class="muted mb-0">Aún no se ha realizado el sorteo.</div>`;
       window.__raffleResult = null;
     }
 
     function copyResult(){
-      if(!window.__raffleResult){
-        alert("Primero realiza el sorteo.");
-        return;
-      }
+      if(!window.__raffleResult) return alert("Primero realiza el sorteo.");
       const r = window.__raffleResult;
       const text =
-`Resultado sorteo Rifa Panda
-- Ganador: ${r.winner.name} (${r.winner.id})
-- Donación: ${r.winner.amount} MXN
-- Boletos: ${ticketsFromAmount(r.winner.amount)}
-- Fecha/Hora: ${r.when}
-- Hash: ${r.hash}`;
-      navigator.clipboard.writeText(text)
-        .then(()=> toast("Resultado copiado ✅"))
-        .catch(()=> alert(text));
+`Resultado sorteo — Rifa Panda
+Ganador: ${r.winner.name} (${r.winner.id})
+Donación: ${r.winner.amount} MXN
+Boletos: ${r.winner.tickets}
+Fecha/Hora: ${r.when}
+Huella: ${r.hash}`;
+      copyText(text);
     }
 
     document.getElementById("year").textContent = new Date().getFullYear();
-    document.getElementById("contactLabel").textContent = CONTACT_PHONE;
     loadValidated();
   </script>
 </body>
