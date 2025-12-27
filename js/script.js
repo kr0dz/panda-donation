@@ -85,14 +85,23 @@ function initShare() {
   $("shareLink").value = base;
 
   const msg = encodeURIComponent(
-    "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " + base
+    "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " +
+      base
   );
 
-  if (exists("btnWA")) $("btnWA").href = "https://wa.me/?text=" + msg;
+  // ✅ WhatsApp: abre chat correctamente (mejor compatibilidad)
+  if (exists("btnWA")) {
+    const waText = "text=" + msg;
+    $("btnWA").href = "https://api.whatsapp.com/send/?" + waText;
+    $("btnWA").setAttribute("target", "_blank");
+    $("btnWA").setAttribute("rel", "noopener");
+  }
+
   if (exists("btnFB"))
     $("btnFB").href =
       "https://www.facebook.com/sharer/sharer.php?u=" +
       encodeURIComponent(base);
+
   if (exists("btnX"))
     $("btnX").href =
       "https://twitter.com/intent/tweet?text=" + msg;
@@ -150,7 +159,13 @@ function normalizeValidatedRow(row) {
 
 // ====== HERO (KPIs + progress) ======
 function renderKPIsAndProgress() {
-  if (!exists("goalLabel") || !exists("raisedLabel") || !exists("ticketsLabel") || !exists("pctLabel") || !exists("progressBar")) {
+  if (
+    !exists("goalLabel") ||
+    !exists("raisedLabel") ||
+    !exists("ticketsLabel") ||
+    !exists("pctLabel") ||
+    !exists("progressBar")
+  ) {
     return;
   }
 
@@ -213,7 +228,6 @@ async function loadValidated() {
 
     const items = Array.isArray(res.items) ? res.items : [];
     validated = items.map(normalizeValidatedRow);
-
   } catch (e) {
     validated = [];
   }
@@ -298,7 +312,7 @@ async function submitRegistration() {
     const folio = String(res.folio || "");
 
     const msg =
-`✅ Registro recibido
+      `✅ Registro recibido
 Folio: ${folio}
 Boletos: ${boletos}
 
@@ -336,7 +350,6 @@ Incluye tu folio en el mensaje.`;
     // refresca datos públicos
     await loadValidated();
     await loadRanking();
-
   } catch (err) {
     alert("No se pudo enviar el registro. Intenta de nuevo. Si persiste, manda tus datos por WhatsApp/correo junto con tu comprobante.");
   } finally {
@@ -344,6 +357,39 @@ Incluye tu folio en el mensaje.`;
     btn.textContent = "Registrar";
     __submitting = false;
   }
+}
+
+// ====== PRIZE CAROUSELS (contador 1/N + debug rotas) ======
+function initPrizeCarousels() {
+  const cars = document.querySelectorAll(".prizeCarousel");
+  if (!cars.length) return false;
+
+  cars.forEach((car) => {
+    const items = Array.from(car.querySelectorAll(".carousel-item"));
+    const totalEl = car.querySelector(".prizeCounter .total");
+    const currentEl = car.querySelector(".prizeCounter .current");
+
+    if (!items.length) return;
+
+    if (totalEl) totalEl.textContent = String(items.length);
+
+    const update = () => {
+      const idx = items.findIndex((x) => x.classList.contains("active"));
+      if (currentEl) currentEl.textContent = String((idx >= 0 ? idx : 0) + 1);
+    };
+
+    update();
+    car.addEventListener("slid.bs.carousel", update);
+
+    // debug imágenes rotas
+    car.querySelectorAll("img").forEach((img) => {
+      img.addEventListener("error", () => {
+        console.warn("[img error]", img.getAttribute("src"));
+      }, { once: true });
+    });
+  });
+
+  return true;
 }
 
 // ====== INIT ======
@@ -364,6 +410,9 @@ async function initPublicWhenReady() {
   await loadValidated();
   await loadRanking();
 
+  // init carousels si ya están
+  initPrizeCarousels();
+
   return true;
 }
 
@@ -373,6 +422,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     document.addEventListener("partials:loaded", () => {
       initPublicWhenReady();
+      initPrizeCarousels();
     }, { once: true });
 
     // fallback poll suave (por si el evento no dispara)
@@ -380,6 +430,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const t = setInterval(async () => {
       tries++;
       const ok2 = await initPublicWhenReady();
+      if (ok2) initPrizeCarousels();
       if (ok2 || tries > 40) clearInterval(t); // ~4s
     }, 100);
   });
