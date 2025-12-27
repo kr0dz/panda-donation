@@ -88,11 +88,7 @@ function initShare() {
     "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " + base
   );
 
-    if (exists("btnWA")) {
-    $("btnWA").href = isMobile()
-      ? "https://wa.me/?text=" + msg
-      : "https://web.whatsapp.com/send?text=" + msg;
-  }
+  if (exists("btnWA")) $("btnWA").href = "https://wa.me/?text=" + msg;
   if (exists("btnFB"))
     $("btnFB").href =
       "https://www.facebook.com/sharer/sharer.php?u=" +
