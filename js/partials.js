@@ -1,34 +1,50 @@
-async function loadHTML(selector, url) {
-  const el = document.querySelector(selector);
-  if (!el) throw new Error(`No existe el mount: ${selector}`);
+// /js/partials.js
+// Carga secciones HTML en "mount points" sin romper si falta algo.
 
+const PARTIALS = [
+  { mount: "#mount-headers", url: "./headers.html" },
+
+  { mount: "#mount-hero",    url: "./sections/hero.html" },
+  { mount: "#mount-premios", url: "./sections/premios.html" },
+  { mount: "#mount-reglas",  url: "./sections/reglas.html" },
+
+  // SOLO TOP
+  { mount: "#mount-top",     url: "./sections/top.html" },
+
+  { mount: "#mount-share",   url: "./sections/share.html" },
+  { mount: "#mount-modal",   url: "./sections/modal-registro.html" },
+  { mount: "#mount-footer",  url: "./sections/footer.html" },
+];
+
+async function loadHTML(url) {
   const res = await fetch(url, { cache: "no-store" });
-  if (!res.ok) throw new Error(`No pude cargar ${url} (${res.status})`);
-
-  el.innerHTML = await res.text();
+  if (!res.ok) throw new Error(`No se pudo cargar ${url} (${res.status})`);
+  return await res.text();
 }
 
 async function bootPartials() {
-  // Header
-  await loadHTML("#mount-header", "./headers.html");
+  const errors = [];
 
-  // Secciones
-  await loadHTML("#mount-hero", "./sections/hero.html");
-  await loadHTML("#mount-premios", "./sections/premios.html");
-  await loadHTML("#mount-reglas", "./sections/reglas.html");
-  await loadHTML("#mount-top", "./sections/top.html");
-  await loadHTML("#mount-share", "./sections/share.html");
+  for (const p of PARTIALS) {
+    const el = document.querySelector(p.mount);
 
-  // Footer + Modal
-  await loadHTML("#mount-footer", "./sections/footer.html");
-  await loadHTML("#mount-modal", "./sections/modal-registro.html");
+    if (!el) continue;
 
-  // Aviso a script.js: ya existe todo el DOM inyectado
-  window.__PARTIALS_READY__ = true;
-  document.dispatchEvent(new Event("partials:ready"));
+    try {
+      el.innerHTML = await loadHTML(p.url);
+    } catch (e) {
+      console.error("[partials]", e);
+      errors.push(e.message);
+    }
+  }
+
+  document.dispatchEvent(new CustomEvent("partials:loaded"));
+
+  if (errors.length) {
+    alert("Error cargando secciones:\n" + errors.join("\n"));
+  }
 }
 
-bootPartials().catch((err) => {
-  console.error(err);
-  alert("Error cargando secciones. Revisa rutas/servidor. (No abre bien con file://)");
-});
+window.bootPartials = bootPartials;
+
+document.addEventListener("DOMContentLoaded", bootPartials);

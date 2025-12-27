@@ -9,11 +9,9 @@ const TICKET_PRICE = 500;
 const CONTACT_WA = "+52 1 415 215 7587";
 const CONTACT_EMAIL = "hbcasamorena@gmail.com";
 
-// ✅ Tu WebApp
 const APPS_SCRIPT_WEBAPP =
   "https://script.google.com/macros/s/AKfycbzdvpnb3-JtRcVoK4Z2BdDNnfafj-i2RaqIdmkMPky8qpgbo22kdGRGpplMqeSaGkWG/exec";
 
-// URL del sitio (si se deja vacío, se usa la actual)
 const SITE_URL = "";
 
 // ====== STATE ======
@@ -37,10 +35,8 @@ const escapeHtml = (s) =>
     "'": "&#039;",
   }[m]));
 
-const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
-
-// alias por si algún HTML llama esc()
 const esc = escapeHtml;
+const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
 // --- DOM safe helpers ---
 function $(id) {
@@ -91,11 +87,14 @@ function initShare() {
   $("shareLink").value = base;
 
   const msg = encodeURIComponent(
-    "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " + base
+    "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " +
+      base
   );
 
   if (exists("btnWA")) $("btnWA").href = "https://wa.me/?text=" + msg;
-  if (exists("btnFB")) $("btnFB").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(base);
+  if (exists("btnFB"))
+    $("btnFB").href =
+      "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(base);
   if (exists("btnX")) $("btnX").href = "https://twitter.com/intent/tweet?text=" + msg;
 }
 
@@ -153,10 +152,13 @@ function jsonp(url) {
 
 // ====== RENDER ======
 function renderKPIsAndProgress() {
-  // si todavía no se cargaron partials/IDs, salimos sin romper
-  if (!exists("goalLabel") || !exists("raisedLabel") || !exists("ticketsLabel") || !exists("pctLabel") || !exists("progressBar")) {
-    return;
-  }
+  if (
+    !exists("goalLabel") ||
+    !exists("raisedLabel") ||
+    !exists("ticketsLabel") ||
+    !exists("pctLabel") ||
+    !exists("progressBar")
+  ) return;
 
   const totalAmount = validated.reduce((acc, x) => acc + (Number(x.amount) || 0), 0);
   const totalTickets = validated.reduce((acc, x) => acc + (Number(x.tickets) || 0), 0);
@@ -171,23 +173,6 @@ function renderKPIsAndProgress() {
   $("progressBar").style.width = pctClamped.toFixed(1) + "%";
 }
 
-  validated
-    .slice()
-    .sort((a, b) => String(b.date || "").localeCompare(String(a.date || "")))
-    .forEach((r) => {
-      const tr = document.createElement("tr");
-      tr.innerHTML = `
-        <td class="mono"><b>${escapeHtml(r.id)}</b></td>
-        <td>${escapeHtml(r.name)}</td>
-        <td><b>${mxn(r.amount)}</b></td>
-        <td>${Number(r.tickets || 0).toLocaleString("es-MX")}</td>
-        <td class="muted small">${escapeHtml(r.date || "")}</td>
-        <td class="text-end"><span class="badge text-bg-success">${escapeHtml(r.status || "Validado")}</span></td>
-      `;
-      tbody.appendChild(tr);
-    });
-}
-
 function computeTopFromValidated() {
   const map = new Map();
   for (const row of validated) {
@@ -198,7 +183,10 @@ function computeTopFromValidated() {
     map.set(name, prev);
   }
   return Array.from(map.values())
-    .sort((a, b) => (b.amount - a.amount) || (b.tickets - a.tickets) || a.name.localeCompare(b.name))
+    .sort(
+      (a, b) =>
+        b.amount - a.amount || b.tickets - a.tickets || a.name.localeCompare(b.name)
+    )
     .slice(0, 10);
 }
 
@@ -227,7 +215,6 @@ function renderTopTable(list) {
 
 function renderAll() {
   renderKPIsAndProgress();
-  renderValidatedTable();
 }
 
 // ====== DATA LOAD ======
@@ -249,6 +236,7 @@ async function loadRanking() {
     const top = Array.isArray(res.top) ? res.top.slice(0, 10) : [];
     renderTopTable(top);
   } catch (e) {
+    if (!validated.length) await loadValidated();
     renderTopTable(computeTopFromValidated());
   }
 }
@@ -263,7 +251,6 @@ async function submitRegistration() {
   if (__submitting) return;
   __submitting = true;
 
-  // si modal no existe aún, no truena
   if (!exists("fName") || !exists("fAmount") || !exists("fOk") || !exists("btnSend")) {
     __submitting = false;
     return alert("El formulario aún no está listo. Recarga la página.");
@@ -276,11 +263,20 @@ async function submitRegistration() {
   const note = exists("fNote") ? $("fNote").value.trim() : "";
   const ok = $("fOk").checked;
 
-  if (!name || !amountRaw) { __submitting = false; return alert("Completa nombre y monto."); }
-  if (!ok) { __submitting = false; return alert("Confirma que enviarás evidencia por WhatsApp o correo."); }
+  if (!name || !amountRaw) {
+    __submitting = false;
+    return alert("Completa nombre y monto.");
+  }
+  if (!ok) {
+    __submitting = false;
+    return alert("Confirma que enviarás evidencia por WhatsApp o correo.");
+  }
 
   const amount = Number(String(amountRaw).replace(/[^\d.]/g, "")) || 0;
-  if (amount < TICKET_PRICE) { __submitting = false; return alert("El monto mínimo para 1 boleto es $500 MXN."); }
+  if (amount < TICKET_PRICE) {
+    __submitting = false;
+    return alert("El monto mínimo para 1 boleto es $500 MXN.");
+  }
 
   const btn = $("btnSend");
   btn.disabled = true;
@@ -305,8 +301,7 @@ async function submitRegistration() {
     const boletos = Number(res.boletos || 0);
     const folio = String(res.folio || "");
 
-    const msg =
-`✅ Registro recibido
+    const msg = `✅ Registro recibido
 Folio: ${folio}
 Boletos: ${boletos}
 
@@ -320,32 +315,38 @@ Incluye tu folio en el mensaje.`;
       const box = $("regResult");
       box.style.display = "block";
       box.className = "soft p-3";
-      const safeMsg = msg.replace(/'/g, "\\'"); // para el onclick
+
       box.innerHTML = `
         <div style="font-weight:900; font-size:1.05rem;">Registro recibido ✅</div>
         <div class="muted small mt-1">Folio: <span class="mono"><b>${escapeHtml(folio)}</b></span></div>
         <div class="muted small">Boletos: <b>${boletos}</b></div>
         <div class="divider"></div>
         <div class="small" style="line-height:1.7">
-          Envía tu comprobante para validar y participar en la lista pública:<br>
+          Envía tu comprobante para validar y participar:<br>
           WhatsApp: <b>${escapeHtml(CONTACT_WA)}</b><br>
           Correo: <b>${escapeHtml(CONTACT_EMAIL)}</b><br>
           <span class="muted small">Incluye tu folio en el mensaje.</span>
         </div>
         <div class="mt-3 d-flex gap-2 flex-wrap">
-          <button class="btn btn-outline-primary btn-sm" onclick="copyText('${safeMsg}')">Copiar mensaje</button>
+          <button class="btn btn-outline-primary btn-sm" id="btnCopyMsg" type="button">Copiar mensaje</button>
         </div>
       `;
+
+      // ✅ Copiar sin meter texto en onclick
+      const btnCopy = $("btnCopyMsg");
+      if (btnCopy) {
+        btnCopy.onclick = () => copyText(msg);
+      }
     }
 
     toast("Registro guardado en Google Sheets ✅");
 
-    // refrescar públicos
     await loadValidated();
     await loadRanking();
-
   } catch (err) {
-    alert("No se pudo enviar el registro. Intenta de nuevo. Si persiste, manda tus datos por WhatsApp/correo junto con tu comprobante.");
+    alert(
+      "No se pudo enviar el registro. Intenta de nuevo. Si persiste, manda tus datos por WhatsApp/correo junto con tu comprobante."
+    );
   } finally {
     btn.disabled = false;
     btn.textContent = "Registrar";
@@ -354,11 +355,8 @@ Incluye tu folio en el mensaje.`;
 }
 
 // ====== INIT (IMPORTANT FOR PARTIALS) ======
-// Este init NO debe correr antes de que partials.js haya insertado los IDs.
-// Solución: esperar a un evento que dispare partials.js, o hacer "poll" suave.
 async function initPublicWhenReady() {
-  // IDs mínimos para arrancar
-  const required = ["year", "shareLink", "tbodyValidadas", "tbodyTop"];
+  const required = ["year", "shareLink", "tbodyTop"];
   const ready = required.every(exists);
   if (!ready) return false;
 
@@ -370,21 +368,28 @@ async function initPublicWhenReady() {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  // 1) intenta inmediato
   initPublicWhenReady().then((ok) => {
     if (ok) return;
 
-    // 2) fallback: esperar a que partials.js dispare un evento
-    document.addEventListener("partials:loaded", () => {
-      initPublicWhenReady();
-    }, { once: true });
+    document.addEventListener(
+      "partials:loaded",
+      () => {
+        initPublicWhenReady();
+      },
+      { once: true }
+    );
 
-    // 3) último fallback: poll ligero por si no emites evento
     let tries = 0;
     const t = setInterval(async () => {
       tries++;
       const ok2 = await initPublicWhenReady();
-      if (ok2 || tries > 40) clearInterval(t); // ~4s
+      if (ok2 || tries > 40) clearInterval(t);
     }, 100);
   });
 });
+
+// ====== EXPORTS para HTML ======
+window.copyText = copyText;
+window.openShare = openShare;
+window.copyShare = copyShare;
+window.submitRegistration = submitRegistration;
