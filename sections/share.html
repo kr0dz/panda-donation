@@ -1,35 +1,58 @@
-<section id="validadas" class="mt-4">
+<section id="share" class="mt-4">
   <div class="cardX p-3 p-md-4">
     <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
       <div>
-        <h2 class="h4 mb-1" style="font-weight:900;">Donaciones validadas</h2>
-        <p class="muted mb-0">Lista pública de donaciones validadas.</p>
+        <h2 class="h4 mb-1" style="font-weight:900;">Compartir campaña</h2>
+        <p class="muted mb-0">
+          Ayúdanos compartiendo el enlace. Mientras más gente lo vea, más rápido llegamos a la meta.
+        </p>
       </div>
-      <span class="pill">Transparencia</span>
+      <span class="pill">Difusión</span>
     </div>
 
     <div class="divider"></div>
 
-    <div class="table-responsive">
-      <table class="table align-middle">
-        <thead>
-          <tr>
-            <th>Folio</th>
-            <th>Nombre</th>
-            <th>Monto</th>
-            <th>Boletos</th>
-            <th>Fecha</th>
-            <th class="text-end">Estado</th>
-          </tr>
-        </thead>
-        <tbody id="tbodyValidadas">
-          <tr><td colspan="6" class="muted">Cargando…</td></tr>
-        </tbody>
-      </table>
+    <div class="row g-3">
+      <div class="col-lg-6">
+        <div class="soft p-3 h-100">
+          <div class="muted small mb-2">Compartir en redes</div>
+          <div class="d-flex gap-2 flex-wrap">
+            <a class="btn btn-outline-primary" id="btnWA" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn btn-outline-primary" id="btnFB" target="_blank" rel="noopener">Facebook</a>
+            <a class="btn btn-outline-primary" id="btnX" target="_blank" rel="noopener">X</a>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="muted small">
+            Tip: WhatsApp tomará la vista previa desde el <b>og:image</b> de tu página (ej. <span class="mono">assets/cover.webp</span>).
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-6">
+        <div class="soft p-3 h-100">
+          <div class="muted small mb-2">Enlace para copiar</div>
+          <div class="d-flex gap-2">
+            <input id="shareLink" class="form-control" readonly>
+            <button class="btn btn-primary" onclick="copyShare()">Copiar</button>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="muted small">
+            Si lo compartes en grupos, mejor con un mensaje corto y claro:
+            <div class="mt-2">
+              <button
+                class="btn btn-outline-primary btn-sm"
+                onclick="copyText('Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: ' + (document.getElementById('shareLink')?.value || location.href))">
+                Copiar mensaje sugerido
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="muted small">
-      Privacidad sugerida: usar nombre abreviado (ej. “Luis G.”) y folio completo.
-    </div>
   </div>
 </section>
