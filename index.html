@@ -4,58 +4,54 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Rifa solidaria — Apoyemos a Panda</title>
-  <meta name="description" content="Rifa solidaria para apoyar a Panda. Participa con tu donación y ayuda a cubrir gastos médicos. Premios: estancias en hoteles." />
+  <meta name="description" content="Rifa solidaria para apoyar a Panda. Participa con tu donación y entra al sorteo de estancias en hoteles." />
 
-  <!-- Open Graph / WhatsApp preview -->
   <meta property="og:title" content="Rifa solidaria — Apoyemos a Panda" />
   <meta property="og:description" content="Participa con tu donación. Premios: 2 noches en Casa Azul, 2 noches en Hotel Casa Morena, 1 noche en Guanajuato (por confirmar)." />
   <meta property="og:type" content="website" />
-  <!-- IMPORTANT: WhatsApp suele tomar bien imágenes absolutas.
-       Si estás en GitHub Pages, asegúrate que exista assets/cover.webp -->
   <meta property="og:image" content="assets/cover.webp" />
   <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Bootstrap 5 (CDN) -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Optional: Google Font (limpia y confiable) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --ink:#0b1220;
-      --muted:#5b667a;
+      --muted:#556278;
       --bg:#f6f7fb;
       --card:#ffffff;
       --line:#e7e9f2;
-      --primary:#1f4fff;        /* azul confiable */
-      --primary-2:#1236c9;
+      --primary:#1f4fff;
+      --primary2:#1436c9;
       --success:#16a34a;
-      --warning:#f59e0b;
+      --warn:#f59e0b;
       --radius:18px;
-      --shadow: 0 18px 50px rgba(15, 23, 42, .10);
+      --shadow:0 18px 55px rgba(15, 23, 42, .10);
     }
     html{scroll-behavior:smooth}
     body{
       font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       color:var(--ink);
-      background: radial-gradient(900px 500px at 20% 0%, rgba(31,79,255,.08), transparent 60%),
-                  radial-gradient(900px 500px at 80% 0%, rgba(22,163,74,.07), transparent 60%),
-                  var(--bg);
+      background:
+        radial-gradient(1000px 520px at 20% 0%, rgba(31,79,255,.09), transparent 60%),
+        radial-gradient(900px 520px at 80% 0%, rgba(22,163,74,.07), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
     }
     .container-xxl{max-width:1120px}
     .cardX{
       background:var(--card);
       border:1px solid var(--line);
       border-radius:var(--radius);
-      box-shadow: var(--shadow);
+      box-shadow:var(--shadow);
     }
     .soft{
-      background: linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.65));
+      background:linear-gradient(180deg, rgba(255,255,255,.92), rgba(255,255,255,.70));
       border:1px solid var(--line);
-      border-radius: var(--radius);
+      border-radius:var(--radius);
     }
     .pill{
       display:inline-flex; align-items:center; gap:.5rem;
@@ -65,10 +61,11 @@
       background:#fff;
       color:var(--muted);
       font-size:.875rem;
+      white-space:nowrap;
     }
     .pill .dot{width:10px;height:10px;border-radius:999px;background:var(--success)}
     .hero-img{
-      border-radius: 20px;
+      border-radius: 22px;
       overflow:hidden;
       border:1px solid var(--line);
       background:#0b1220;
@@ -79,7 +76,7 @@
       width:100%; height:100%; object-fit:cover;
       display:block;
       transform: scale(1.02);
-      transition: transform 600ms cubic-bezier(.2,.8,.2,1);
+      transition: transform 650ms cubic-bezier(.2,.8,.2,1);
       filter: saturate(1.02) contrast(1.02);
     }
     .hero-img:hover img{transform: scale(1.06)}
@@ -89,8 +86,8 @@
       background: rgba(255,255,255,.92);
       border:1px solid rgba(231,233,242,.9);
       border-radius: 999px;
-      padding: .35rem .6rem;
-      font-size: .85rem;
+      padding: .38rem .65rem;
+      font-size: .86rem;
       color: #0b1220;
       display:flex; gap:.5rem; align-items:center;
       backdrop-filter: blur(8px);
@@ -104,12 +101,9 @@
       height:100%;
     }
     .kpi .t{font-size:.82rem;color:var(--muted)}
-    .kpi .v{font-weight:800; font-size:1.05rem}
-    .btn-primary{
-      background: var(--primary);
-      border-color: var(--primary);
-    }
-    .btn-primary:hover{background:var(--primary-2); border-color:var(--primary-2)}
+    .kpi .v{font-weight:900; font-size:1.07rem}
+    .btn-primary{background:var(--primary);border-color:var(--primary)}
+    .btn-primary:hover{background:var(--primary2);border-color:var(--primary2)}
     .btn-outline-primary{
       border-color: rgba(31,79,255,.35);
       color: var(--primary);
@@ -117,16 +111,10 @@
     .btn-outline-primary:hover{
       background: rgba(31,79,255,.08);
       border-color: rgba(31,79,255,.45);
-      color: var(--primary-2);
+      color: var(--primary2);
     }
-    .section-title{
-      font-weight: 850;
-      letter-spacing: -.02em;
-    }
-    .sub{
-      color: var(--muted);
-      line-height: 1.65;
-    }
+    .section-title{font-weight: 900; letter-spacing: -.02em;}
+    .sub{color:var(--muted); line-height:1.65}
     .divider{height:1px;background:var(--line); margin: 14px 0}
     .prize-img{
       border-radius: 16px;
@@ -136,31 +124,27 @@
       aspect-ratio: 16/10;
     }
     .prize-img img{width:100%;height:100%;object-fit:cover;display:block}
-    .fadeUp{
-      opacity:0;
-      transform: translateY(10px);
-      animation: fadeUp 700ms ease forwards;
-    }
-    .fadeUp.d1{animation-delay: .06s}
-    .fadeUp.d2{animation-delay: .12s}
-    .fadeUp.d3{animation-delay: .18s}
-    @keyframes fadeUp{to{opacity:1; transform: translateY(0)}}
+    .fadeUp{opacity:0;transform:translateY(10px);animation:fadeUp 720ms ease forwards}
+    .fadeUp.d1{animation-delay:.06s}
+    .fadeUp.d2{animation-delay:.12s}
+    .fadeUp.d3{animation-delay:.18s}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
     .mono{
       font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
       font-size: .92rem;
     }
-    .smallNote{font-size:.9rem; color: var(--muted)}
-    .table thead th{color:var(--muted); font-weight:600}
+    .smallNote{font-size:.9rem;color:var(--muted)}
+    .table thead th{color:var(--muted);font-weight:650}
     .winnerBox{
       border:1px dashed rgba(31,79,255,.35);
       background: rgba(31,79,255,.04);
       border-radius: 16px;
       padding: 14px;
     }
-    .stickySide{
-      position: sticky;
-      top: 16px;
-    }
+    .stickySide{position: sticky; top: 16px;}
+    .progress{background:rgba(20,54,201,.10)}
+    .progress-bar{background:linear-gradient(90deg, var(--primary), #5b7cff)}
+    .shadow-sm2{box-shadow: 0 10px 26px rgba(15,23,42,.08)}
   </style>
 </head>
 
@@ -168,12 +152,13 @@
   <header class="py-4">
     <div class="container-xxl">
       <div class="d-flex align-items-center justify-content-between gap-3 flex-wrap">
-        <div class="d-flex align-items-center gap-2">
+        <div class="d-flex align-items-center gap-2 flex-wrap">
           <span class="pill"><span class="dot"></span> Campaña solidaria + rifa</span>
-          <span class="pill">Fechas del premio: <b>14–15 Feb</b></span>
+          <span class="pill">Premios: <b>14–15 Feb</b></span>
+          <span class="pill">1 boleto = <b>$500</b></span>
         </div>
         <div class="d-flex gap-2">
-          <a class="btn btn-outline-primary btn-sm" href="#premios">Ver premios</a>
+          <a class="btn btn-outline-primary btn-sm" href="#premios">Premios</a>
           <a class="btn btn-primary btn-sm" href="#participar">Participar</a>
         </div>
       </div>
@@ -183,43 +168,41 @@
   <main class="pb-5">
     <div class="container-xxl">
 
-      <!-- HERO -->
       <div class="row g-4 align-items-stretch">
         <div class="col-lg-7 fadeUp d1">
           <div class="cardX p-3 p-md-4 h-100">
             <div class="hero-img mb-3">
-              <img src="assets/cover.webp" alt="Foto de Panda (campaña solidaria)">
+              <img src="assets/cover.webp" alt="Panda — Rifa solidaria">
               <div class="badgeTrust">
-                <!-- shield icon -->
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
                   <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4Z" stroke="#0b1220" stroke-width="1.5"/>
                   <path d="M9.2 12.2l1.8 1.8 3.8-4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                 </svg>
-                Página informativa · pagos verificados
+                Página informativa · validación manual
               </div>
             </div>
 
-            <h1 class="section-title display-6 mb-2" style="font-weight:900; letter-spacing:-.03em;">
+            <h1 class="section-title display-6 mb-2" style="letter-spacing:-.03em;">
               Rifa solidaria — Apoyemos a Panda
             </h1>
 
             <p class="sub mb-3">
-              Creamos esta página para explicar claramente la rifa, los premios y el uso de los fondos.
-              <b>La participación sólo cuenta si tu donación está validada.</b>
-              (Más abajo verás el listado de donaciones validadas y el avance hacia la meta).
+              Esta página existe para que todo esté claro: <b>cómo donar</b>, <b>cómo entrar a la rifa</b>,
+              qué incluye cada premio y cómo se valida a los participantes.
+              <b>La participación cuenta sólo con donación validada</b> para evitar duplicados o fraudes.
             </p>
 
             <div class="row g-2">
               <div class="col-md-4">
                 <div class="kpi">
                   <div class="t">Meta</div>
-                  <div class="v" id="goalLabel">$500,000 MXN</div>
+                  <div class="v" id="goalLabel">$0</div>
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="kpi">
                   <div class="t">Recaudado (validado)</div>
-                  <div class="v" id="raisedLabel">$0 MXN</div>
+                  <div class="v" id="raisedLabel">$0</div>
                 </div>
               </div>
               <div class="col-md-4">
@@ -232,48 +215,48 @@
 
             <div class="mt-3">
               <div class="d-flex align-items-center justify-content-between mb-1">
-                <div class="smallNote">Progreso hacia la meta (según donaciones validadas)</div>
+                <div class="smallNote">Progreso hacia la meta (según validadas)</div>
                 <div class="smallNote"><span id="pctLabel">0%</span></div>
               </div>
               <div class="progress" role="progressbar" aria-label="Progreso" style="height:12px; border-radius:999px;">
                 <div id="progressBar" class="progress-bar" style="width:0%"></div>
               </div>
               <div class="smallNote mt-2">
-                Transparencia: este contador sube conforme validamos donaciones (para evitar fraudes o duplicados).
+                La barra sube conforme se validan comprobantes.
               </div>
             </div>
 
             <div class="divider"></div>
 
             <div class="d-flex flex-wrap gap-2" id="participar">
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalParticipar">
-                Participar / Donar
+              <button class="btn btn-primary shadow-sm2" data-bs-toggle="modal" data-bs-target="#modalParticipar">
+                Participar / Registrar donación
               </button>
-              <a class="btn btn-outline-primary" href="#validadas">Ver donaciones validadas</a>
-              <a class="btn btn-outline-primary" href="#reglas">Reglas claras</a>
+              <a class="btn btn-outline-primary" href="#premios">Ver premios</a>
+              <a class="btn btn-outline-primary" href="#validadas">Donaciones validadas</a>
+              <a class="btn btn-outline-primary" href="#reglas">Reglas</a>
             </div>
           </div>
         </div>
 
-        <!-- SIDEBAR -->
         <div class="col-lg-5 fadeUp d2">
           <div class="stickySide">
             <div class="cardX p-3 p-md-4">
-              <h2 class="section-title h5 mb-2">Cómo participar (simple)</h2>
+              <h2 class="section-title h5 mb-2">Cómo participar</h2>
               <p class="sub mb-3">
-                1) Realiza tu donación (transferencia).<br>
-                2) Envía tu comprobante para validación.<br>
-                3) Te asignamos boletos y apareces en la lista pública (con datos protegidos).
+                1) Realiza tu donación.<br>
+                2) Regístrala en el popup (se guarda en un Google Sheet).<br>
+                3) Envía tu comprobante para validación.
               </p>
 
               <div class="soft p-3 mb-3">
                 <div class="d-flex justify-content-between align-items-start gap-3 flex-wrap">
                   <div>
                     <div class="smallNote mb-1">Cuenta para donación (BBVA)</div>
-                    <div class="mono"><b>4152 3145 6104 1529</b></div>
+                    <div class="mono"><b id="acctDisplay">4152 3145 6104 1529</b></div>
                     <div class="smallNote mt-1">Titular: <b>Ramón Fabián Palacios García</b></div>
                   </div>
-                  <button class="btn btn-outline-primary btn-sm" onclick="copyText('4152314561041529')">Copiar</button>
+                  <button class="btn btn-outline-primary btn-sm" onclick="copyText(ACCOUNT_RAW)">Copiar</button>
                 </div>
                 <div class="divider"></div>
                 <div class="smallNote">
@@ -281,33 +264,44 @@
                 </div>
               </div>
 
-              <div class="d-flex gap-2 flex-wrap">
-                <button class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#modalParticipar">
-                  Validar mi donación
-                </button>
-                <button class="btn btn-outline-primary w-100" onclick="openShare()">
-                  Compartir campaña
-                </button>
+              <div class="soft p-3">
+                <div class="smallNote mb-1">Envío de comprobante (evidencia)</div>
+                <div class="d-grid gap-2">
+                  <a class="btn btn-outline-primary" id="btnProofWA" target="_blank" rel="noopener">Enviar por WhatsApp</a>
+                  <a class="btn btn-outline-primary" href="mailto:hbcasamorena@gmail.com?subject=Validaci%C3%B3n%20Rifa%20Panda&body=Hola%2C%20adjunto%20mi%20comprobante%20para%20validar%20mi%20donaci%C3%B3n.%0A%0A-%20Nombre%3A%0A-%20Monto%3A%0A-%20Fecha%3A%0A-%20Folio%20(si%20ya%20lo%20tienes)%3A%0A">Enviar por correo</a>
+                </div>
+                <div class="smallNote mt-2">
+                  WhatsApp: <b id="contactLabel">+52 1 415 215 7587</b> · Correo: <b>hbcasamorena@gmail.com</b>
+                </div>
               </div>
 
               <div class="mt-3 smallNote">
-                <b>Nota:</b> este sitio no procesa pagos (todavía). Sirve para informar, organizar y validar participantes de forma ordenada.
+                Este sitio no procesa pagos; organiza y valida participantes de forma clara.
               </div>
             </div>
 
             <div class="cardX p-3 p-md-4 mt-3">
-              <h2 class="section-title h6 mb-2">Contacto para validación</h2>
-              <p class="sub mb-2">Define aquí tu canal (WhatsApp/Instagram/Correo) y reemplázalo:</p>
+              <h2 class="section-title h6 mb-2">Compartir campaña</h2>
               <div class="soft p-3">
-                <div class="mono" id="contactLabel">WhatsApp: +52 XX XXXX XXXX</div>
-                <div class="smallNote mt-1">Cámbialo en el código: <b>CONTACT_PHONE</b></div>
+                <div class="d-flex gap-2 flex-wrap mb-2">
+                  <a class="btn btn-outline-primary" id="btnWA" target="_blank" rel="noopener">WhatsApp</a>
+                  <a class="btn btn-outline-primary" id="btnFB" target="_blank" rel="noopener">Facebook</a>
+                  <a class="btn btn-outline-primary" id="btnX" target="_blank" rel="noopener">X</a>
+                </div>
+                <div class="d-flex gap-2">
+                  <input id="shareLink" class="form-control" readonly>
+                  <button class="btn btn-primary" onclick="copyShare()">Copiar</button>
+                </div>
+                <div class="smallNote mt-2">
+                  WhatsApp toma la vista previa desde <b>og:image</b> (assets/cover.webp).
+                </div>
               </div>
             </div>
+
           </div>
         </div>
       </div>
 
-      <!-- PREMIOS -->
       <section id="premios" class="mt-4 fadeUp d3">
         <div class="cardX p-3 p-md-4">
           <div class="d-flex align-items-end justify-content-between flex-wrap gap-2">
@@ -315,23 +309,21 @@
               <h2 class="section-title h4 mb-1">Premios</h2>
               <p class="sub mb-0">Estancias para <b>14–15 de febrero</b>. (El 3er premio está por confirmar).</p>
             </div>
-            <span class="pill">Sin letras chiquitas raras · reglas abajo</span>
+            <span class="pill">Premios reales · validación de ganador</span>
           </div>
 
           <div class="row g-3 mt-1">
-            <!-- 1er premio -->
             <div class="col-lg-4">
               <div class="soft p-3 h-100">
                 <div class="prize-img mb-3">
-                  <!-- Usa una imagen que SÍ exista en tu repo -->
                   <img src="casa-azul/0fe1beb8-b9a1-4331-ae35-9d547df79844.avif" alt="Casa Azul">
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="smallNote">1er premio</div>
                   <span class="badge text-bg-success">2 noches</span>
                 </div>
-                <h3 class="h5 mt-2 mb-1" style="font-weight:800;">Casa Azul</h3>
-                <p class="sub mb-2">Estancia de 2 noches (14–15 febrero). Sujeto a reglas de check-in del anfitrión.</p>
+                <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Casa Azul</h3>
+                <p class="sub mb-2">2 noches (14–15 feb). Sujeto a reglas de check-in del anfitrión.</p>
                 <a class="btn btn-outline-primary w-100" target="_blank" rel="noopener"
                    href="https://www.airbnb.mx/rooms/935670103045137368?viralityEntryPoint=1&s=76">
                   Ver alojamiento
@@ -339,7 +331,6 @@
               </div>
             </div>
 
-            <!-- 2do premio -->
             <div class="col-lg-4">
               <div class="soft p-3 h-100">
                 <div class="prize-img mb-3">
@@ -349,8 +340,8 @@
                   <div class="smallNote">2do premio</div>
                   <span class="badge text-bg-primary">2 noches</span>
                 </div>
-                <h3 class="h5 mt-2 mb-1" style="font-weight:800;">Hotel Casa Morena (San Miguel)</h3>
-                <p class="sub mb-2">Estancia de 2 noches (14–15 febrero). Confirmación final al ganador.</p>
+                <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Hotel Casa Morena (San Miguel)</h3>
+                <p class="sub mb-2">2 noches (14–15 feb). Confirmación final al ganador.</p>
                 <a class="btn btn-outline-primary w-100" target="_blank" rel="noopener"
                    href="https://www.airbnb.mx/rooms/1470676662423815389?viralityEntryPoint=1&s=76">
                   Ver alojamiento
@@ -358,38 +349,36 @@
               </div>
             </div>
 
-            <!-- 3er premio -->
             <div class="col-lg-4">
               <div class="soft p-3 h-100">
                 <div class="prize-img mb-3">
-                  <!-- Placeholder: usa una de casa-azul mientras confirmas -->
                   <img src="casa-azul/2e5ec738-1fee-45f1-ab0b-895dc97f8cd0.avif" alt="Hotel Guanajuato (por confirmar)">
                 </div>
                 <div class="d-flex justify-content-between align-items-center">
                   <div class="smallNote">3er premio</div>
                   <span class="badge text-bg-warning">1 noche</span>
                 </div>
-                <h3 class="h5 mt-2 mb-1" style="font-weight:800;">Hotel en Guanajuato</h3>
-                <p class="sub mb-2">1 noche (fecha por confirmar). Detalles se publican en cuanto quede listo.</p>
+                <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Hotel en Guanajuato</h3>
+                <p class="sub mb-2">1 noche. Detalles por confirmar y se publican en cuanto quede listo.</p>
                 <button class="btn btn-outline-primary w-100" disabled>Por confirmar</button>
               </div>
             </div>
           </div>
+
         </div>
       </section>
 
-      <!-- DONACIONES VALIDADAS -->
       <section id="validadas" class="mt-4">
         <div class="cardX p-3 p-md-4">
           <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
             <div>
               <h2 class="section-title h4 mb-1">Donaciones validadas</h2>
               <p class="sub mb-0">
-                Para evitar fraudes, sólo mostramos como “participantes” a quienes ya validamos.
-                (Nombre protegido + folio).
+                Para evitar fraudes, aquí solo aparecen donaciones ya validadas.
+                Se recomienda mostrar nombre parcial + folio.
               </p>
             </div>
-            <span class="pill">Actualizado desde <b>data/validations.json</b></span>
+            <span class="pill">Fuente: <b>data/validations.json</b></span>
           </div>
 
           <div class="divider"></div>
@@ -406,42 +395,38 @@
                   <th class="text-end">Estado</th>
                 </tr>
               </thead>
-              <tbody id="tbodyValidadas">
-                <!-- JS render -->
-              </tbody>
+              <tbody id="tbodyValidadas"></tbody>
             </table>
           </div>
 
           <div class="smallNote">
-            Tip: Puedes publicar sólo el folio y 1–2 letras del nombre para privacidad.
+            Los boletos se calculan con la regla: <b>floor(monto / 500)</b>.
           </div>
         </div>
       </section>
 
-      <!-- SORTEO -->
       <section id="sorteo" class="mt-4">
         <div class="cardX p-3 p-md-4">
           <div class="row g-3">
             <div class="col-lg-7">
-              <h2 class="section-title h4 mb-1">Sorteo (selección del ganador)</h2>
+              <h2 class="section-title h4 mb-1">Sorteo</h2>
               <p class="sub">
-                Este módulo elige un ganador de forma <b>ponderada por boletos</b> (si alguien tiene 3 boletos,
-                tiene 3x probabilidad). Puedes usarlo en vivo y guardar el resultado.
+                Selección <b>ponderada por boletos</b>. Si alguien tiene 3 boletos, participa 3 veces.
               </p>
 
               <div class="soft p-3">
                 <div class="row g-2">
                   <div class="col-md-4">
                     <div class="smallNote">Participantes</div>
-                    <div class="h5 mb-0" style="font-weight:850" id="participantsCount">0</div>
+                    <div class="h5 mb-0" style="font-weight:900" id="participantsCount">0</div>
                   </div>
                   <div class="col-md-4">
                     <div class="smallNote">Total boletos</div>
-                    <div class="h5 mb-0" style="font-weight:850" id="ticketsTotal">0</div>
+                    <div class="h5 mb-0" style="font-weight:900" id="ticketsTotal">0</div>
                   </div>
                   <div class="col-md-4">
-                    <div class="smallNote">Modo</div>
-                    <div class="h6 mb-0" style="font-weight:800">Ponderado</div>
+                    <div class="smallNote">Regla</div>
+                    <div class="h6 mb-0" style="font-weight:900">1 boleto = $500</div>
                   </div>
                 </div>
 
@@ -459,8 +444,7 @@
                 </div>
 
                 <div class="smallNote mt-3">
-                  Para transparencia, el sorteo genera un <b>hash/semilla</b> local y hora exacta al seleccionar.
-                  (Luego, con Stripe, lo haremos 100% automático).
+                  El sorteo agrega huella (hash) + hora ISO para transparencia.
                 </div>
               </div>
             </div>
@@ -469,31 +453,23 @@
               <h2 class="section-title h5 mb-2" id="reglas">Reglas claras</h2>
               <div class="soft p-3">
                 <ul class="mb-2">
-                  <li><b>Participa sólo con donación validada.</b> Sin validación no se asignan boletos.</li>
-                  <li>Los premios aplican para <b>14–15 febrero</b>. El 3er premio está por confirmar.</li>
-                  <li>Para reclamar premio, el ganador debe <b>comprobar identidad</b> y coincidencia con comprobante.</li>
-                  <li>Si hay dudas de duplicado/fraude, se puede anular el folio (con evidencia).</li>
+                  <li><b>Participa solo con donación validada.</b></li>
+                  <li><b>1 boleto por cada $500 MXN</b> (múltiplos; se redondea hacia abajo).</li>
+                  <li>Premios aplican para <b>14–15 febrero</b> (el 3er premio por confirmar).</li>
+                  <li>Para reclamar premio: identidad + comprobante deben coincidir.</li>
+                  <li>Donaciones con evidencia inconsistente pueden ser rechazadas.</li>
                 </ul>
                 <div class="smallNote">
-                  Puedes editar estas reglas en el HTML para que queden exactas a tu caso.
+                  Recomendación de privacidad: muestra solo nombre parcial (ej. “Luis G.”) + folio.
                 </div>
               </div>
 
               <div class="mt-3">
-                <h2 class="section-title h6 mb-2">Compartir</h2>
+                <h2 class="section-title h6 mb-2">Transparencia</h2>
                 <div class="soft p-3">
-                  <div class="d-flex gap-2 flex-wrap">
-                    <a class="btn btn-outline-primary" id="btnWA" target="_blank" rel="noopener">WhatsApp</a>
-                    <a class="btn btn-outline-primary" id="btnFB" target="_blank" rel="noopener">Facebook</a>
-                    <a class="btn btn-outline-primary" id="btnX" target="_blank" rel="noopener">X</a>
-                  </div>
-                  <div class="divider"></div>
-                  <div class="d-flex gap-2">
-                    <input id="shareLink" class="form-control" readonly>
-                    <button class="btn btn-primary" onclick="copyShare()">Copiar</button>
-                  </div>
-                  <div class="smallNote mt-2">
-                    Al compartir, WhatsApp tomará la imagen de vista previa desde <b>og:image</b> (assets/cover.webp).
+                  <div class="smallNote mb-1">Validación</div>
+                  <div class="sub mb-0">
+                    El registro se guarda en un Google Sheet. La validación se hace al recibir comprobante por WhatsApp o correo.
                   </div>
                 </div>
               </div>
@@ -504,25 +480,20 @@
       </section>
 
       <footer class="py-4 smallNote text-center">
-        Hecho con cuidado para transparencia. © <span id="year"></span>
+        © <span id="year"></span> · Campaña solidaria
       </footer>
 
     </div>
   </main>
 
-  <!-- MODAL: VALIDAR DONACIÓN -->
   <div class="modal fade" id="modalParticipar" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content" style="border-radius:18px;">
         <div class="modal-header">
-          <h5 class="modal-title" style="font-weight:850;">Validar mi donación</h5>
+          <h5 class="modal-title" style="font-weight:900;">Registrar donación</h5>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
-          <p class="sub mb-2">
-            Por ahora, la validación es manual. (Después lo automatizamos con Stripe).
-          </p>
-
           <div class="soft p-3 mb-3">
             <div class="smallNote mb-1">Donación a BBVA</div>
             <div class="mono"><b>4152 3145 6104 1529</b></div>
@@ -530,112 +501,116 @@
           </div>
 
           <div class="mb-2">
-            <label class="form-label">Tu nombre</label>
+            <label class="form-label">Nombre completo</label>
             <input class="form-control" id="fName" placeholder="Nombre y apellido">
           </div>
           <div class="mb-2">
-            <label class="form-label">Tu WhatsApp o correo</label>
-            <input class="form-control" id="fContact" placeholder="Ej. +52... / correo@...">
+            <label class="form-label">WhatsApp o correo</label>
+            <input class="form-control" id="fContact" placeholder="+52... o correo@...">
           </div>
           <div class="mb-2">
             <label class="form-label">Monto donado (MXN)</label>
-            <input class="form-control" id="fAmount" placeholder="Ej. 500">
+            <input class="form-control" id="fAmount" inputmode="decimal" placeholder="Ej. 500">
           </div>
 
-          <div class="smallNote">
-            Envíanos tu comprobante por <b id="contactInline">WhatsApp: +52 XX XXXX XXXX</b> para validar y asignarte folio.
+          <div class="soft p-3 mt-3">
+            <div class="smallNote mb-1">Después de registrar</div>
+            <div class="sub mb-0">
+              Envía tu comprobante a <b>WhatsApp: +52 1 415 215 7587</b> o <b>hbcasamorena@gmail.com</b> para validar.
+            </div>
           </div>
         </div>
         <div class="modal-footer">
           <button class="btn btn-outline-primary" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" onclick="sendValidation()">Enviar datos</button>
+          <button class="btn btn-primary" id="btnSend" onclick="sendValidation()">Enviar</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
   <script>
-    /***********************
-     * CONFIG RÁPIDA
-     ***********************/
-    const GOAL_MXN = 500000; // meta
-    const CONTACT_PHONE = "+52 XX XXXX XXXX"; // <-- cámbialo
-    // Tu URL del sitio (para compartir). Si lo dejas vacío, usa location.href
+    const GOAL_MXN = 500000;
+    const TICKET_PRICE = 500;
+
+    const CONTACT_PHONE = "+52 1 415 215 7587";
+    const CONTACT_EMAIL = "hbcasamorena@gmail.com";
+    const ACCOUNT_RAW = "4152314561041529";
+
+    const SHEETS_ENDPOINT = "https://script.google.com/macros/s/AKfycbyerNkgpCHk4OY-8HbJRKXxffTdeH5KM33WDwwDDMXheVsK9IwslPAgkEIq7SKZ0hd9/exec";
+
+    const VALIDATIONS_JSON_PATH = "data/validations.json";
     const SITE_URL = "";
 
-    // Si creas data/validations.json, el sitio lo cargará.
-    // Si no existe, usa los datos demo.
-    const VALIDATIONS_JSON_PATH = "data/validations.json";
-
-    /***********************
-     * DATOS (DEMO / FALLBACK)
-     * tickets = número de boletos asignados (ponderación)
-     ***********************/
     const fallbackData = [
-      { id:"PANDA-001", name:"Ricardo R.", amount:5000, tickets:5, date:"2026-01-02", status:"Validado" },
-      { id:"PANDA-002", name:"Luis E. G.", amount:3000, tickets:3, date:"2026-01-03", status:"Validado" },
-      { id:"PANDA-003", name:"Yessica P. R.", amount:5000, tickets:5, date:"2026-01-04", status:"Validado" }
+      { id:"PANDA-0001", name:"Participante demo", amount:500, date:"2026-01-01", status:"Validado" }
     ];
 
     let validated = [];
+    window.__raffleResult = null;
 
-    /***********************
-     * HELPERS
-     ***********************/
-    const mxn = (n)=> n.toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
+    const mxn = (n)=> Number(n||0).toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
     const clamp = (v,min,max)=> Math.min(max, Math.max(min,v));
+
+    function escapeHtml(s){
+      return String(s).replace(/[&<>"']/g, (m)=>({
+        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
+      }[m]));
+    }
+
+    function toast(msg){
+      const t = document.createElement("div");
+      t.textContent = msg;
+      t.style.cssText = `
+        position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
+        background: rgba(11,18,32,.92); color: #fff; padding: 10px 12px;
+        border-radius: 999px; z-index: 9999; font-size: 14px;
+        box-shadow: 0 14px 40px rgba(0,0,0,.25);
+      `;
+      document.body.appendChild(t);
+      setTimeout(()=>{ t.style.opacity="0"; t.style.transition="opacity .25s ease"; }, 1100);
+      setTimeout(()=> t.remove(), 1400);
+    }
 
     function copyText(txt){
       navigator.clipboard.writeText(txt)
         .then(()=> toast("Copiado ✅"))
         .catch(()=> alert("No se pudo copiar. Copia manualmente."));
     }
+    function copyShare(){ copyText(document.getElementById("shareLink").value); }
 
-    function toast(msg){
-      // mini toast simple
-      const t = document.createElement("div");
-      t.textContent = msg;
-      t.style.cssText = `
-        position: fixed; left: 50%; bottom: 18px; transform: translateX(-50%);
-        background: rgba(11,18,32,.92); color: #fff; padding: 10px 12px;
-        border-radius: 999px; z-index: 9999; font-size: 14px; box-shadow: 0 14px 40px rgba(0,0,0,.25);
-      `;
-      document.body.appendChild(t);
-      setTimeout(()=>{ t.style.opacity = "0"; t.style.transition="opacity .25s ease"; }, 1100);
-      setTimeout(()=> t.remove(), 1400);
+    function ticketsFromAmount(amount){
+      const a = Number(amount || 0);
+      if(!Number.isFinite(a) || a <= 0) return 0;
+      return Math.floor(a / TICKET_PRICE);
     }
 
-    function openShare(){
-      document.getElementById("shareLink").focus();
-      location.hash = "#validadas";
-    }
-
-    /***********************
-     * CARGA JSON (si existe)
-     ***********************/
     async function loadValidated(){
       try{
         const res = await fetch(VALIDATIONS_JSON_PATH, {cache:"no-store"});
         if(!res.ok) throw new Error("No JSON");
         const data = await res.json();
         if(!Array.isArray(data)) throw new Error("JSON must be array");
-        validated = data;
+        validated = data.map(x => ({
+          id: x.id || "-",
+          name: x.name || "-",
+          amount: Number(x.amount||0),
+          date: x.date || "-",
+          status: x.status || "Validado"
+        }));
       }catch(e){
         validated = fallbackData;
       }
       renderAll();
     }
 
-    /***********************
-     * RENDER
-     ***********************/
     function renderAll(){
-      // totals
-      const raised = validated.reduce((a,x)=> a + (Number(x.amount)||0), 0);
-      const tickets = validated.reduce((a,x)=> a + (Number(x.tickets)||0), 0);
+      const rows = validated.map(r => ({...r, tickets: ticketsFromAmount(r.amount)}))
+                            .filter(r => r.tickets > 0);
+
+      const raised = rows.reduce((a,x)=> a + (Number(x.amount)||0), 0);
+      const tickets = rows.reduce((a,x)=> a + (Number(x.tickets)||0), 0);
       const pct = clamp((raised / GOAL_MXN) * 100, 0, 100);
 
       document.getElementById("goalLabel").textContent = mxn(GOAL_MXN);
@@ -645,101 +620,140 @@
       document.getElementById("pctLabel").textContent = `${pct.toFixed(1)}%`;
       document.getElementById("progressBar").style.width = `${pct}%`;
 
-      document.getElementById("participantsCount").textContent = validated.length.toLocaleString("es-MX");
+      document.getElementById("participantsCount").textContent = rows.length.toLocaleString("es-MX");
       document.getElementById("ticketsTotal").textContent = tickets.toLocaleString("es-MX");
 
-      // table
       const tbody = document.getElementById("tbodyValidadas");
       tbody.innerHTML = "";
-      validated
-        .slice()
-        .sort((a,b)=> (b.date||"").localeCompare(a.date||""))
-        .forEach(row=>{
-          const tr = document.createElement("tr");
-          tr.innerHTML = `
-            <td class="mono"><b>${escapeHtml(row.id||"-")}</b></td>
-            <td>${escapeHtml(row.name||"-")}</td>
-            <td><b>${mxn(Number(row.amount)||0)}</b></td>
-            <td>${(Number(row.tickets)||0)}</td>
-            <td class="smallNote">${escapeHtml(row.date||"-")}</td>
-            <td class="text-end"><span class="badge text-bg-success">${escapeHtml(row.status||"Validado")}</span></td>
-          `;
-          tbody.appendChild(tr);
-        });
+      rows.slice().sort((a,b)=> (b.date||"").localeCompare(a.date||"")).forEach(row=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="mono"><b>${escapeHtml(row.id)}</b></td>
+          <td>${escapeHtml(row.name)}</td>
+          <td><b>${mxn(row.amount)}</b></td>
+          <td>${row.tickets}</td>
+          <td class="smallNote">${escapeHtml(row.date)}</td>
+          <td class="text-end"><span class="badge text-bg-success">${escapeHtml(row.status)}</span></td>
+        `;
+        tbody.appendChild(tr);
+      });
 
-      // share links
       const url = SITE_URL || (location.origin + location.pathname);
       document.getElementById("shareLink").value = url;
 
-      const msg = encodeURIComponent(
-        "Rifa solidaria para apoyar a Panda. Premios: estancias en hoteles. Participa aquí: " + url
-      );
+      const msg = encodeURIComponent("Rifa solidaria para apoyar a Panda. Participa aquí: " + url);
       document.getElementById("btnWA").href = "https://wa.me/?text=" + msg;
       document.getElementById("btnFB").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
       document.getElementById("btnX").href = "https://twitter.com/intent/tweet?text=" + msg;
 
-      // contact
-      document.getElementById("contactLabel").textContent = "WhatsApp: " + CONTACT_PHONE;
-      document.getElementById("contactInline").textContent = "WhatsApp: " + CONTACT_PHONE;
+      const proofMsg = encodeURIComponent("Hola, quiero validar mi donación para la Rifa Panda. Adjunto mi comprobante.\n\n- Nombre:\n- Monto:\n- Fecha:\n- Folio (si ya lo tienes):");
+      document.getElementById("btnProofWA").href = "https://wa.me/5214152157587?text=" + proofMsg;
     }
 
-    function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, (m)=>({
-        "&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"
-      }[m]));
-    }
-
-    /***********************
-     * VALIDACIÓN (stub)
-     * Por ahora solo prepara texto para que lo pegues en WhatsApp/email.
-     ***********************/
-    function sendValidation(){
+    async function sendValidation(){
       const name = document.getElementById("fName").value.trim();
       const contact = document.getElementById("fContact").value.trim();
-      const amount = document.getElementById("fAmount").value.trim();
+      const amountStr = document.getElementById("fAmount").value.trim();
 
-      if(!name || !contact || !amount){
+      if(!name || !contact || !amountStr){
         alert("Completa nombre, contacto y monto para continuar.");
         return;
       }
 
-      const text =
-`Hola, quiero validar mi donación para la Rifa Panda:
-- Nombre: ${name}
-- Contacto: ${contact}
-- Monto: ${amount} MXN
-Adjunto comprobante.`;
+      const amount = Number(amountStr.replace(",", "."));
+      if(!Number.isFinite(amount) || amount <= 0){
+        alert("Monto inválido. Ejemplo: 500");
+        return;
+      }
 
-      // Copia al portapapeles para enviarlo
-      navigator.clipboard.writeText(text)
-        .then(()=> toast("Mensaje copiado ✅ Pégalo en WhatsApp junto con tu comprobante"))
-        .catch(()=> alert(text));
+      const isEmail = contact.includes("@");
+      const payload = {
+        name,
+        whatsapp: isEmail ? "" : contact,
+        email: isEmail ? contact : "",
+        amount
+      };
+
+      const btn = document.getElementById("btnSend");
+      const prev = btn.textContent;
+
+      try{
+        btn.disabled = true;
+        btn.textContent = "Enviando...";
+
+        const res = await fetch(SHEETS_ENDPOINT, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+
+        const text = await res.text();
+        let out;
+        try { out = JSON.parse(text); } catch { out = { ok:false, error:text || "Respuesta no válida" }; }
+
+        if(!out.ok) throw new Error(out.error || "Error al registrar");
+
+        const tickets = (typeof out.boletos !== "undefined") ? out.boletos : ticketsFromAmount(amount);
+        const folio = out.folio ? `Folio: ${out.folio}` : "Registro recibido";
+
+        toast(`✅ Registro enviado · ${folio} · Boletos: ${tickets}`);
+
+        document.getElementById("fName").value = "";
+        document.getElementById("fContact").value = "";
+        document.getElementById("fAmount").value = "";
+
+        const modalEl = document.getElementById("modalParticipar");
+        const modal = bootstrap.Modal.getInstance(modalEl);
+        if(modal) modal.hide();
+
+      }catch(e){
+        alert("No se pudo enviar el registro. Intenta de nuevo. Si persiste, manda tus datos por WhatsApp/correo junto con tu comprobante.");
+      }finally{
+        btn.disabled = false;
+        btn.textContent = prev;
+      }
     }
 
-    function copyShare(){
-      copyText(document.getElementById("shareLink").value);
+    function cryptoRandomInt(min, max){
+      const range = max - min + 1;
+      const maxRange = 0xFFFFFFFF;
+      const bucket = Math.floor(maxRange / range) * range;
+      let x;
+      do{
+        const arr = new Uint32Array(1);
+        crypto.getRandomValues(arr);
+        x = arr[0];
+      }while(x >= bucket);
+      return min + (x % range);
     }
 
-    /***********************
-     * SORTEO
-     * Selección ponderada por tickets.
-     ***********************/
+    function simpleHash(str){
+      let h1 = 0xdeadbeef ^ str.length;
+      let h2 = 0x41c6ce57 ^ str.length;
+      for (let i=0, ch; i<str.length; i++){
+        ch = str.charCodeAt(i);
+        h1 = Math.imul(h1 ^ ch, 2654435761);
+        h2 = Math.imul(h2 ^ ch, 1597334677);
+      }
+      h1 = (h1 ^ (h1 >>> 16)) >>> 0;
+      h2 = (h2 ^ (h2 >>> 16)) >>> 0;
+      return ("RAFFLE-" + (h1.toString(16).padStart(8,"0") + h2.toString(16).padStart(8,"0")).toUpperCase());
+    }
+
     function drawWinner(){
-      if(!validated.length){
-        alert("Aún no hay donaciones validadas.");
-        return;
-      }
-      const pool = [];
-      validated.forEach(p=>{
-        const t = Number(p.tickets)||0;
-        for(let i=0;i<t;i++) pool.push(p);
-      });
-      if(!pool.length){
-        alert("No hay boletos asignados (tickets=0).");
+      const rows = validated.map(r => ({...r, tickets: ticketsFromAmount(r.amount)}))
+                            .filter(r => r.tickets > 0);
+
+      if(!rows.length){
+        alert("Aún no hay donaciones validadas con boletos (monto >= 500).");
         return;
       }
 
-      // crypto random
+      const pool = [];
+      rows.forEach(p=>{
+        for(let i=0;i<p.tickets;i++) pool.push(p);
+      });
+
       const idx = cryptoRandomInt(0, pool.length - 1);
       const w = pool[idx];
 
@@ -752,8 +766,10 @@ Adjunto comprobante.`;
         <div class="d-flex justify-content-between flex-wrap gap-2">
           <div>
             <div class="smallNote">Ganador</div>
-            <div class="h5 mb-1" style="font-weight:900">${escapeHtml(w.name)} <span class="badge text-bg-primary ms-1">${escapeHtml(w.id)}</span></div>
-            <div class="sub mb-0">Boletos asignados: <b>${Number(w.tickets)||0}</b> · Donación: <b>${mxn(Number(w.amount)||0)}</b></div>
+            <div class="h5 mb-1" style="font-weight:900">
+              ${escapeHtml(w.name)} <span class="badge text-bg-primary ms-1">${escapeHtml(w.id)}</span>
+            </div>
+            <div class="sub mb-0">Boletos: <b>${w.tickets}</b> · Donación: <b>${mxn(w.amount)}</b></div>
           </div>
           <div class="text-end">
             <div class="smallNote">Momento</div>
@@ -761,14 +777,11 @@ Adjunto comprobante.`;
           </div>
         </div>
         <div class="divider"></div>
-        <div class="smallNote mb-1">Huella de sorteo (para transparencia)</div>
+        <div class="smallNote mb-1">Huella de sorteo</div>
         <div class="mono"><b>${hash}</b></div>
       `;
 
-      // guardar resultado para copiar
-      window.__raffleResult = {
-        winner: w, when, hash, poolSize: pool.length, index: idx
-      };
+      window.__raffleResult = { winner:w, when, hash, poolSize: pool.length, index: idx };
       toast("Sorteo realizado ✅");
     }
 
@@ -788,7 +801,7 @@ Adjunto comprobante.`;
 `Resultado sorteo Rifa Panda
 - Ganador: ${r.winner.name} (${r.winner.id})
 - Donación: ${r.winner.amount} MXN
-- Boletos: ${r.winner.tickets}
+- Boletos: ${ticketsFromAmount(r.winner.amount)}
 - Fecha/Hora: ${r.when}
 - Hash: ${r.hash}`;
       navigator.clipboard.writeText(text)
@@ -796,38 +809,8 @@ Adjunto comprobante.`;
         .catch(()=> alert(text));
     }
 
-    function cryptoRandomInt(min, max){
-      // inclusive
-      const range = max - min + 1;
-      const maxRange = 0xFFFFFFFF;
-      const bucket = Math.floor(maxRange / range) * range;
-      let x;
-      do{
-        const arr = new Uint32Array(1);
-        crypto.getRandomValues(arr);
-        x = arr[0];
-      }while(x >= bucket);
-      return min + (x % range);
-    }
-
-    function simpleHash(str){
-      // hash simple para "huella" (no criptográfico)
-      let h1 = 0xdeadbeef ^ str.length;
-      let h2 = 0x41c6ce57 ^ str.length;
-      for (let i = 0, ch; i < str.length; i++) {
-        ch = str.charCodeAt(i);
-        h1 = Math.imul(h1 ^ ch, 2654435761);
-        h2 = Math.imul(h2 ^ ch, 1597334677);
-      }
-      h1 = (h1 ^ (h1 >>> 16)) >>> 0;
-      h2 = (h2 ^ (h2 >>> 16)) >>> 0;
-      return ("RAFFLE-" + (h1.toString(16).padStart(8,"0") + h2.toString(16).padStart(8,"0")).toUpperCase());
-    }
-
-    /***********************
-     * INIT
-     ***********************/
     document.getElementById("year").textContent = new Date().getFullYear();
+    document.getElementById("contactLabel").textContent = CONTACT_PHONE;
     loadValidated();
   </script>
 </body>
