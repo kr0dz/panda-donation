@@ -10,7 +10,6 @@
   <meta property="og:title" content="Rifa solidaria — Apoyemos a Panda" />
   <meta property="og:description" content="1 boleto = $500 MXN. Premios: 2 noches Casa Azul, 2 noches Hotel Casa Morena, 1 noche en Guanajuato (por confirmar). Fechas: 14–15 febrero." />
   <meta property="og:type" content="website" />
-  <!-- IMPORTANTE: usa URL ABSOLUTA para WhatsApp -->
   <meta property="og:image" content="https://kr0dz.github.io/panda-donation/assets/cover.webp" />
   <meta name="twitter:card" content="summary_large_image" />
 
@@ -170,6 +169,16 @@
       background: rgba(255,255,255,.65);
       backdrop-filter: blur(10px);
     }
+    /* Dashboard (oculto) */
+    #adminPanel{display:none}
+    body.is-admin #adminPanel{display:block}
+    body.is-admin .adminHint{display:none}
+    .adminLock{
+      border:1px dashed rgba(245,158,11,.45);
+      background: rgba(245,158,11,.06);
+      border-radius: 18px;
+      padding: 14px;
+    }
   </style>
 </head>
 
@@ -184,6 +193,7 @@
         </div>
         <div class="d-flex gap-2 flex-wrap">
           <a class="btn btn-outline-primary btn-sm" href="#premios">Premios</a>
+          <a class="btn btn-outline-primary btn-sm" href="#top">Top donadores</a>
           <a class="btn btn-outline-primary btn-sm" href="#validadas">Validadas</a>
           <a class="btn btn-primary btn-sm" href="#participar">Participar</a>
         </div>
@@ -211,8 +221,8 @@
             <h1 class="title display-6 mb-2">Rifa solidaria — Apoyemos a Panda</h1>
             <p class="muted mb-3" style="line-height:1.7">
               Esta página existe para dar contexto y organizar la rifa de forma clara.
-              <b>La participación cuenta sólo con donación validada</b> (para evitar fraudes o duplicados).
-              Más abajo puedes ver: premios, reglas, progreso y lista de donaciones validadas.
+              <b>La participación cuenta sólo con donación validada</b>.
+              Más abajo puedes ver premios, reglas, progreso y donaciones validadas.
             </p>
 
             <div class="row g-2">
@@ -245,7 +255,7 @@
                 <div id="progressBar" class="progress-bar" style="width:0%"></div>
               </div>
               <div class="muted small mt-2">
-                El contador sube cuando se valida evidencia. Así protegemos a todos los participantes.
+                El contador sube cuando se valida la evidencia. Así protegemos a todos los participantes.
               </div>
             </div>
 
@@ -257,6 +267,11 @@
               </button>
               <a class="btn btn-outline-primary" href="#premios">Ver premios</a>
               <a class="btn btn-outline-primary" href="#reglas">Reglas</a>
+              <a class="btn btn-outline-primary" href="#top">Top donadores</a>
+            </div>
+
+            <div class="adminHint mt-3 muted small">
+              Transparencia: la lista pública muestra donaciones validadas (nombre abreviado recomendado).
             </div>
           </div>
         </div>
@@ -283,7 +298,7 @@
               <div class="soft p-3 mb-3">
                 <div class="muted small mb-2"><b>Validación de evidencia</b></div>
                 <div class="small" style="line-height:1.7">
-                  Envía tu comprobante y nombre al WhatsApp:
+                  Envía tu comprobante y tu nombre al WhatsApp:
                   <b>+52 1 415 215 7587</b><br>
                   o por correo: <b>hbcasamorena@gmail.com</b>
                 </div>
@@ -299,7 +314,7 @@
               </div>
 
               <div class="mt-3 muted small">
-                Este sitio no cobra ni procesa pagos: organiza la rifa, registra participantes y muestra validadas.
+                Este sitio no cobra ni procesa pagos: organiza la rifa, registra participantes y muestra donaciones validadas.
               </div>
             </div>
 
@@ -387,10 +402,60 @@
             <ul class="mb-0 small" style="line-height:1.8">
               <li><b>1 boleto = $500 MXN</b>. Boletos = <b>monto / 500</b> (redondeo hacia abajo).</li>
               <li>La participación cuenta <b>cuando la donación está validada</b> (comprobante + datos).</li>
-              <li>El ganador debe <b>comprobar identidad</b> y coincidencia con comprobante.</li>
+              <li>El ganador debe <b>comprobar identidad</b> y coincidencia con el comprobante.</li>
               <li>Premios válidos para <b>14–15 de febrero</b>. (3er premio por confirmar.)</li>
-              <li>Si se detecta duplicado/fraude, se puede anular folio con evidencia.</li>
+              <li>Si se detecta duplicado o fraude, se puede anular folio con evidencia.</li>
             </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- TOP DONADORES -->
+      <section id="top" class="mt-4">
+        <div class="cardX p-3 p-md-4">
+          <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
+            <div>
+              <h2 class="h4 mb-1" style="font-weight:900;">Top donadores</h2>
+              <p class="muted mb-0">Reconocimiento público a quienes más aportan (según donaciones validadas).</p>
+            </div>
+            <span class="pill">Incentivo extra</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="row g-3">
+            <div class="col-lg-6">
+              <div class="soft p-3 h-100">
+                <div class="muted small mb-2"><b>Top 10</b> por monto total</div>
+                <div class="table-responsive">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>#</th>
+                        <th>Nombre</th>
+                        <th>Monto</th>
+                        <th>Boletos</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyTop"></tbody>
+                  </table>
+                </div>
+                <div class="muted small mt-2">
+                  Nota: el sorteo sigue siendo aleatorio, pero este ranking es un incentivo adicional.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-6">
+              <div class="soft p-3 h-100">
+                <div class="muted small mb-2"><b>¿Cómo se calcula?</b></div>
+                <ul class="mb-0 small" style="line-height:1.8">
+                  <li>Se suman montos por nombre (recomendado: abreviado, ej. “Luis G.”).</li>
+                  <li>Los boletos provienen de donaciones validadas.</li>
+                  <li>Si hay varias donaciones del mismo nombre, se acumulan.</li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -400,7 +465,7 @@
           <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
             <div>
               <h2 class="h4 mb-1" style="font-weight:900;">Donaciones validadas</h2>
-              <p class="muted mb-0">Esta lista se carga desde <span class="mono">data/validations.json</span>.</p>
+              <p class="muted mb-0">Lista pública de donaciones validadas.</p>
             </div>
             <span class="pill">Transparencia</span>
           </div>
@@ -424,7 +489,7 @@
           </div>
 
           <div class="muted small">
-            Privacidad sugerida: usa nombre abreviado (ej. “Luis G.”) y folio completo.
+            Privacidad sugerida: usar nombre abreviado (ej. “Luis G.”) y folio completo.
           </div>
         </div>
       </section>
@@ -501,6 +566,93 @@
         </div>
       </section>
 
+      <!-- DASHBOARD (ADMIN) -->
+      <section id="adminPanel" class="mt-4">
+        <div class="cardX p-3 p-md-4">
+          <div class="d-flex justify-content-between align-items-end flex-wrap gap-2">
+            <div>
+              <h2 class="h4 mb-1" style="font-weight:900;">Dashboard de validación</h2>
+              <p class="muted mb-0">Validación de donaciones y actualización de estatus.</p>
+            </div>
+            <span class="pill">Sólo admin</span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="adminLock mb-3">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+              <div>
+                <div style="font-weight:900;">Acceso de administrador</div>
+                <div class="muted small">Para tu seguridad, se requiere una clave para cargar pendientes y validar.</div>
+              </div>
+              <div class="d-flex gap-2">
+                <button class="btn btn-outline-primary btn-sm" onclick="adminLogin()">Ingresar clave</button>
+                <button class="btn btn-outline-primary btn-sm" onclick="adminLogout()">Cerrar sesión</button>
+              </div>
+            </div>
+            <div class="muted small mt-2" id="adminStatus">Estado: no autenticado</div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-lg-7">
+              <div class="soft p-3">
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+                  <div>
+                    <div style="font-weight:900;">Pendientes (Google Sheets)</div>
+                    <div class="muted small">Registros recibidos sin evidencia validada o sin confirmación.</div>
+                  </div>
+                  <div class="d-flex gap-2">
+                    <button class="btn btn-primary btn-sm" onclick="adminLoadPending()">Cargar pendientes</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="adminRefreshValidated()">Refrescar validadas</button>
+                  </div>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="table-responsive">
+                  <table class="table align-middle mb-0">
+                    <thead>
+                      <tr>
+                        <th>Folio</th>
+                        <th>Nombre</th>
+                        <th>Monto</th>
+                        <th>Boletos</th>
+                        <th class="text-end">Acción</th>
+                      </tr>
+                    </thead>
+                    <tbody id="tbodyPending"></tbody>
+                  </table>
+                </div>
+
+                <div class="muted small mt-2" id="pendingHint">
+                  Consejo: valida sólo cuando tengas comprobante y coincida con los datos.
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-5">
+              <div class="soft p-3">
+                <div style="font-weight:900;">Exportar validadas (opcional)</div>
+                <div class="muted small mb-2">Útil si quieres actualizar el archivo público de validadas.</div>
+
+                <div class="d-grid gap-2">
+                  <button class="btn btn-outline-primary btn-sm" onclick="adminDownloadValidatedJson()">
+                    Descargar JSON de validadas
+                  </button>
+                </div>
+
+                <div class="divider"></div>
+
+                <div class="muted small">
+                  Si usas este JSON para tu sitio público, verás el contador y el ranking actualizados.
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       <footer class="py-4 muted small text-center">
         © <span id="year"></span> — Rifa solidaria
       </footer>
@@ -562,7 +714,7 @@
             <div class="small" style="line-height:1.7">
               1) Envía tu comprobante por WhatsApp o correo.<br>
               2) Se valida y se agrega a la lista de “donaciones validadas”.<br>
-              3) El sorteo se hace con base en esa lista.
+              3) El sorteo se realiza con base en esa lista.
             </div>
           </div>
 
@@ -586,16 +738,22 @@
     const CONTACT_WA = "+52 1 415 215 7587";
     const CONTACT_EMAIL = "hbcasamorena@gmail.com";
 
+    // Lista pública (validadas)
     const VALIDATIONS_JSON_PATH = "data/validations.json";
 
-    // Tu Web App (Apps Script)
+    // Apps Script WebApp
     const APPS_SCRIPT_WEBAPP = "https://script.google.com/macros/s/AKfycby1PPxBNqCZbz1YKed_H2LeU8Djzwgfw7LQH_1nAPPymJIsOiwH9IpfUMDr4EF4EOow/exec";
 
-    // Si quieres forzar URL al compartir (si no, usa la actual)
+    // URL del sitio (si se deja vacío, se usa la actual)
     const SITE_URL = "";
 
     let validated = [];
+    let pending = [];
     window.__raffleResult = null;
+
+    // Admin state (se guarda sólo en el navegador)
+    const ADMIN_KEY_STORAGE = "panda_admin_key";
+    const isAdminRoute = ()=> (location.hash || "").toLowerCase().includes("admin");
 
     const mxn = (n)=> n.toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
     const clamp = (v,min,max)=> Math.min(max, Math.max(min,v));
@@ -645,6 +803,44 @@
       renderAll();
     }
 
+    function computeTopDonors(list){
+      // Agrupa por nombre tal cual viene en validations.json (recomendado: abreviar)
+      const map = new Map();
+      for(const row of list){
+        const name = (row.name || "").trim() || "Anónimo";
+        const amount = Number(row.amount) || 0;
+        const tickets = Number(row.tickets) || 0;
+        const prev = map.get(name) || { name, amount:0, tickets:0 };
+        prev.amount += amount;
+        prev.tickets += tickets;
+        map.set(name, prev);
+      }
+      return Array.from(map.values())
+        .sort((a,b)=> (b.amount - a.amount) || (b.tickets - a.tickets) || a.name.localeCompare(b.name));
+    }
+
+    function renderTop(){
+      const top = computeTopDonors(validated).slice(0,10);
+      const tbody = document.getElementById("tbodyTop");
+      tbody.innerHTML = "";
+
+      if(!top.length){
+        tbody.innerHTML = `<tr><td colspan="4" class="muted">Aún no hay donaciones validadas publicadas.</td></tr>`;
+        return;
+      }
+
+      top.forEach((x, i)=>{
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td><b>${i+1}</b></td>
+          <td>${escapeHtml(x.name)}</td>
+          <td><b>${mxn(x.amount)}</b></td>
+          <td>${x.tickets.toLocaleString("es-MX")}</td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
     function renderAll(){
       const raised = validated.reduce((a,x)=> a + (Number(x.amount)||0), 0);
       const tickets = validated.reduce((a,x)=> a + (Number(x.tickets)||0), 0);
@@ -665,21 +861,23 @@
 
       validated
         .slice()
-        .sort((a,b)=> (b.date||"").localeCompare(a.date||""))
+        .sort((a,b)=> (String(b.date||"")).localeCompare(String(a.date||"")))
         .forEach(row=>{
           const tr = document.createElement("tr");
           tr.innerHTML = `
             <td class="mono"><b>${escapeHtml(row.id||"-")}</b></td>
             <td>${escapeHtml(row.name||"-")}</td>
             <td><b>${mxn(Number(row.amount)||0)}</b></td>
-            <td>${Number(row.tickets)||0}</td>
+            <td>${(Number(row.tickets)||0).toLocaleString("es-MX")}</td>
             <td class="muted small">${escapeHtml(row.date||"-")}</td>
             <td class="text-end"><span class="badge text-bg-success">${escapeHtml(row.status||"Validado")}</span></td>
           `;
           tbody.appendChild(tr);
         });
 
-      const url = SITE_URL || (location.origin + location.pathname);
+      renderTop();
+
+      const url = SITE_URL || (location.origin + location.pathname + location.hash.replace("#admin",""));
       document.getElementById("shareLink").value = url;
 
       const msg = encodeURIComponent(
@@ -690,7 +888,7 @@
       document.getElementById("btnX").href = "https://twitter.com/intent/tweet?text=" + msg;
     }
 
-    // --- Registro a Google Sheets vía JSONP ---
+    // --- JSONP helper ---
     function jsonp(url){
       return new Promise((resolve, reject)=>{
         const cb = "cb_" + Math.random().toString(36).slice(2);
@@ -702,7 +900,7 @@
 
         function cleanup(){
           clearTimeout(timer);
-          delete window[cb];
+          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
           s.remove();
         }
 
@@ -721,6 +919,7 @@
       });
     }
 
+    // --- Registro público a Google Sheets vía JSONP (ya funciona) ---
     async function submitRegistration(){
       const name = document.getElementById("fName").value.trim();
       const whatsapp = document.getElementById("fWhatsapp").value.trim();
@@ -823,7 +1022,7 @@ Incluye tu folio en el mensaje.`;
     }
 
     function drawWinner(){
-      if(!validated.length) return alert("Aún no hay donaciones validadas en validations.json.");
+      if(!validated.length) return alert("Aún no hay donaciones validadas publicadas.");
 
       const pool = [];
       validated.forEach(p=>{
@@ -882,7 +1081,146 @@ Huella: ${r.hash}`;
       copyText(text);
     }
 
+    // --- ADMIN (Dashboard) ---
+    function adminKey(){
+      return localStorage.getItem(ADMIN_KEY_STORAGE) || "";
+    }
+    function setAdminStatus(){
+      const el = document.getElementById("adminStatus");
+      const key = adminKey();
+      el.textContent = key ? "Estado: autenticado" : "Estado: no autenticado";
+    }
+    function adminLogin(){
+      const key = prompt("Ingresa la clave de administrador:");
+      if(!key) return;
+      localStorage.setItem(ADMIN_KEY_STORAGE, key.trim());
+      setAdminStatus();
+      toast("Acceso admin listo ✅");
+    }
+    function adminLogout(){
+      localStorage.removeItem(ADMIN_KEY_STORAGE);
+      setAdminStatus();
+      toast("Sesión cerrada");
+    }
+
+    async function adminLoadPending(){
+      const key = adminKey();
+      if(!key) return alert("Ingresa la clave de administrador.");
+
+      const url = APPS_SCRIPT_WEBAPP + "?action=pending&key=" + encodeURIComponent(key);
+      try{
+        const res = await jsonp(url);
+        if(!res || !res.ok) throw new Error(res?.error || "No se pudo cargar pendientes");
+        pending = Array.isArray(res.items) ? res.items : [];
+        renderPending();
+        toast("Pendientes cargados ✅");
+      }catch(e){
+        alert("No se pudieron cargar pendientes. Verifica la clave o el endpoint de Apps Script.");
+      }
+    }
+
+    function renderPending(){
+      const tbody = document.getElementById("tbodyPending");
+      tbody.innerHTML = "";
+
+      if(!pending.length){
+        tbody.innerHTML = `<tr><td colspan="5" class="muted">No hay pendientes (o no se cargaron).</td></tr>`;
+        return;
+      }
+
+      pending.forEach(row=>{
+        const folio = row.folio || row.id || "-";
+        const name = row.name || "-";
+        const amount = Number(row.amount)||0;
+        const tickets = Number(row.tickets)||0;
+
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td class="mono"><b>${escapeHtml(folio)}</b></td>
+          <td>${escapeHtml(name)}</td>
+          <td><b>${mxn(amount)}</b></td>
+          <td>${tickets}</td>
+          <td class="text-end">
+            <button class="btn btn-primary btn-sm" onclick="adminValidate('${escapeHtml(folio).replace(/'/g,"&#039;")}')">Validar</button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    async function adminValidate(folio){
+      const key = adminKey();
+      if(!key) return alert("Ingresa la clave de administrador.");
+
+      if(!confirm("¿Marcar como VALIDADO este folio?\n\n" + folio)) return;
+
+      const url = APPS_SCRIPT_WEBAPP + "?action=validate&key=" + encodeURIComponent(key) + "&folio=" + encodeURIComponent(folio);
+      try{
+        const res = await jsonp(url);
+        if(!res || !res.ok) throw new Error(res?.error || "No se pudo validar");
+
+        // Quita de pendientes
+        pending = pending.filter(x => (x.folio||x.id) !== folio);
+        renderPending();
+        toast("Validado ✅");
+
+      }catch(e){
+        alert("No se pudo validar. Revisa el endpoint en Apps Script y la clave.");
+      }
+    }
+
+    async function adminRefreshValidated(){
+      // Esta función asume que Apps Script puede devolver validadas (opcional)
+      const url = APPS_SCRIPT_WEBAPP + "?action=validated";
+      try{
+        const res = await jsonp(url);
+        if(!res || !res.ok) throw new Error(res?.error || "No se pudo refrescar");
+        if(Array.isArray(res.items)){
+          validated = res.items;
+          renderAll();
+          toast("Validadas actualizadas ✅");
+        }else{
+          alert("Respuesta inválida: no se encontró items[]");
+        }
+      }catch(e){
+        alert("No se pudo refrescar validadas desde Apps Script. Si usas validations.json, actualízalo manualmente.");
+      }
+    }
+
+    async function adminDownloadValidatedJson(){
+      // Si Apps Script provee validadas, se descarga el JSON desde ahí.
+      const url = APPS_SCRIPT_WEBAPP + "?action=validated";
+      try{
+        const res = await jsonp(url);
+        if(!res || !res.ok) throw new Error(res?.error || "No se pudo obtener validadas");
+        const items = Array.isArray(res.items) ? res.items : [];
+        const blob = new Blob([JSON.stringify(items, null, 2)], {type:"application/json"});
+        const a = document.createElement("a");
+        a.href = URL.createObjectURL(blob);
+        a.download = "validations.json";
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        toast("Descarga lista ✅");
+      }catch(e){
+        alert("No se pudo descargar. Si no tienes action=validated, usa tu archivo local validations.json.");
+      }
+    }
+
+    // Inicialización
+    function initAdminMode(){
+      if(isAdminRoute()){
+        document.body.classList.add("is-admin");
+        setAdminStatus();
+      }else{
+        document.body.classList.remove("is-admin");
+      }
+    }
+
+    window.addEventListener("hashchange", initAdminMode);
+
     document.getElementById("year").textContent = new Date().getFullYear();
+    initAdminMode();
     loadValidated();
   </script>
 </body>
