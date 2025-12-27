@@ -1,0 +1,351 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Apoyemos a Panda | Donaciones</title>
+  <meta name="description" content="Apoyo para tratamiento. Donaciones seguras vía GoFundMe." />
+
+  <!-- SEO/Share (GitHub Pages friendly) -->
+  <meta property="og:title" content="Apoyemos a nuestro amigo Panda" />
+  <meta property="og:description" content="Ayúdanos a apoyar su tratamiento. Donación segura vía GoFundMe." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/cover.webp" />
+
+  <style>
+    :root{
+      --bg:#0f2f2a;
+      --glass: rgba(255,255,255,.08);
+      --glass2: rgba(0,0,0,.18);
+      --border: rgba(255,255,255,.14);
+      --text:#ffffff;
+      --muted: rgba(255,255,255,.82);
+      --accent:#b9f36b;
+      --radius:18px;
+      --max:1060px;
+      --shadow: 0 18px 40px rgba(0,0,0,.30);
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(1200px 800px at 50% 0%, rgba(185,243,107,.18), transparent 60%),
+        var(--bg);
+      overflow-x:hidden;
+    }
+
+    /* Subtle animated background glow */
+    .bgGlow{
+      position:fixed;
+      inset:-200px;
+      background:
+        radial-gradient(700px 500px at 20% 10%, rgba(185,243,107,.14), transparent 60%),
+        radial-gradient(600px 500px at 80% 0%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(700px 550px at 70% 90%, rgba(185,243,107,.10), transparent 60%);
+      filter: blur(30px);
+      animation: floatGlow 14s ease-in-out infinite;
+      pointer-events:none;
+      z-index:-1;
+    }
+    @keyframes floatGlow{
+      0%,100%{ transform: translate3d(0,0,0) scale(1); opacity:.9;}
+      50%{ transform: translate3d(0,-14px,0) scale(1.02); opacity:1;}
+    }
+
+    .wrap{max-width:var(--max);margin:0 auto;padding:26px 18px 70px;}
+
+    /* Top */
+    .top{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      margin-bottom:16px;
+
+      opacity:0;
+      transform: translateY(10px);
+      animation: enter .7s ease forwards;
+    }
+    @keyframes enter{
+      to{opacity:1; transform: translateY(0);}
+    }
+
+    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
+    .dot{width:10px;height:10px;border-radius:50%;background:var(--accent); box-shadow: 0 0 0 6px rgba(185,243,107,.12)}
+    .pill{
+      border:1px solid rgba(255,255,255,.22);
+      padding:8px 12px;border-radius:999px;font-size:13px;opacity:.95;
+      background: rgba(255,255,255,.04);
+    }
+
+    /* Layout */
+    .layout{
+      display:grid;
+      grid-template-columns: 1.18fr .82fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    @media(max-width:920px){.layout{grid-template-columns:1fr}}
+
+    .card{
+      background:var(--glass);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      padding:16px;
+      backdrop-filter: blur(10px);
+      box-shadow: var(--shadow);
+    }
+
+    /* Hero Image with gentle hover */
+    .heroImg{
+      width:100%;
+      aspect-ratio: 16/10;
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.14);
+      overflow:hidden;
+      background: rgba(0,0,0,.20);
+      position:relative;
+      transform: translateZ(0);
+    }
+    .heroImg::after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(0,0,0,.15), rgba(0,0,0,.35));
+      pointer-events:none;
+      opacity:.9;
+    }
+    .heroImg img{
+      width:100%; height:100%;
+      object-fit:cover;
+      display:block;
+      transform: scale(1.03);
+      filter: saturate(1.03) contrast(1.02);
+      transition: transform .9s cubic-bezier(.2,.8,.2,1);
+    }
+    .heroImg:hover img{ transform: scale(1.08); }
+
+    /* Titles */
+    .title{
+      font-size:42px;
+      line-height:1.05;
+      margin:12px 0 10px;
+      letter-spacing:-.9px;
+    }
+    @media(max-width:520px){.title{font-size:32px}}
+
+    .subtitle{
+      font-size:16px;
+      line-height:1.7;
+      margin:0 0 14px;
+      color:var(--muted);
+    }
+
+    /* Buttons */
+    .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+    .btn{
+      display:inline-flex;align-items:center;justify-content:center;
+      padding:12px 14px;border-radius:12px;text-decoration:none;
+      font-weight:850;border:0;cursor:pointer;
+      transition: transform .18s ease, filter .18s ease;
+      user-select:none;
+    }
+    .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
+    .btn:active{ transform: translateY(0px) scale(.99); }
+
+    .btn.primary{background:var(--accent);color:#0b0b0b}
+    .btn.secondary{
+      background:transparent;color:#fff;
+      border:1px solid rgba(255,255,255,.25);font-weight:650;
+    }
+
+    /* KPI */
+    .mini{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:10px;
+      margin-top:14px;
+    }
+    @media(max-width:920px){.mini{grid-template-columns:1fr}}
+
+    .miniBox{
+      background:var(--glass2);
+      border:1px solid rgba(255,255,255,.14);
+      border-radius:16px;
+      padding:12px;
+      transform: translateY(6px);
+      opacity:0;
+      animation: rise .7s ease forwards;
+    }
+    .miniBox:nth-child(1){animation-delay:.05s}
+    .miniBox:nth-child(2){animation-delay:.12s}
+    .miniBox:nth-child(3){animation-delay:.19s}
+    @keyframes rise{
+      to{transform: translateY(0); opacity:1;}
+    }
+    .miniBox b{display:block;font-size:14px;margin-bottom:6px}
+    .miniBox span{font-size:13px;opacity:.9;line-height:1.4}
+
+    .sideTitle{font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.9;margin:0 0 10px}
+    .shareRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
+
+    .linkBox{
+      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
+      padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);
+      background:rgba(0,0,0,.16);
+    }
+    input{
+      flex:1;min-width:220px;
+      padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);
+      background:rgba(255,255,255,.06);
+      color:#fff;font-size:14px;
+      outline:none;
+    }
+
+    /* White section */
+    .white{
+      margin-top:16px;
+      background:#fff;color:#0b0b0b;border-radius:var(--radius);
+      padding:18px;box-shadow: var(--shadow);
+      border:1px solid rgba(0,0,0,.06);
+
+      opacity:0;
+      transform: translateY(12px);
+      transition: opacity .7s ease, transform .7s ease;
+    }
+    .white.reveal{ opacity:1; transform: translateY(0); }
+
+    h2{margin:0 0 10px;font-size:20px}
+    p{margin:0 0 10px;line-height:1.75}
+    .mutedB{color:#555}
+    .list{margin:10px 0 0;padding-left:18px;line-height:1.75}
+    .footer{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:14px}
+    .copy{font-size:12px;color:#666}
+
+    /* Small fade in for cards */
+    .fadeUp{
+      opacity:0;
+      transform: translateY(10px);
+      animation: enter .7s ease forwards;
+    }
+    .fadeUp.delay1{animation-delay:.05s}
+    .fadeUp.delay2{animation-delay:.12s}
+  </style>
+</head>
+
+<body>
+  <div class="bgGlow"></div>
+
+  <div class="wrap">
+    <div class="top">
+      <div class="brand"><span class="dot"></span> Donaciones para tratamiento</div>
+      <div class="pill">Donación segura vía GoFundMe</div>
+    </div>
+
+    <div class="layout">
+      <!-- IZQUIERDA -->
+      <div class="card fadeUp delay1">
+        <div class="heroImg">
+          <!-- RUTA GITHUB PAGES -->
+          <img src="assets/cover.jpg" alt="Foto de Panda" />
+        </div>
+
+        <h1 class="title">Apoyemos a nuestro amigo Panda</h1>
+        <p class="subtitle">
+          Estamos recaudando fondos para apoyar su tratamiento médico.
+          Tu ayuda —donando o compartiendo— hace una diferencia real.
+        </p>
+
+        <div class="cta">
+          <a class="btn primary" href="https://gofund.me/246906993" target="_blank" rel="noopener">Donar ahora</a>
+          <a class="btn secondary" href="#historia">Historia</a>
+          <a class="btn secondary" href="#compartir">Compartir</a>
+        </div>
+
+        <div class="mini">
+          <div class="miniBox"><b>Meta</b><span>$500,000 MXN</span></div>
+          <div class="miniBox"><b>Recaudación</b><span>Actualizada en GoFundMe</span></div>
+          <div class="miniBox"><b>Transparencia</b><span>Actualizaciones periódicas</span></div>
+        </div>
+      </div>
+
+      <!-- DERECHA -->
+      <div class="card fadeUp delay2">
+        <p class="sideTitle">Link oficial</p>
+        <div class="linkBox">
+          <input id="fundLink" value="https://gofund.me/246906993" readonly />
+          <button class="btn primary" style="padding:10px 12px;" onclick="copyLink()">Copiar</button>
+        </div>
+
+        <p class="sideTitle" id="compartir" style="margin-top:14px;">Compartir</p>
+        <div class="shareRow">
+          <a class="btn secondary" id="wa" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn secondary" id="fb" target="_blank" rel="noopener">Facebook</a>
+          <a class="btn secondary" id="x" target="_blank" rel="noopener">X</a>
+        </div>
+
+        <p class="subtitle" style="margin-top:14px; margin-bottom:0;">
+          Si no puedes donar, compartir el enlace ayuda muchísimo.
+        </p>
+      </div>
+    </div>
+
+    <div class="white" id="historia">
+      <h2>Historia</h2>
+      <p class="mutedB">
+        En 2022 se le detectó un tumor y posteriormente se confirmó cáncer con metástasis.
+        El tratamiento se ha elevado considerablemente y hoy necesitamos apoyo para cubrir
+        consultas, estudios, medicamentos y traslados.
+      </p>
+      <p class="mutedB">
+        Panda se mantiene fuerte y estable, enfrentando la situación con mucha valentía.
+        Gracias por sumar con tu donación o compartiendo el enlace.
+      </p>
+
+      <h2 style="margin-top:14px;">¿En qué se usará la ayuda?</h2>
+      <ul class="list">
+        <li>Tratamiento y consultas</li>
+        <li>Estudios y seguimiento</li>
+        <li>Medicamentos</li>
+        <li>Traslados y logística médica</li>
+      </ul>
+
+      <div class="footer">
+        <a class="btn primary" href="https://gofund.me/246906993" target="_blank" rel="noopener">Donar ahora</a>
+        <div class="copy">Gracias por apoyar 🤍</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const fund = "https://gofund.me/246906993";
+    const msg = encodeURIComponent("Ayúdanos a apoyar el tratamiento de Panda. Donación segura aquí: " + fund);
+
+    document.getElementById("wa").href = "https://wa.me/?text=" + msg;
+    document.getElementById("fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(fund);
+    document.getElementById("x").href = "https://twitter.com/intent/tweet?text=" + msg;
+
+    function copyLink(){
+      const el = document.getElementById("fundLink");
+      el.select(); el.setSelectionRange(0, 99999);
+      navigator.clipboard.writeText(el.value)
+        .then(()=> alert("Link copiado ✅"))
+        .catch(()=> alert("No se pudo copiar. Copia manualmente el link."));
+    }
+
+    // Reveal animation for the white section when it enters viewport
+    const target = document.querySelector(".white");
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{
+        if(e.isIntersecting){
+          target.classList.add("reveal");
+          io.disconnect();
+        }
+      });
+    }, {threshold: 0.15});
+    io.observe(target);
+  </script>
+</body>
+</html>
