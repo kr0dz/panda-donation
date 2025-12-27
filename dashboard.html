@@ -9,19 +9,28 @@
     body{background:#f6f7fb}
     .card{border-radius:16px}
     .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace}
+    .hidden{display:none !important}
+    .winnerBox{
+      border:1px dashed rgba(13,110,253,.35);
+      background:rgba(13,110,253,.04);
+      border-radius:14px;
+      padding:12px;
+    }
   </style>
 </head>
+
 <body class="py-4">
   <main class="container" style="max-width:1100px;">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div>
         <h1 class="h4 mb-1" style="font-weight:800;">Dashboard — Rifa Panda</h1>
-        <div class="text-secondary">Validación de donaciones + ranking</div>
+        <div class="text-secondary">Validación + ranking + sorteo (solo admin)</div>
       </div>
       <button class="btn btn-outline-secondary btn-sm" onclick="logout()">Salir</button>
     </div>
 
-    <div class="card p-3 mb-3">
+    <!-- LOCK / TOKEN -->
+    <div class="card p-3 mb-3" id="cardToken">
       <div class="row g-2 align-items-end">
         <div class="col-md-8">
           <label class="form-label">Admin token</label>
@@ -32,258 +41,114 @@
         </div>
       </div>
       <div class="small text-secondary mt-2">
-        Este panel requiere token. Configúralo en Apps Script → Script Properties (ej. ADMIN_TOKEN).
+        Este panel requiere token. Configúralo en Apps Script → Script Properties (ej. <b>ADMIN_TOKEN</b>).
       </div>
     </div>
 
-    <div class="row g-3">
-      <div class="col-lg-7">
-        <div class="card p-3">
-          <div class="d-flex justify-content-between align-items-center">
-            <h2 class="h5 mb-0" style="font-weight:800;">Pendientes</h2>
-            <button class="btn btn-outline-primary btn-sm" onclick="loadPending()">Actualizar</button>
+    <!-- MAIN ADMIN UI (HIDDEN UNTIL TOKEN) -->
+    <section id="adminUI" class="hidden">
+      <div class="row g-3">
+        <div class="col-lg-7">
+          <div class="card p-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="h5 mb-0" style="font-weight:800;">Pendientes</h2>
+              <button class="btn btn-outline-primary btn-sm" onclick="refreshAll()">Actualizar todo</button>
+            </div>
+
+            <div class="table-responsive mt-3">
+              <table class="table align-middle">
+                <thead>
+                  <tr class="text-secondary">
+                    <th>Folio</th>
+                    <th>Nombre</th>
+                    <th>Monto</th>
+                    <th>Boletos</th>
+                    <th>Fecha</th>
+                    <th class="text-end">Acción</th>
+                  </tr>
+                </thead>
+                <tbody id="pendingBody"></tbody>
+              </table>
+            </div>
+
+            <div class="text-secondary small">
+              “Validar” marca el registro como VALIDADO y publica el nombre abreviado (publicName).
+            </div>
           </div>
 
-          <div class="table-responsive mt-3">
-            <table class="table align-middle">
-              <thead>
-                <tr class="text-secondary">
-                  <th>Folio</th>
-                  <th>Nombre</th>
-                  <th>Monto</th>
-                  <th>Boletos</th>
-                  <th>Fecha</th>
-                  <th class="text-end">Acción</th>
-                </tr>
-              </thead>
-              <tbody id="pendingBody"></tbody>
-            </table>
+          <!-- SORTEO (ADMIN) -->
+          <div class="card p-3 mt-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="h5 mb-0" style="font-weight:800;">Sorteo (ponderado por boletos)</h2>
+              <button class="btn btn-outline-primary btn-sm" onclick="loadValidated()">Refrescar validadas</button>
+            </div>
+
+            <div class="text-secondary small mt-2">
+              Recomendación: ejecutar en vivo con pantalla grabada. El resultado incluye huella para auditoría básica.
+            </div>
+
+            <div class="mt-3">
+              <div class="row g-2">
+                <div class="col-md-4">
+                  <div class="text-secondary small">Participantes</div>
+                  <div class="h5 mb-0" style="font-weight:800" id="participantsCount">0</div>
+                </div>
+                <div class="col-md-4">
+                  <div class="text-secondary small">Total boletos</div>
+                  <div class="h5 mb-0" style="font-weight:800" id="ticketsTotal">0</div>
+                </div>
+                <div class="col-md-4">
+                  <div class="text-secondary small">Modo</div>
+                  <div class="h6 mb-0" style="font-weight:800">Ponderado</div>
+                </div>
+              </div>
+
+              <div class="d-flex gap-2 flex-wrap mt-3">
+                <button class="btn btn-primary" onclick="drawWinner()">Elegir ganador</button>
+                <button class="btn btn-outline-primary" onclick="copyResult()">Copiar resultado</button>
+                <button class="btn btn-outline-secondary" onclick="resetResult()">Reiniciar</button>
+              </div>
+
+              <div class="winnerBox mt-3" id="winnerBox">
+                <div class="text-secondary small mb-1">Resultado</div>
+                <div class="text-secondary mb-0">Aún no se ha realizado el sorteo.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-lg-5">
+          <div class="card p-3">
+            <div class="d-flex justify-content-between align-items-center">
+              <h2 class="h5 mb-0" style="font-weight:800;">Top donadores</h2>
+              <button class="btn btn-outline-primary btn-sm" onclick="loadRanking()">Actualizar</button>
+            </div>
+            <div class="mt-3" id="ranking"></div>
           </div>
 
-          <div class="text-secondary small">
-            “Validar” mueve el registro a “Validada” (o cambia estado) y recalcula boletos si hiciera falta.
+          <div class="card p-3 mt-3">
+            <h2 class="h6 mb-2" style="font-weight:800;">Web App (BASE)</h2>
+            <input id="webapp" class="form-control mono" placeholder="Pega aquí tu URL base /exec (sin ?action=...)">
+            <div class="small text-secondary mt-2">
+              Debe terminar en <b>/exec</b>. Ej: https://script.google.com/macros/s/XXXX/exec
+            </div>
+            <div class="d-grid mt-2">
+              <button class="btn btn-outline-secondary btn-sm" onclick="saveWebapp()">Guardar URL</button>
+            </div>
           </div>
+
+          <div class="card p-3 mt-3">
+            <h2 class="h6 mb-2" style="font-weight:800;">Tips</h2>
+            <div class="text-secondary small" style="line-height:1.55">
+              • Si <b>ranking</b> falla en backend, este dashboard lo calcula con validadas.<br>
+              • Si ves boletos en 0, el dashboard recalcula como <b>floor(monto/500)</b>.<br>
+              • Si “pending” falla, casi siempre es token incorrecto o endpoint incorrecto.
+            </div>
+          </div>
+
         </div>
       </div>
-
-      <div class="col-lg-5">
-        <div class="card p-3">
-          <div class="d-flex justify-content-between align-items-center">
-            <h2 class="h5 mb-0" style="font-weight:800;">Top donadores</h2>
-            <button class="btn btn-outline-primary btn-sm" onclick="loadRanking()">Actualizar</button>
-          </div>
-          <div class="mt-3" id="ranking"></div>
-        </div>
-
-        <div class="card p-3 mt-3">
-          <h2 class="h6 mb-2" style="font-weight:800;">Web App (BASE)</h2>
-          <input id="webapp" class="form-control mono" placeholder="Pega aquí tu URL base /exec (sin ?action=...)">
-          <div class="small text-secondary mt-2">
-            Debe terminar en <b>/exec</b>. Ej: https://script.google.com/macros/s/XXXX/exec
-          </div>
-        </div>
-      </div>
-    </div>
+    </section>
   </main>
-
-  <script>
-    // === CONFIG ===
-    // IMPORTANTE: URL BASE sin params (sin ?action=...)
-    const DEFAULT_WEBAPP_BASE = "https://script.google.com/macros/s/AKfycbzdvpnb3-JtRcVoK4Z2BdDNnfafj-i2RaqIdmkMPky8qpgbo22kdGRGpplMqeSaGkWG/exec";
-
-    const mxn = (n)=> Number(n||0).toLocaleString("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
-    const esc = (s)=> String(s).replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
-
-    function getWebappBase(){
-      const v = (document.getElementById("webapp").value.trim() || DEFAULT_WEBAPP_BASE).trim();
-      if(!v) throw new Error("Configura la URL BASE del Web App.");
-      if(v.includes("?")) throw new Error("Pega la URL BASE sin parámetros (sin ?action=...).");
-      return v;
-    }
-
-    function getToken(){
-      return localStorage.getItem("ADMIN_TOKEN") || "";
-    }
-
-    function saveToken(){
-      const t = document.getElementById("token").value.trim();
-      if(!t) return alert("Pega tu ADMIN_TOKEN.");
-      localStorage.setItem("ADMIN_TOKEN", t);
-      alert("Token guardado.");
-      loadPending();
-      loadRanking();
-    }
-
-    function logout(){
-      localStorage.removeItem("ADMIN_TOKEN");
-      location.reload();
-    }
-
-    // === JSONP helper ===
-    function jsonp(url){
-      return new Promise((resolve, reject)=>{
-        const cb = "cb_" + Math.random().toString(36).slice(2);
-        const s = document.createElement("script");
-        const timer = setTimeout(()=>{
-          cleanup();
-          reject(new Error("timeout"));
-        }, 15000);
-
-        function cleanup(){
-          clearTimeout(timer);
-          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
-          s.remove();
-        }
-
-        window[cb] = (data)=>{
-          cleanup();
-          resolve(data);
-        };
-
-        const sep = url.includes("?") ? "&" : "?";
-        s.src = url + sep + "callback=" + encodeURIComponent(cb);
-        s.onerror = ()=>{
-          cleanup();
-          reject(new Error("script error"));
-        };
-
-        document.body.appendChild(s);
-      });
-    }
-
-    function buildUrl(params){
-      const base = getWebappBase();
-      const u = new URL(base);
-      Object.entries(params).forEach(([k,v])=>{
-        if(v !== undefined && v !== null && String(v).length) u.searchParams.set(k, String(v));
-      });
-      // NO ponemos callback aquí; jsonp() lo agrega solo.
-      return u.toString();
-    }
-
-    async function loadPending(){
-      const token = getToken();
-      if(!token) return alert("Primero guarda tu ADMIN_TOKEN.");
-
-      try{
-        // OJO: tu Apps Script actual usa key=... (no token=...)
-        const url = buildUrl({ action:"pending", key: token });
-        const data = await jsonp(url);
-
-        if(!data || !data.ok) throw new Error(data?.error || "No se pudo cargar pendientes");
-        renderPending(Array.isArray(data.items) ? data.items : (data.rows || []));
-      }catch(e){
-        alert("Pendientes: " + e.message);
-      }
-    }
-
-    function renderPending(rows){
-      const tb = document.getElementById("pendingBody");
-      tb.innerHTML = "";
-
-      if(!rows.length){
-        tb.innerHTML = `<tr><td colspan="6" class="text-secondary">No hay pendientes.</td></tr>`;
-        return;
-      }
-
-      rows.forEach(r=>{
-        // Soporta r.nombre o r.name (según tu backend)
-        const folio = r.folio || r.id || "-";
-        const nombre = r.nombre || r.name || "-";
-        const monto = r.monto_mxn ?? r.amount ?? 0;
-        const boletos = r.boletos ?? r.tickets ?? 0;
-        const ts = r.timestamp || r.date || "";
-
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td class="mono"><b>${esc(folio)}</b></td>
-          <td>${esc(nombre)}</td>
-          <td><b>${mxn(monto)}</b></td>
-          <td>${Number(boletos||0)}</td>
-          <td class="text-secondary small">${esc(ts)}</td>
-          <td class="text-end">
-            <button class="btn btn-success btn-sm" onclick="validateFolio('${esc(folio).replace(/'/g,"&#039;")}', '${esc(nombre).replace(/'/g,"&#039;")}')">
-              Validar
-            </button>
-          </td>
-        `;
-        tb.appendChild(tr);
-      });
-    }
-
-    async function validateFolio(folio, fullName){
-      const token = getToken();
-      if(!token) return alert("Sin token.");
-
-      const publicName = prompt("Nombre público (ej. “Luis G.”).", abbreviate(fullName));
-      if(!publicName) return;
-
-      try{
-        const url = buildUrl({
-          action:"validate",
-          key: token,
-          folio: folio,
-          publicName: publicName.trim()
-        });
-
-        const data = await jsonp(url);
-        if(!data || !data.ok) throw new Error(data?.error || "No se pudo validar");
-
-        alert("Validado ✅");
-        await loadPending();
-        await loadRanking();
-      }catch(e){
-        alert("Validar: " + e.message);
-      }
-    }
-
-    function abbreviate(full){
-      const p = String(full||"").trim().split(/\s+/).filter(Boolean);
-      if(p.length <= 1) return full || "";
-      return `${p[0]} ${p[1][0].toUpperCase()}.`;
-    }
-
-    async function loadRanking(){
-      try{
-        // Si tu backend implementa action=ranking
-        // Si NO lo implementa, dime y lo calculamos aquí a partir de action=validated
-        const url = buildUrl({ action:"ranking" });
-        const data = await jsonp(url);
-
-        if(!data || !data.ok) throw new Error(data?.error || "No se pudo cargar ranking");
-        renderRanking(Array.isArray(data.top) ? data.top : []);
-      }catch(e){
-        document.getElementById("ranking").innerHTML =
-          `<div class="text-secondary">No se pudo cargar ranking.</div>`;
-      }
-    }
-
-    function renderRanking(list){
-      if(!list.length){
-        document.getElementById("ranking").innerHTML =
-          `<div class="text-secondary">Aún no hay donaciones validadas.</div>`;
-        return;
-      }
-      const html = `
-        <ol class="mb-0">
-          ${list.map(x=>`
-            <li class="mb-2">
-              <div style="font-weight:800;">${esc(x.name || x.nombre || "—")}</div>
-              <div class="text-secondary small">Total: <b>${mxn(x.amount ?? x.monto ?? 0)}</b> · Boletos: <b>${Number(x.tickets ?? x.boletos ?? 0)}</b></div>
-            </li>
-          `).join("")}
-        </ol>
-      `;
-      document.getElementById("ranking").innerHTML = html;
-    }
-
-    // init
-    document.getElementById("webapp").value = DEFAULT_WEBAPP_BASE;
-    document.getElementById("token").value = getToken();
-    if(getToken()){
-      loadPending();
-      loadRanking();
-    }
-  </script>
 </body>
 </html>
