@@ -17,7 +17,6 @@ async function bootPartials() {
   await loadHTML("#mount-premios", "./sections/premios.html");
   await loadHTML("#mount-reglas", "./sections/reglas.html");
   await loadHTML("#mount-top", "./sections/top.html");
-  await loadHTML("#mount-validadas", "./sections/validadas.html");
   await loadHTML("#mount-share", "./sections/share.html");
 
   // Footer + Modal
