@@ -450,7 +450,7 @@
               <div class="soft p-3 h-100">
                 <div class="muted small mb-2"><b>¿Cómo se calcula?</b></div>
                 <ul class="mb-0 small" style="line-height:1.8">
-                  <li>Se suman montos por nombre (recomendado: abreviado, ej. “Luis G.”).</li>
+                  <li>Se suman montos por nombre (recomendado: abreviar, ej. “Luis G.”).</li>
                   <li>Los boletos provienen de donaciones validadas.</li>
                   <li>Si hay varias donaciones del mismo nombre, se acumulan.</li>
                 </ul>
@@ -741,8 +741,8 @@
     // Lista pública (validadas)
     const VALIDATIONS_JSON_PATH = "data/validations.json";
 
-    // Apps Script WebApp
-    const APPS_SCRIPT_WEBAPP = "https://script.google.com/macros/s/AKfycby1PPxBNqCZbz1YKed_H2LeU8Djzwgfw7LQH_1nAPPymJIsOiwH9IpfUMDr4EF4EOow/exec";
+    // ✅ NUEVO Apps Script WebApp
+    const APPS_SCRIPT_WEBAPP = "https://script.google.com/macros/s/AKfycbwi24Y6Ob6bwrOeak2sCo8PwVrZHeC34brctR2sHG4IIhVnfPrjAWKnLU9ZIOWwT0rV/exec";
 
     // URL del sitio (si se deja vacío, se usa la actual)
     const SITE_URL = "";
@@ -755,7 +755,10 @@
     const ADMIN_KEY_STORAGE = "panda_admin_key";
     const isAdminRoute = ()=> (location.hash || "").toLowerCase().includes("admin");
 
-    const mxn = (n)=> n.toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
+    // Anti doble-envío
+    let __submitting = false;
+
+    const mxn = (n)=> Number(n||0).toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
     const clamp = (v,min,max)=> Math.min(max, Math.max(min,v));
 
     function escapeHtml(s){
@@ -790,13 +793,32 @@
       copyText(document.getElementById("shareLink").value);
     }
 
+    function normalizeValidatedRow(row){
+      const amount = Number(row.amount ?? row.monto ?? row.monto_mxn ?? 0) || 0;
+      let tickets = Number(row.tickets ?? row.boletos ?? 0) || 0;
+
+      // ✅ Si vienen en 0 o faltan, se calculan
+      if(!tickets && amount >= TICKET_PRICE){
+        tickets = Math.floor(amount / TICKET_PRICE);
+      }
+
+      return {
+        id: row.id ?? row.folio ?? "-",
+        name: row.name ?? row.nombre ?? "-",
+        amount,
+        tickets,
+        date: row.date ?? row.fecha ?? "",
+        status: row.status ?? row.estado ?? "Validado"
+      };
+    }
+
     async function loadValidated(){
       try{
         const res = await fetch(VALIDATIONS_JSON_PATH, {cache:"no-store"});
         if(!res.ok) throw new Error("No validations.json");
         const data = await res.json();
         if(!Array.isArray(data)) throw new Error("JSON debe ser array");
-        validated = data;
+        validated = data.map(normalizeValidatedRow);
       }catch(e){
         validated = [];
       }
@@ -804,7 +826,6 @@
     }
 
     function computeTopDonors(list){
-      // Agrupa por nombre tal cual viene en validations.json (recomendado: abreviar)
       const map = new Map();
       for(const row of list){
         const name = (row.name || "").trim() || "Anónimo";
@@ -835,7 +856,7 @@
           <td><b>${i+1}</b></td>
           <td>${escapeHtml(x.name)}</td>
           <td><b>${mxn(x.amount)}</b></td>
-          <td>${x.tickets.toLocaleString("es-MX")}</td>
+          <td>${Number(x.tickets||0).toLocaleString("es-MX")}</td>
         `;
         tbody.appendChild(tr);
       });
@@ -861,7 +882,7 @@
 
       validated
         .slice()
-        .sort((a,b)=> (String(b.date||"")).localeCompare(String(a.date||"")))
+        .sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")))
         .forEach(row=>{
           const tr = document.createElement("tr");
           tr.innerHTML = `
@@ -919,8 +940,17 @@
       });
     }
 
-    // --- Registro público a Google Sheets vía JSONP (ya funciona) ---
+    function makeDedupeKey(){
+      // ✅ Esto evita duplicados incluso si el usuario da doble click o el navegador reintenta
+      if (crypto && crypto.randomUUID) return crypto.randomUUID();
+      return "k_" + Date.now() + "_" + Math.random().toString(16).slice(2);
+    }
+
+    // --- Registro público a Google Sheets vía JSONP ---
     async function submitRegistration(){
+      if(__submitting) return; // ✅ anti doble click
+      __submitting = true;
+
       const name = document.getElementById("fName").value.trim();
       const whatsapp = document.getElementById("fWhatsapp").value.trim();
       const email = document.getElementById("fEmail").value.trim();
@@ -928,22 +958,25 @@
       const note = document.getElementById("fNote").value.trim();
       const ok = document.getElementById("fOk").checked;
 
-      if(!name || !amountRaw) return alert("Completa nombre y monto.");
-      if(!ok) return alert("Confirma que enviarás evidencia por WhatsApp o correo.");
+      if(!name || !amountRaw){ __submitting=false; return alert("Completa nombre y monto."); }
+      if(!ok){ __submitting=false; return alert("Confirma que enviarás evidencia por WhatsApp o correo."); }
 
       const amount = Number(String(amountRaw).replace(/[^\d.]/g,"")) || 0;
-      if(amount < TICKET_PRICE) return alert("El monto mínimo para 1 boleto es $500 MXN.");
+      if(amount < TICKET_PRICE){ __submitting=false; return alert("El monto mínimo para 1 boleto es $500 MXN."); }
 
       const btn = document.getElementById("btnSend");
       btn.disabled = true;
       btn.textContent = "Registrando...";
+
+      const dedupeKey = makeDedupeKey();
 
       const qs =
         "name=" + encodeURIComponent(name) +
         "&whatsapp=" + encodeURIComponent(whatsapp) +
         "&email=" + encodeURIComponent(email) +
         "&amount=" + encodeURIComponent(String(amount)) +
-        "&note=" + encodeURIComponent(note);
+        "&note=" + encodeURIComponent(note) +
+        "&dedupe_key=" + encodeURIComponent(dedupeKey);
 
       const url = APPS_SCRIPT_WEBAPP + "?" + qs;
 
@@ -991,6 +1024,7 @@ Incluye tu folio en el mensaje.`;
       }finally{
         btn.disabled = false;
         btn.textContent = "Registrar";
+        __submitting = false;
       }
     }
 
@@ -1024,12 +1058,14 @@ Incluye tu folio en el mensaje.`;
     function drawWinner(){
       if(!validated.length) return alert("Aún no hay donaciones validadas publicadas.");
 
+      // ✅ pool ponderado, pero usando tickets calculados (si vienen en 0)
       const pool = [];
       validated.forEach(p=>{
         const t = Number(p.tickets)||0;
         for(let i=0;i<t;i++) pool.push(p);
       });
-      if(!pool.length) return alert("No hay boletos asignados (tickets=0).");
+
+      if(!pool.length) return alert("No hay boletos asignados (tickets=0). Asegúrate de que validations.json tenga amount o tickets.");
 
       const idx = cryptoRandomInt(0, pool.length - 1);
       const w = pool[idx];
@@ -1088,7 +1124,7 @@ Huella: ${r.hash}`;
     function setAdminStatus(){
       const el = document.getElementById("adminStatus");
       const key = adminKey();
-      el.textContent = key ? "Estado: autenticado" : "Estado: no autenticado";
+      el.textContent = key ? "Estado: autenticado (clave guardada en este navegador)" : "Estado: no autenticado";
     }
     function adminLogin(){
       const key = prompt("Ingresa la clave de administrador:");
@@ -1130,9 +1166,9 @@ Huella: ${r.hash}`;
 
       pending.forEach(row=>{
         const folio = row.folio || row.id || "-";
-        const name = row.name || "-";
-        const amount = Number(row.amount)||0;
-        const tickets = Number(row.tickets)||0;
+        const name = row.name || row.nombre || "-";
+        const amount = Number(row.amount ?? row.monto ?? row.monto_mxn ?? 0) || 0;
+        const tickets = Number(row.tickets ?? row.boletos ?? 0) || Math.floor(amount / TICKET_PRICE);
 
         const tr = document.createElement("tr");
         tr.innerHTML = `
@@ -1141,7 +1177,7 @@ Huella: ${r.hash}`;
           <td><b>${mxn(amount)}</b></td>
           <td>${tickets}</td>
           <td class="text-end">
-            <button class="btn btn-primary btn-sm" onclick="adminValidate('${escapeHtml(folio).replace(/'/g,"&#039;")}')">Validar</button>
+            <button class="btn btn-primary btn-sm" onclick="adminValidate('${String(folio).replace(/'/g,"&#039;")}')">Validar</button>
           </td>
         `;
         tbody.appendChild(tr);
@@ -1159,7 +1195,6 @@ Huella: ${r.hash}`;
         const res = await jsonp(url);
         if(!res || !res.ok) throw new Error(res?.error || "No se pudo validar");
 
-        // Quita de pendientes
         pending = pending.filter(x => (x.folio||x.id) !== folio);
         renderPending();
         toast("Validado ✅");
@@ -1170,13 +1205,12 @@ Huella: ${r.hash}`;
     }
 
     async function adminRefreshValidated(){
-      // Esta función asume que Apps Script puede devolver validadas (opcional)
       const url = APPS_SCRIPT_WEBAPP + "?action=validated";
       try{
         const res = await jsonp(url);
         if(!res || !res.ok) throw new Error(res?.error || "No se pudo refrescar");
         if(Array.isArray(res.items)){
-          validated = res.items;
+          validated = res.items.map(normalizeValidatedRow);
           renderAll();
           toast("Validadas actualizadas ✅");
         }else{
@@ -1188,7 +1222,6 @@ Huella: ${r.hash}`;
     }
 
     async function adminDownloadValidatedJson(){
-      // Si Apps Script provee validadas, se descarga el JSON desde ahí.
       const url = APPS_SCRIPT_WEBAPP + "?action=validated";
       try{
         const res = await jsonp(url);
