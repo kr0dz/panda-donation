@@ -1,0 +1,23 @@
+[
+  {
+    "id": "PANDA-001",
+    "name": "Ricardo R.",
+    "amount": 5000,
+    "date": "2026-01-02",
+    "status": "Validado"
+  },
+  {
+    "id": "PANDA-002",
+    "name": "Luis E. G.",
+    "amount": 3000,
+    "date": "2026-01-03",
+    "status": "Validado"
+  },
+  {
+    "id": "PANDA-003",
+    "name": "Yessica P. R.",
+    "amount": 5000,
+    "date": "2026-01-04",
+    "status": "Validado"
+  }
+]
