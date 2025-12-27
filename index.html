@@ -1,14 +1,17 @@
 <!doctype html>
 <html lang="es">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Rifa solidaria — Apoyemos a Panda</title>
-  <meta name="description" content="Rifa solidaria para apoyar a Panda. Participa con tu donación y entra al sorteo de estancias en hoteles." />
+  <meta name="description"
+    content="Rifa solidaria para apoyar a Panda. Participa con tu donación y entra al sorteo de estancias en hoteles." />
 
   <!-- Open Graph (WhatsApp/Facebook) -->
   <meta property="og:title" content="Rifa solidaria — Apoyemos a Panda" />
-  <meta property="og:description" content="1 boleto = $500 MXN. Premios: 2 noches Casa Azul, 2 noches Hotel Casa Morena, 1 noche en Guanajuato (por confirmar). Fechas: 14–15 febrero." />
+  <meta property="og:description"
+    content="1 boleto = $500 MXN. Premios: 2 noches Casa Azul, 2 noches Hotel Casa Morena, 1 noche en Guanajuato (por confirmar). Fechas: 14–15 febrero." />
   <meta property="og:type" content="website" />
   <meta property="og:image" content="https://kr0dz.github.io/panda-donation/assets/cover.webp" />
   <meta name="twitter:card" content="summary_large_image" />
@@ -19,163 +22,276 @@
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
 
   <style>
-    :root{
-      --bg0:#f7f8fb;
-      --bg1:#eef2ff;
-      --ink:#0b1220;
-      --muted:#51607a;
-      --line:#e6eaf2;
-      --card:#ffffff;
-      --primary:#1d4ed8;
-      --primary2:#153aa0;
-      --ok:#16a34a;
-      --warn:#f59e0b;
-      --radius:20px;
+    :root {
+      --bg0: #f7f8fb;
+      --bg1: #eef2ff;
+      --ink: #0b1220;
+      --muted: #51607a;
+      --line: #e6eaf2;
+      --card: #ffffff;
+      --primary: #1d4ed8;
+      --primary2: #153aa0;
+      --ok: #16a34a;
+      --warn: #f59e0b;
+      --radius: 20px;
       --shadow: 0 16px 50px rgba(15, 23, 42, .10);
     }
-    html{scroll-behavior:smooth}
-    body{
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
       font-family: "Plus Jakarta Sans", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
-      color:var(--ink);
+      color: var(--ink);
       background:
-        radial-gradient(1000px 600px at 15% 0%, rgba(29,78,216,.10), transparent 60%),
-        radial-gradient(900px 600px at 85% 0%, rgba(22,163,74,.06), transparent 60%),
+        radial-gradient(1000px 600px at 15% 0%, rgba(29, 78, 216, .10), transparent 60%),
+        radial-gradient(900px 600px at 85% 0%, rgba(22, 163, 74, .06), transparent 60%),
         linear-gradient(180deg, var(--bg1), var(--bg0));
     }
-    .container-xxl{max-width:1140px}
-    .cardX{
-      background:var(--card);
-      border:1px solid var(--line);
-      border-radius:var(--radius);
-      box-shadow:var(--shadow);
+
+    .container-xxl {
+      max-width: 1140px
     }
-    .soft{
-      border:1px solid var(--line);
+
+    .cardX {
+      background: var(--card);
+      border: 1px solid var(--line);
       border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,1), rgba(255,255,255,.82));
+      box-shadow: var(--shadow);
     }
-    .pill{
-      display:inline-flex; align-items:center; gap:.5rem;
-      padding:.45rem .75rem;
-      border:1px solid var(--line);
-      border-radius:999px;
-      background:#fff;
-      color:var(--muted);
-      font-size:.9rem;
-      white-space:nowrap;
+
+    .soft {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 1), rgba(255, 255, 255, .82));
     }
-    .dot{width:10px;height:10px;border-radius:999px;background:var(--ok)}
-    .muted{color:var(--muted)}
-    .title{
-      font-weight:900;
-      letter-spacing:-.03em;
-      line-height:1.05;
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      padding: .45rem .75rem;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: #fff;
+      color: var(--muted);
+      font-size: .9rem;
+      white-space: nowrap;
     }
-    .hero{
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--ok)
+    }
+
+    .muted {
+      color: var(--muted)
+    }
+
+    .title {
+      font-weight: 900;
+      letter-spacing: -.03em;
+      line-height: 1.05;
+    }
+
+    .hero {
       border-radius: 22px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:#0b1220;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0b1220;
       aspect-ratio: 16/10;
-      position:relative;
+      position: relative;
       transform: translateZ(0);
     }
-    .hero img{
-      width:100%; height:100%;
-      object-fit:cover;
-      display:block;
+
+    .hero img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
       transform: scale(1.02);
       filter: saturate(1.02) contrast(1.02);
-      transition: transform .8s cubic-bezier(.2,.8,.2,1);
+      transition: transform .8s cubic-bezier(.2, .8, .2, 1);
     }
-    .hero:hover img{transform: scale(1.06)}
-    .trustBadge{
-      position:absolute;
-      left:14px; bottom:14px;
-      display:flex; align-items:center; gap:.55rem;
-      background: rgba(255,255,255,.92);
-      border:1px solid rgba(230,234,242,.9);
-      border-radius:999px;
-      padding:.35rem .65rem;
-      font-size:.9rem;
-      color:var(--ink);
+
+    .hero:hover img {
+      transform: scale(1.06)
+    }
+
+    .trustBadge {
+      position: absolute;
+      left: 14px;
+      bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: .55rem;
+      background: rgba(255, 255, 255, .92);
+      border: 1px solid rgba(230, 234, 242, .9);
+      border-radius: 999px;
+      padding: .35rem .65rem;
+      font-size: .9rem;
+      color: var(--ink);
       backdrop-filter: blur(10px);
     }
-    .trustBadge svg{width:18px;height:18px}
-    .kpi{
-      border:1px solid var(--line);
+
+    .trustBadge svg {
+      width: 18px;
+      height: 18px
+    }
+
+    .kpi {
+      border: 1px solid var(--line);
       border-radius: 16px;
       padding: 14px;
-      background:#fff;
-      height:100%;
+      background: #fff;
+      height: 100%;
     }
-    .kpi .t{font-size:.86rem;color:var(--muted)}
-    .kpi .v{font-weight:900}
-    .btn-primary{
+
+    .kpi .t {
+      font-size: .86rem;
+      color: var(--muted)
+    }
+
+    .kpi .v {
+      font-weight: 900
+    }
+
+    .btn-primary {
       background: var(--primary);
       border-color: var(--primary);
-      font-weight:800;
+      font-weight: 800;
     }
-    .btn-primary:hover{background:var(--primary2); border-color:var(--primary2)}
-    .btn-outline-primary{
-      border-color: rgba(29,78,216,.30);
+
+    .btn-primary:hover {
+      background: var(--primary2);
+      border-color: var(--primary2)
+    }
+
+    .btn-outline-primary {
+      border-color: rgba(29, 78, 216, .30);
       color: var(--primary);
-      font-weight:800;
+      font-weight: 800;
     }
-    .btn-outline-primary:hover{
-      background: rgba(29,78,216,.07);
-      border-color: rgba(29,78,216,.45);
+
+    .btn-outline-primary:hover {
+      background: rgba(29, 78, 216, .07);
+      border-color: rgba(29, 78, 216, .45);
       color: var(--primary2);
     }
-    .divider{height:1px;background:var(--line); margin: 14px 0}
-    .prizeImg{
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 14px 0
+    }
+
+    .prizeImg {
       border-radius: 18px;
-      overflow:hidden;
-      border:1px solid var(--line);
-      background:#0b1220;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: #0b1220;
       aspect-ratio: 16/10;
     }
-    .prizeImg img{width:100%;height:100%;object-fit:cover;display:block}
-    .mono{font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;}
-    .small{font-size:.92rem}
-    .stickySide{position:sticky; top:16px}
-    .fadeUp{opacity:0; transform: translateY(10px); animation: fadeUp .7s ease forwards;}
-    .fadeUp.d1{animation-delay:.06s}
-    .fadeUp.d2{animation-delay:.12s}
-    .fadeUp.d3{animation-delay:.18s}
-    @keyframes fadeUp{to{opacity:1; transform: translateY(0)}}
-    .winnerBox{
-      border:1px dashed rgba(29,78,216,.35);
-      background: rgba(29,78,216,.04);
+
+    .prizeImg img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block
+    }
+
+    .mono {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    }
+
+    .small {
+      font-size: .92rem
+    }
+
+    .stickySide {
+      position: sticky;
+      top: 16px
+    }
+
+    .fadeUp {
+      opacity: 0;
+      transform: translateY(10px);
+      animation: fadeUp .7s ease forwards;
+    }
+
+    .fadeUp.d1 {
+      animation-delay: .06s
+    }
+
+    .fadeUp.d2 {
+      animation-delay: .12s
+    }
+
+    .fadeUp.d3 {
+      animation-delay: .18s
+    }
+
+    @keyframes fadeUp {
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .winnerBox {
+      border: 1px dashed rgba(29, 78, 216, .35);
+      background: rgba(29, 78, 216, .04);
       border-radius: 18px;
       padding: 14px;
     }
-    .table thead th{color:var(--muted); font-weight:700}
-    .chip{
-      display:inline-flex; align-items:center; gap:.4rem;
-      padding:.25rem .55rem;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:#fff;
-      font-weight:800;
-      font-size:.85rem;
-      color:var(--muted);
+
+    .table thead th {
+      color: var(--muted);
+      font-weight: 700
     }
-    .topbar{
-      border-bottom: 1px solid rgba(230,234,242,.7);
-      background: rgba(255,255,255,.65);
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      padding: .25rem .55rem;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      font-weight: 800;
+      font-size: .85rem;
+      color: var(--muted);
+    }
+
+    .topbar {
+      border-bottom: 1px solid rgba(230, 234, 242, .7);
+      background: rgba(255, 255, 255, .65);
       backdrop-filter: blur(10px);
     }
+
     /* Dashboard (oculto) */
-    #adminPanel{display:none}
-    body.is-admin #adminPanel{display:block}
-    body.is-admin .adminHint{display:none}
-    .adminLock{
-      border:1px dashed rgba(245,158,11,.45);
-      background: rgba(245,158,11,.06);
+    #adminPanel {
+      display: none
+    }
+
+    body.is-admin #adminPanel {
+      display: block
+    }
+
+    body.is-admin .adminHint {
+      display: none
+    }
+
+    .adminLock {
+      border: 1px dashed rgba(245, 158, 11, .45);
+      background: rgba(245, 158, 11, .06);
       border-radius: 18px;
       padding: 14px;
     }
@@ -211,8 +327,9 @@
               <img src="assets/cover.webp" alt="Portada de la campaña">
               <div class="trustBadge">
                 <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                  <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4Z" stroke="#0b1220" stroke-width="1.5"/>
-                  <path d="M9.2 12.2l1.8 1.8 3.8-4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4Z" stroke="#0b1220" stroke-width="1.5" />
+                  <path d="M9.2 12.2l1.8 1.8 3.8-4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round"
+                    stroke-linejoin="round" />
                 </svg>
                 Página informativa · validación manual
               </div>
@@ -314,7 +431,8 @@
               </div>
 
               <div class="mt-3 muted small">
-                Este sitio no cobra ni procesa pagos: organiza la rifa, registra participantes y muestra donaciones validadas.
+                Este sitio no cobra ni procesa pagos: organiza la rifa, registra participantes y muestra donaciones
+                validadas.
               </div>
             </div>
 
@@ -357,7 +475,7 @@
                 <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Casa Azul</h3>
                 <p class="muted small mb-2">Estancia 2 noches (14–15 feb). Sujeto a políticas del anfitrión.</p>
                 <a class="btn btn-outline-primary w-100" target="_blank" rel="noopener"
-                   href="https://www.airbnb.mx/rooms/935670103045137368?viralityEntryPoint=1&s=76">Ver alojamiento</a>
+                  href="https://www.airbnb.mx/rooms/935670103045137368?viralityEntryPoint=1&s=76">Ver alojamiento</a>
               </div>
             </div>
 
@@ -373,7 +491,7 @@
                 <h3 class="h5 mt-2 mb-1" style="font-weight:900;">Hotel Casa Morena (San Miguel)</h3>
                 <p class="muted small mb-2">Estancia 2 noches (14–15 feb). Confirmación final al ganador.</p>
                 <a class="btn btn-outline-primary w-100" target="_blank" rel="noopener"
-                   href="https://www.airbnb.mx/rooms/1470676662423815389?viralityEntryPoint=1&s=76">Ver alojamiento</a>
+                  href="https://www.airbnb.mx/rooms/1470676662423815389?viralityEntryPoint=1&s=76">Ver alojamiento</a>
               </div>
             </div>
 
@@ -583,7 +701,8 @@
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
               <div>
                 <div style="font-weight:900;">Acceso de administrador</div>
-                <div class="muted small">Para tu seguridad, se requiere una clave para cargar pendientes y validar.</div>
+                <div class="muted small">Para tu seguridad, se requiere una clave para cargar pendientes y validar.
+                </div>
               </div>
               <div class="d-flex gap-2">
                 <button class="btn btn-outline-primary btn-sm" onclick="adminLogin()">Ingresar clave</button>
@@ -603,7 +722,8 @@
                   </div>
                   <div class="d-flex gap-2">
                     <button class="btn btn-primary btn-sm" onclick="adminLoadPending()">Cargar pendientes</button>
-                    <button class="btn btn-outline-primary btn-sm" onclick="adminRefreshValidated()">Refrescar validadas</button>
+                    <button class="btn btn-outline-primary btn-sm" onclick="adminRefreshValidated()">Refrescar
+                      validadas</button>
                   </div>
                 </div>
 
@@ -705,7 +825,8 @@
           <div class="form-check mt-2">
             <input class="form-check-input" type="checkbox" id="fOk">
             <label class="form-check-label small" for="fOk">
-              Confirmo que enviaré evidencia por WhatsApp (<b>+52 1 415 215 7587</b>) o correo (<b>hbcasamorena@gmail.com</b>).
+              Confirmo que enviaré evidencia por WhatsApp (<b>+52 1 415 215 7587</b>) o correo
+              (<b>hbcasamorena@gmail.com</b>).
             </label>
           </div>
 
@@ -753,19 +874,19 @@
 
     // Admin state (se guarda sólo en el navegador)
     const ADMIN_KEY_STORAGE = "panda_admin_key";
-    const isAdminRoute = ()=> (location.hash || "").toLowerCase().includes("admin");
+    const isAdminRoute = () => (location.hash || "").toLowerCase().includes("admin");
 
     // Anti doble-envío
     let __submitting = false;
 
-    const mxn = (n)=> Number(n||0).toLocaleString("es-MX", {style:"currency", currency:"MXN", maximumFractionDigits:0});
-    const clamp = (v,min,max)=> Math.min(max, Math.max(min,v));
+    const mxn = (n) => Number(n || 0).toLocaleString("es-MX", { style: "currency", currency: "MXN", maximumFractionDigits: 0 });
+    const clamp = (v, min, max) => Math.min(max, Math.max(min, v));
 
-    function escapeHtml(s){
-      return String(s).replace(/[&<>"']/g, (m)=>( {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m] ));
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (m) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "\"": "&quot;", "'": "&#039;" }[m]));
     }
 
-    function toast(msg){
+    function toast(msg) {
       const t = document.createElement("div");
       t.textContent = msg;
       t.style.cssText = `
@@ -774,31 +895,31 @@
         border-radius: 999px; z-index: 9999; font-size: 14px; box-shadow: 0 14px 40px rgba(0,0,0,.25);
       `;
       document.body.appendChild(t);
-      setTimeout(()=>{ t.style.opacity="0"; t.style.transition="opacity .25s ease"; }, 1200);
-      setTimeout(()=> t.remove(), 1500);
+      setTimeout(() => { t.style.opacity = "0"; t.style.transition = "opacity .25s ease"; }, 1200);
+      setTimeout(() => t.remove(), 1500);
     }
 
-    function copyText(txt){
+    function copyText(txt) {
       navigator.clipboard.writeText(txt)
-        .then(()=> toast("Copiado ✅"))
-        .catch(()=> alert("No se pudo copiar. Copia manualmente."));
+        .then(() => toast("Copiado ✅"))
+        .catch(() => alert("No se pudo copiar. Copia manualmente."));
     }
 
-    function openShare(){
+    function openShare() {
       location.hash = "#sorteo";
       document.getElementById("shareLink").focus();
     }
 
-    function copyShare(){
+    function copyShare() {
       copyText(document.getElementById("shareLink").value);
     }
 
-    function normalizeValidatedRow(row){
+    function normalizeValidatedRow(row) {
       const amount = Number(row.amount ?? row.monto ?? row.monto_mxn ?? 0) || 0;
       let tickets = Number(row.tickets ?? row.boletos ?? 0) || 0;
 
       // ✅ Si vienen en 0 o faltan, se calculan
-      if(!tickets && amount >= TICKET_PRICE){
+      if (!tickets && amount >= TICKET_PRICE) {
         tickets = Math.floor(amount / TICKET_PRICE);
       }
 
@@ -812,126 +933,104 @@
       };
     }
 
-    async function loadValidated(){
-      try{
-        const res = await fetch(VALIDATIONS_JSON_PATH, {cache:"no-store"});
-        if(!res.ok) throw new Error("No validations.json");
-        const data = await res.json();
-        if(!Array.isArray(data)) throw new Error("JSON debe ser array");
-        validated = data.map(normalizeValidatedRow);
-      }catch(e){
+    async function loadValidated() {
+      try {
+        // Trae validadas desde Apps Script (JSONP)
+        const res = await jsonp(APPS_SCRIPT_WEBAPP + "?action=validated");
+        if (!res || !res.ok) throw new Error(res?.error || "No ok");
+
+        // res.items viene del Apps Script
+        validated = Array.isArray(res.items) ? res.items.map(normalizeValidatedRow) : [];
+      } catch (e) {
         validated = [];
       }
+
       renderAll();
     }
 
-    function computeTopDonors(list){
+
+    function computeTopDonors(list) {
       const map = new Map();
-      for(const row of list){
+      for (const row of list) {
         const name = (row.name || "").trim() || "Anónimo";
         const amount = Number(row.amount) || 0;
         const tickets = Number(row.tickets) || 0;
-        const prev = map.get(name) || { name, amount:0, tickets:0 };
+        const prev = map.get(name) || { name, amount: 0, tickets: 0 };
         prev.amount += amount;
         prev.tickets += tickets;
         map.set(name, prev);
       }
       return Array.from(map.values())
-        .sort((a,b)=> (b.amount - a.amount) || (b.tickets - a.tickets) || a.name.localeCompare(b.name));
+        .sort((a, b) => (b.amount - a.amount) || (b.tickets - a.tickets) || a.name.localeCompare(b.name));
     }
 
-    function renderTop(){
-      const top = computeTopDonors(validated).slice(0,10);
+    async function renderTop() {
       const tbody = document.getElementById("tbodyTop");
-      tbody.innerHTML = "";
+      tbody.innerHTML = `<tr><td colspan="4" class="muted">Cargando...</td></tr>`;
 
-      if(!top.length){
-        tbody.innerHTML = `<tr><td colspan="4" class="muted">Aún no hay donaciones validadas publicadas.</td></tr>`;
-        return;
-      }
+      try {
+        const res = await jsonp(APPS_SCRIPT_WEBAPP + "?action=ranking");
+        if (!res || !res.ok) throw new Error(res?.error || "No ok");
 
-      top.forEach((x, i)=>{
-        const tr = document.createElement("tr");
-        tr.innerHTML = `
-          <td><b>${i+1}</b></td>
-          <td>${escapeHtml(x.name)}</td>
-          <td><b>${mxn(x.amount)}</b></td>
-          <td>${Number(x.tickets||0).toLocaleString("es-MX")}</td>
-        `;
-        tbody.appendChild(tr);
-      });
-    }
+        const top = Array.isArray(res.top) ? res.top.slice(0, 10) : [];
 
-    function renderAll(){
-      const raised = validated.reduce((a,x)=> a + (Number(x.amount)||0), 0);
-      const tickets = validated.reduce((a,x)=> a + (Number(x.tickets)||0), 0);
-      const pct = clamp((raised / GOAL_MXN) * 100, 0, 100);
+        tbody.innerHTML = "";
+        if (!top.length) {
+          tbody.innerHTML = `<tr><td colspan="4" class="muted">Aún no hay donaciones validadas.</td></tr>`;
+          return;
+        }
 
-      document.getElementById("goalLabel").textContent = mxn(GOAL_MXN);
-      document.getElementById("raisedLabel").textContent = mxn(raised);
-      document.getElementById("ticketsLabel").textContent = tickets.toLocaleString("es-MX");
-
-      document.getElementById("pctLabel").textContent = `${pct.toFixed(1)}%`;
-      document.getElementById("progressBar").style.width = `${pct}%`;
-
-      document.getElementById("participantsCount").textContent = validated.length.toLocaleString("es-MX");
-      document.getElementById("ticketsTotal").textContent = tickets.toLocaleString("es-MX");
-
-      const tbody = document.getElementById("tbodyValidadas");
-      tbody.innerHTML = "";
-
-      validated
-        .slice()
-        .sort((a,b)=> String(b.date||"").localeCompare(String(a.date||"")))
-        .forEach(row=>{
+        top.forEach((x, i) => {
           const tr = document.createElement("tr");
           tr.innerHTML = `
-            <td class="mono"><b>${escapeHtml(row.id||"-")}</b></td>
-            <td>${escapeHtml(row.name||"-")}</td>
-            <td><b>${mxn(Number(row.amount)||0)}</b></td>
-            <td>${(Number(row.tickets)||0).toLocaleString("es-MX")}</td>
-            <td class="muted small">${escapeHtml(row.date||"-")}</td>
-            <td class="text-end"><span class="badge text-bg-success">${escapeHtml(row.status||"Validado")}</span></td>
-          `;
+        <td><b>${i + 1}</b></td>
+        <td>${escapeHtml(x.name || "-")}</td>
+        <td><b>${mxn(Number(x.amount) || 0)}</b></td>
+        <td>${Number(x.tickets || 0).toLocaleString("es-MX")}</td>
+      `;
           tbody.appendChild(tr);
         });
 
-      renderTop();
+      } catch (e) {
+        tbody.innerHTML = `<tr><td colspan="4" class="muted">No se pudo cargar el ranking.</td></tr>`;
+      }
+    }
+    renderTop();
 
-      const url = SITE_URL || (location.origin + location.pathname + location.hash.replace("#admin",""));
-      document.getElementById("shareLink").value = url;
+    const url = SITE_URL || (location.origin + location.pathname + location.hash.replace("#admin", ""));
+    document.getElementById("shareLink").value = url;
 
-      const msg = encodeURIComponent(
-        "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " + url
-      );
-      document.getElementById("btnWA").href = "https://wa.me/?text=" + msg;
-      document.getElementById("btnFB").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
-      document.getElementById("btnX").href = "https://twitter.com/intent/tweet?text=" + msg;
+    const msg = encodeURIComponent(
+      "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " + url
+    );
+    document.getElementById("btnWA").href = "https://wa.me/?text=" + msg;
+    document.getElementById("btnFB").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(url);
+    document.getElementById("btnX").href = "https://twitter.com/intent/tweet?text=" + msg;
     }
 
     // --- JSONP helper ---
-    function jsonp(url){
-      return new Promise((resolve, reject)=>{
+    function jsonp(url) {
+      return new Promise((resolve, reject) => {
         const cb = "cb_" + Math.random().toString(36).slice(2);
         const s = document.createElement("script");
-        const timer = setTimeout(()=>{
+        const timer = setTimeout(() => {
           cleanup();
           reject(new Error("timeout"));
         }, 15000);
 
-        function cleanup(){
+        function cleanup() {
           clearTimeout(timer);
-          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
+          try { delete window[cb]; } catch (e) { window[cb] = undefined; }
           s.remove();
         }
 
-        window[cb] = (data)=>{
+        window[cb] = (data) => {
           cleanup();
           resolve(data);
         };
 
         s.src = url + (url.includes("?") ? "&" : "?") + "callback=" + cb;
-        s.onerror = ()=>{
+        s.onerror = () => {
           cleanup();
           reject(new Error("script error"));
         };
@@ -940,15 +1039,15 @@
       });
     }
 
-    function makeDedupeKey(){
+    function makeDedupeKey() {
       // ✅ Esto evita duplicados incluso si el usuario da doble click o el navegador reintenta
       if (crypto && crypto.randomUUID) return crypto.randomUUID();
       return "k_" + Date.now() + "_" + Math.random().toString(16).slice(2);
     }
 
     // --- Registro público a Google Sheets vía JSONP ---
-    async function submitRegistration(){
-      if(__submitting) return; // ✅ anti doble click
+    async function submitRegistration() {
+      if (__submitting) return; // ✅ anti doble click
       __submitting = true;
 
       const name = document.getElementById("fName").value.trim();
@@ -958,11 +1057,11 @@
       const note = document.getElementById("fNote").value.trim();
       const ok = document.getElementById("fOk").checked;
 
-      if(!name || !amountRaw){ __submitting=false; return alert("Completa nombre y monto."); }
-      if(!ok){ __submitting=false; return alert("Confirma que enviarás evidencia por WhatsApp o correo."); }
+      if (!name || !amountRaw) { __submitting = false; return alert("Completa nombre y monto."); }
+      if (!ok) { __submitting = false; return alert("Confirma que enviarás evidencia por WhatsApp o correo."); }
 
-      const amount = Number(String(amountRaw).replace(/[^\d.]/g,"")) || 0;
-      if(amount < TICKET_PRICE){ __submitting=false; return alert("El monto mínimo para 1 boleto es $500 MXN."); }
+      const amount = Number(String(amountRaw).replace(/[^\d.]/g, "")) || 0;
+      if (amount < TICKET_PRICE) { __submitting = false; return alert("El monto mínimo para 1 boleto es $500 MXN."); }
 
       const btn = document.getElementById("btnSend");
       btn.disabled = true;
@@ -980,15 +1079,15 @@
 
       const url = APPS_SCRIPT_WEBAPP + "?" + qs;
 
-      try{
+      try {
         const res = await jsonp(url);
-        if(!res || !res.ok) throw new Error(res && res.error ? res.error : "No se pudo registrar");
+        if (!res || !res.ok) throw new Error(res && res.error ? res.error : "No se pudo registrar");
 
         const boletos = Number(res.boletos || 0);
         const folio = String(res.folio || "");
 
         const msg =
-`✅ Registro recibido
+          `✅ Registro recibido
 Folio: ${folio}
 Boletos: ${boletos}
 
@@ -1013,15 +1112,15 @@ Incluye tu folio en el mensaje.`;
             <span class="muted small">Incluye tu folio en el mensaje.</span>
           </div>
           <div class="mt-3 d-flex gap-2 flex-wrap">
-            <button class="btn btn-outline-primary btn-sm" onclick="copyText('${escapeHtml(msg).replace(/'/g,"&#039;")}')">Copiar mensaje</button>
+            <button class="btn btn-outline-primary btn-sm" onclick="copyText('${escapeHtml(msg).replace(/'/g, "&#039;")}')">Copiar mensaje</button>
           </div>
         `;
 
         toast("Registro guardado en Google Sheets ✅");
 
-      }catch(err){
+      } catch (err) {
         alert("No se pudo enviar el registro. Intenta de nuevo. Si persiste, manda tus datos por WhatsApp/correo junto con tu comprobante.");
-      }finally{
+      } finally {
         btn.disabled = false;
         btn.textContent = "Registrar";
         __submitting = false;
@@ -1029,20 +1128,20 @@ Incluye tu folio en el mensaje.`;
     }
 
     // --- Sorteo ponderado ---
-    function cryptoRandomInt(min, max){
+    function cryptoRandomInt(min, max) {
       const range = max - min + 1;
       const maxRange = 0xFFFFFFFF;
       const bucket = Math.floor(maxRange / range) * range;
       let x;
-      do{
+      do {
         const arr = new Uint32Array(1);
         crypto.getRandomValues(arr);
         x = arr[0];
-      }while(x >= bucket);
+      } while (x >= bucket);
       return min + (x % range);
     }
 
-    function simpleHash(str){
+    function simpleHash(str) {
       let h1 = 0xdeadbeef ^ str.length;
       let h2 = 0x41c6ce57 ^ str.length;
       for (let i = 0, ch; i < str.length; i++) {
@@ -1052,20 +1151,20 @@ Incluye tu folio en el mensaje.`;
       }
       h1 = (h1 ^ (h1 >>> 16)) >>> 0;
       h2 = (h2 ^ (h2 >>> 16)) >>> 0;
-      return ("RAFFLE-" + (h1.toString(16).padStart(8,"0") + h2.toString(16).padStart(8,"0")).toUpperCase());
+      return ("RAFFLE-" + (h1.toString(16).padStart(8, "0") + h2.toString(16).padStart(8, "0")).toUpperCase());
     }
 
-    function drawWinner(){
-      if(!validated.length) return alert("Aún no hay donaciones validadas publicadas.");
+    function drawWinner() {
+      if (!validated.length) return alert("Aún no hay donaciones validadas publicadas.");
 
       // ✅ pool ponderado, pero usando tickets calculados (si vienen en 0)
       const pool = [];
-      validated.forEach(p=>{
-        const t = Number(p.tickets)||0;
-        for(let i=0;i<t;i++) pool.push(p);
+      validated.forEach(p => {
+        const t = Number(p.tickets) || 0;
+        for (let i = 0; i < t; i++) pool.push(p);
       });
 
-      if(!pool.length) return alert("No hay boletos asignados (tickets=0). Asegúrate de que validations.json tenga amount o tickets.");
+      if (!pool.length) return alert("No hay boletos asignados (tickets=0). Asegúrate de que validations.json tenga amount o tickets.");
 
       const idx = cryptoRandomInt(0, pool.length - 1);
       const w = pool[idx];
@@ -1082,7 +1181,7 @@ Incluye tu folio en el mensaje.`;
             <div class="h5 mb-1" style="font-weight:900">
               ${escapeHtml(w.name)} <span class="badge text-bg-primary ms-1">${escapeHtml(w.id)}</span>
             </div>
-            <div class="muted small mb-0">Boletos: <b>${Number(w.tickets)||0}</b> · Donación: <b>${mxn(Number(w.amount)||0)}</b></div>
+            <div class="muted small mb-0">Boletos: <b>${Number(w.tickets) || 0}</b> · Donación: <b>${mxn(Number(w.amount) || 0)}</b></div>
           </div>
           <div class="text-end">
             <div class="muted small">Momento</div>
@@ -1094,21 +1193,21 @@ Incluye tu folio en el mensaje.`;
         <div class="mono"><b>${hash}</b></div>
       `;
 
-      window.__raffleResult = { winner:w, when, hash, poolSize:pool.length, index:idx };
+      window.__raffleResult = { winner: w, when, hash, poolSize: pool.length, index: idx };
       toast("Sorteo realizado ✅");
     }
 
-    function resetResult(){
+    function resetResult() {
       document.getElementById("winnerBox").innerHTML =
         `<div class="muted small mb-1">Resultado</div><div class="muted mb-0">Aún no se ha realizado el sorteo.</div>`;
       window.__raffleResult = null;
     }
 
-    function copyResult(){
-      if(!window.__raffleResult) return alert("Primero realiza el sorteo.");
+    function copyResult() {
+      if (!window.__raffleResult) return alert("Primero realiza el sorteo.");
       const r = window.__raffleResult;
       const text =
-`Resultado sorteo — Rifa Panda
+        `Resultado sorteo — Rifa Panda
 Ganador: ${r.winner.name} (${r.winner.id})
 Donación: ${r.winner.amount} MXN
 Boletos: ${r.winner.tickets}
@@ -1118,53 +1217,53 @@ Huella: ${r.hash}`;
     }
 
     // --- ADMIN (Dashboard) ---
-    function adminKey(){
+    function adminKey() {
       return localStorage.getItem(ADMIN_KEY_STORAGE) || "";
     }
-    function setAdminStatus(){
+    function setAdminStatus() {
       const el = document.getElementById("adminStatus");
       const key = adminKey();
       el.textContent = key ? "Estado: autenticado (clave guardada en este navegador)" : "Estado: no autenticado";
     }
-    function adminLogin(){
+    function adminLogin() {
       const key = prompt("Ingresa la clave de administrador:");
-      if(!key) return;
+      if (!key) return;
       localStorage.setItem(ADMIN_KEY_STORAGE, key.trim());
       setAdminStatus();
       toast("Acceso admin listo ✅");
     }
-    function adminLogout(){
+    function adminLogout() {
       localStorage.removeItem(ADMIN_KEY_STORAGE);
       setAdminStatus();
       toast("Sesión cerrada");
     }
 
-    async function adminLoadPending(){
+    async function adminLoadPending() {
       const key = adminKey();
-      if(!key) return alert("Ingresa la clave de administrador.");
+      if (!key) return alert("Ingresa la clave de administrador.");
 
       const url = APPS_SCRIPT_WEBAPP + "?action=pending&key=" + encodeURIComponent(key);
-      try{
+      try {
         const res = await jsonp(url);
-        if(!res || !res.ok) throw new Error(res?.error || "No se pudo cargar pendientes");
+        if (!res || !res.ok) throw new Error(res?.error || "No se pudo cargar pendientes");
         pending = Array.isArray(res.items) ? res.items : [];
         renderPending();
         toast("Pendientes cargados ✅");
-      }catch(e){
+      } catch (e) {
         alert("No se pudieron cargar pendientes. Verifica la clave o el endpoint de Apps Script.");
       }
     }
 
-    function renderPending(){
+    function renderPending() {
       const tbody = document.getElementById("tbodyPending");
       tbody.innerHTML = "";
 
-      if(!pending.length){
+      if (!pending.length) {
         tbody.innerHTML = `<tr><td colspan="5" class="muted">No hay pendientes (o no se cargaron).</td></tr>`;
         return;
       }
 
-      pending.forEach(row=>{
+      pending.forEach(row => {
         const folio = row.folio || row.id || "-";
         const name = row.name || row.nombre || "-";
         const amount = Number(row.amount ?? row.monto ?? row.monto_mxn ?? 0) || 0;
@@ -1177,57 +1276,57 @@ Huella: ${r.hash}`;
           <td><b>${mxn(amount)}</b></td>
           <td>${tickets}</td>
           <td class="text-end">
-            <button class="btn btn-primary btn-sm" onclick="adminValidate('${String(folio).replace(/'/g,"&#039;")}')">Validar</button>
+            <button class="btn btn-primary btn-sm" onclick="adminValidate('${String(folio).replace(/'/g, "&#039;")}')">Validar</button>
           </td>
         `;
         tbody.appendChild(tr);
       });
     }
 
-    async function adminValidate(folio){
+    async function adminValidate(folio) {
       const key = adminKey();
-      if(!key) return alert("Ingresa la clave de administrador.");
+      if (!key) return alert("Ingresa la clave de administrador.");
 
-      if(!confirm("¿Marcar como VALIDADO este folio?\n\n" + folio)) return;
+      if (!confirm("¿Marcar como VALIDADO este folio?\n\n" + folio)) return;
 
       const url = APPS_SCRIPT_WEBAPP + "?action=validate&key=" + encodeURIComponent(key) + "&folio=" + encodeURIComponent(folio);
-      try{
+      try {
         const res = await jsonp(url);
-        if(!res || !res.ok) throw new Error(res?.error || "No se pudo validar");
+        if (!res || !res.ok) throw new Error(res?.error || "No se pudo validar");
 
-        pending = pending.filter(x => (x.folio||x.id) !== folio);
+        pending = pending.filter(x => (x.folio || x.id) !== folio);
         renderPending();
         toast("Validado ✅");
 
-      }catch(e){
+      } catch (e) {
         alert("No se pudo validar. Revisa el endpoint en Apps Script y la clave.");
       }
     }
 
-    async function adminRefreshValidated(){
+    async function adminRefreshValidated() {
       const url = APPS_SCRIPT_WEBAPP + "?action=validated";
-      try{
+      try {
         const res = await jsonp(url);
-        if(!res || !res.ok) throw new Error(res?.error || "No se pudo refrescar");
-        if(Array.isArray(res.items)){
+        if (!res || !res.ok) throw new Error(res?.error || "No se pudo refrescar");
+        if (Array.isArray(res.items)) {
           validated = res.items.map(normalizeValidatedRow);
           renderAll();
           toast("Validadas actualizadas ✅");
-        }else{
+        } else {
           alert("Respuesta inválida: no se encontró items[]");
         }
-      }catch(e){
+      } catch (e) {
         alert("No se pudo refrescar validadas desde Apps Script. Si usas validations.json, actualízalo manualmente.");
       }
     }
 
-    async function adminDownloadValidatedJson(){
+    async function adminDownloadValidatedJson() {
       const url = APPS_SCRIPT_WEBAPP + "?action=validated";
-      try{
+      try {
         const res = await jsonp(url);
-        if(!res || !res.ok) throw new Error(res?.error || "No se pudo obtener validadas");
+        if (!res || !res.ok) throw new Error(res?.error || "No se pudo obtener validadas");
         const items = Array.isArray(res.items) ? res.items : [];
-        const blob = new Blob([JSON.stringify(items, null, 2)], {type:"application/json"});
+        const blob = new Blob([JSON.stringify(items, null, 2)], { type: "application/json" });
         const a = document.createElement("a");
         a.href = URL.createObjectURL(blob);
         a.download = "validations.json";
@@ -1235,17 +1334,17 @@ Huella: ${r.hash}`;
         a.click();
         a.remove();
         toast("Descarga lista ✅");
-      }catch(e){
+      } catch (e) {
         alert("No se pudo descargar. Si no tienes action=validated, usa tu archivo local validations.json.");
       }
     }
 
     // Inicialización
-    function initAdminMode(){
-      if(isAdminRoute()){
+    function initAdminMode() {
+      if (isAdminRoute()) {
         document.body.classList.add("is-admin");
         setAdminStatus();
-      }else{
+      } else {
         document.body.classList.remove("is-admin");
       }
     }
@@ -1257,4 +1356,5 @@ Huella: ${r.hash}`;
     loadValidated();
   </script>
 </body>
+
 </html>
