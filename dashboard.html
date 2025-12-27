@@ -32,7 +32,7 @@
         </div>
       </div>
       <div class="small text-secondary mt-2">
-        Este panel requiere token. Si no tienes uno, configúralo en Apps Script → Script Properties.
+        Este panel requiere token. Configúralo en Apps Script → Script Properties (ej. ADMIN_TOKEN).
       </div>
     </div>
 
@@ -61,7 +61,7 @@
           </div>
 
           <div class="text-secondary small">
-            “Validar” mueve el registro a “Validadas” y recalcula boletos si hiciera falta.
+            “Validar” mueve el registro a “Validada” (o cambia estado) y recalcula boletos si hiciera falta.
           </div>
         </div>
       </div>
@@ -76,10 +76,10 @@
         </div>
 
         <div class="card p-3 mt-3">
-          <h2 class="h6 mb-2" style="font-weight:800;">Web App</h2>
-          <input id="webapp" class="form-control mono" placeholder="https://script.google.com/macros/s/AKfycbwk79dFmFYBtVOmhTyj2zjQUDxfHbj1XT4O3pbNA_5kJlwFj4hX-x8Pek5Qs2lxwqvH/exec?action=validated&callback=cb">
+          <h2 class="h6 mb-2" style="font-weight:800;">Web App (BASE)</h2>
+          <input id="webapp" class="form-control mono" placeholder="Pega aquí tu URL base /exec (sin ?action=...)">
           <div class="small text-secondary mt-2">
-            Debe ser el mismo endpoint que usa tu página pública.
+            Debe terminar en <b>/exec</b>. Ej: https://script.google.com/macros/s/XXXX/exec
           </div>
         </div>
       </div>
@@ -88,15 +88,16 @@
 
   <script>
     // === CONFIG ===
-    // Pega aquí tu WebApp si quieres dejarlo fijo. Si no, lo pones en el input.
-    const DEFAULT_WEBAPP = "";
+    // IMPORTANTE: URL BASE sin params (sin ?action=...)
+    const DEFAULT_WEBAPP_BASE = "https://script.google.com/macros/s/AKfycbwk79dFmFYBtVOmhTyj2zjQUDxfHbj1XT4O3pbNA_5kJlwFj4hX-x8Pek5Qs2lxwqvH/exec";
 
     const mxn = (n)=> Number(n||0).toLocaleString("es-MX",{style:"currency",currency:"MXN",maximumFractionDigits:0});
     const esc = (s)=> String(s).replace(/[&<>"']/g,m=>({ "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;" }[m]));
 
-    function getWebapp(){
-      const v = document.getElementById("webapp").value.trim() || DEFAULT_WEBAPP;
-      if(!v) throw new Error("Configura la URL del Web App.");
+    function getWebappBase(){
+      const v = (document.getElementById("webapp").value.trim() || DEFAULT_WEBAPP_BASE).trim();
+      if(!v) throw new Error("Configura la URL BASE del Web App.");
+      if(v.includes("?")) throw new Error("Pega la URL BASE sin parámetros (sin ?action=...).");
       return v;
     }
 
@@ -118,22 +119,62 @@
       location.reload();
     }
 
-    async function postJSON(payload){
-      const webapp = getWebapp();
-      const res = await fetch(webapp, {
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify(payload)
+    // === JSONP helper ===
+    function jsonp(url){
+      return new Promise((resolve, reject)=>{
+        const cb = "cb_" + Math.random().toString(36).slice(2);
+        const s = document.createElement("script");
+        const timer = setTimeout(()=>{
+          cleanup();
+          reject(new Error("timeout"));
+        }, 15000);
+
+        function cleanup(){
+          clearTimeout(timer);
+          try{ delete window[cb]; }catch(e){ window[cb] = undefined; }
+          s.remove();
+        }
+
+        window[cb] = (data)=>{
+          cleanup();
+          resolve(data);
+        };
+
+        const sep = url.includes("?") ? "&" : "?";
+        s.src = url + sep + "callback=" + encodeURIComponent(cb);
+        s.onerror = ()=>{
+          cleanup();
+          reject(new Error("script error"));
+        };
+
+        document.body.appendChild(s);
       });
-      return await res.json();
+    }
+
+    function buildUrl(params){
+      const base = getWebappBase();
+      const u = new URL(base);
+      Object.entries(params).forEach(([k,v])=>{
+        if(v !== undefined && v !== null && String(v).length) u.searchParams.set(k, String(v));
+      });
+      // NO ponemos callback aquí; jsonp() lo agrega solo.
+      return u.toString();
     }
 
     async function loadPending(){
       const token = getToken();
       if(!token) return alert("Primero guarda tu ADMIN_TOKEN.");
-      const data = await postJSON({ action:"pending", token });
-      if(!data.ok) return alert("Error: " + (data.error||""));
-      renderPending(data.rows || []);
+
+      try{
+        // OJO: tu Apps Script actual usa key=... (no token=...)
+        const url = buildUrl({ action:"pending", key: token });
+        const data = await jsonp(url);
+
+        if(!data || !data.ok) throw new Error(data?.error || "No se pudo cargar pendientes");
+        renderPending(Array.isArray(data.items) ? data.items : (data.rows || []));
+      }catch(e){
+        alert("Pendientes: " + e.message);
+      }
     }
 
     function renderPending(rows){
@@ -146,15 +187,22 @@
       }
 
       rows.forEach(r=>{
+        // Soporta r.nombre o r.name (según tu backend)
+        const folio = r.folio || r.id || "-";
+        const nombre = r.nombre || r.name || "-";
+        const monto = r.monto_mxn ?? r.amount ?? 0;
+        const boletos = r.boletos ?? r.tickets ?? 0;
+        const ts = r.timestamp || r.date || "";
+
         const tr = document.createElement("tr");
         tr.innerHTML = `
-          <td class="mono"><b>${esc(r.folio||"-")}</b></td>
-          <td>${esc(r.nombre||"-")}</td>
-          <td><b>${mxn(r.monto_mxn)}</b></td>
-          <td>${Number(r.boletos||0)}</td>
-          <td class="text-secondary small">${esc(r.timestamp||"")}</td>
+          <td class="mono"><b>${esc(folio)}</b></td>
+          <td>${esc(nombre)}</td>
+          <td><b>${mxn(monto)}</b></td>
+          <td>${Number(boletos||0)}</td>
+          <td class="text-secondary small">${esc(ts)}</td>
           <td class="text-end">
-            <button class="btn btn-success btn-sm" onclick="validateFolio('${esc(r.folio||"")}', '${esc(r.nombre||"")}')">
+            <button class="btn btn-success btn-sm" onclick="validateFolio('${esc(folio).replace(/'/g,"&#039;")}', '${esc(nombre).replace(/'/g,"&#039;")}')">
               Validar
             </button>
           </td>
@@ -166,15 +214,27 @@
     async function validateFolio(folio, fullName){
       const token = getToken();
       if(!token) return alert("Sin token.");
+
       const publicName = prompt("Nombre público (ej. “Luis G.”).", abbreviate(fullName));
       if(!publicName) return;
 
-      const data = await postJSON({ action:"validate", token, folio, publicName: publicName.trim() });
-      if(!data.ok) return alert("Error: " + (data.error||""));
+      try{
+        const url = buildUrl({
+          action:"validate",
+          key: token,
+          folio: folio,
+          publicName: publicName.trim()
+        });
 
-      alert("Validado ✅");
-      loadPending();
-      loadRanking();
+        const data = await jsonp(url);
+        if(!data || !data.ok) throw new Error(data?.error || "No se pudo validar");
+
+        alert("Validado ✅");
+        await loadPending();
+        await loadRanking();
+      }catch(e){
+        alert("Validar: " + e.message);
+      }
     }
 
     function abbreviate(full){
@@ -185,11 +245,13 @@
 
     async function loadRanking(){
       try{
-        const webapp = getWebapp();
-        const res = await fetch(webapp + "?action=ranking", { cache:"no-store" });
-        const data = await res.json();
-        if(!data.ok) throw new Error(data.error||"");
-        renderRanking(data.top || []);
+        // Si tu backend implementa action=ranking
+        // Si NO lo implementa, dime y lo calculamos aquí a partir de action=validated
+        const url = buildUrl({ action:"ranking" });
+        const data = await jsonp(url);
+
+        if(!data || !data.ok) throw new Error(data?.error || "No se pudo cargar ranking");
+        renderRanking(Array.isArray(data.top) ? data.top : []);
       }catch(e){
         document.getElementById("ranking").innerHTML =
           `<div class="text-secondary">No se pudo cargar ranking.</div>`;
@@ -206,8 +268,8 @@
         <ol class="mb-0">
           ${list.map(x=>`
             <li class="mb-2">
-              <div style="font-weight:800;">${esc(x.name)}</div>
-              <div class="text-secondary small">Total: <b>${mxn(x.amount)}</b> · Boletos: <b>${Number(x.tickets||0)}</b></div>
+              <div style="font-weight:800;">${esc(x.name || x.nombre || "—")}</div>
+              <div class="text-secondary small">Total: <b>${mxn(x.amount ?? x.monto ?? 0)}</b> · Boletos: <b>${Number(x.tickets ?? x.boletos ?? 0)}</b></div>
             </li>
           `).join("")}
         </ol>
@@ -216,7 +278,7 @@
     }
 
     // init
-    document.getElementById("webapp").value = DEFAULT_WEBAPP;
+    document.getElementById("webapp").value = DEFAULT_WEBAPP_BASE;
     document.getElementById("token").value = getToken();
     if(getToken()){
       loadPending();
