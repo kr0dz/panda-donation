@@ -2,447 +2,423 @@
 <html lang="es">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Apoyemos a Panda | Donaciones</title>
-  <meta name="description" content="Apoyo para tratamiento. Donaciones seguras vía GoFundMe." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-  <!-- SEO/Share (GitHub Pages friendly) -->
-  <meta property="og:title" content="Apoyemos a nuestro amigo Panda" />
-  <meta property="og:description" content="Ayúdanos a apoyar su tratamiento. Donación segura vía GoFundMe." />
+  <title>Apoyemos a Panda | Enlace oficial</title>
+  <meta name="description" content="Página informativa con contexto y enlace oficial. La donación se realiza en GoFundMe." />
+
+  <meta property="og:title" content="Apoyemos a Panda" />
+  <meta property="og:description" content="Contexto + enlace oficial para apoyar el tratamiento. Donación segura en GoFundMe." />
   <meta property="og:type" content="website" />
-  <!-- Mejor con URL absoluta para que WhatsApp/Facebook tomen bien la imagen -->
-  <meta property="og:image" content="https://kr0dz.github.io/panda-donation/assets/cover.webp" />
+  <meta property="og:image" content="./assets/cover.webp" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Bootstrap 5 -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 
   <style>
     :root{
-      --bg:#0f2f2a;
-      --glass: rgba(255,255,255,.08);
-      --glass2: rgba(0,0,0,.18);
-      --border: rgba(255,255,255,.14);
-      --text:#ffffff;
-      --muted: rgba(255,255,255,.82);
-      --accent:#b9f36b;
-      --radius:18px;
-      --max:1060px;
-      --shadow: 0 18px 40px rgba(0,0,0,.30);
+      --bg: #0b1220;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.08);
+      --line: rgba(255,255,255,.10);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --accent: #4f8cff;   /* azul confianza */
+      --accent2:#1e3a8a;
+      --good: #22c55e;
+      --radius: 18px;
+      --shadow: 0 24px 70px rgba(0,0,0,.35);
     }
-    *{box-sizing:border-box}
-    html{scroll-behavior:smooth}
+
     body{
-      margin:0;
-      font-family: system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-      color:var(--text);
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
       background:
-        radial-gradient(1200px 800px at 50% 0%, rgba(185,243,107,.18), transparent 60%),
+        radial-gradient(900px 600px at 20% 0%, rgba(79,140,255,.18), transparent 55%),
+        radial-gradient(700px 520px at 80% 10%, rgba(34,197,94,.12), transparent 55%),
         var(--bg);
-      overflow-x:hidden;
+      color: var(--text);
+      overflow-x: hidden;
     }
 
-    /* Subtle animated background glow */
-    .bgGlow{
-      position:fixed;
-      inset:-200px;
-      background:
-        radial-gradient(700px 500px at 20% 10%, rgba(185,243,107,.14), transparent 60%),
-        radial-gradient(600px 500px at 80% 0%, rgba(255,255,255,.06), transparent 60%),
-        radial-gradient(700px 550px at 70% 90%, rgba(185,243,107,.10), transparent 60%);
-      filter: blur(30px);
-      animation: floatGlow 14s ease-in-out infinite;
+    /* Subtle grid */
+    .grid-bg{
+      position: fixed; inset: 0;
+      background-image:
+        linear-gradient(to right, rgba(255,255,255,.05) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(255,255,255,.05) 1px, transparent 1px);
+      background-size: 64px 64px;
+      opacity: .07;
       pointer-events:none;
-      z-index:-1;
-    }
-    @keyframes floatGlow{
-      0%,100%{ transform: translate3d(0,0,0) scale(1); opacity:.9;}
-      50%{ transform: translate3d(0,-14px,0) scale(1.02); opacity:1;}
+      z-index:0;
     }
 
-    .wrap{max-width:var(--max);margin:0 auto;padding:26px 18px 70px;}
-
-    /* Top */
-    .top{
-      display:flex;
-      justify-content:space-between;
-      align-items:center;
-      gap:12px;
-      margin-bottom:16px;
-      opacity:0;
-      transform: translateY(10px);
-      animation: enter .7s ease forwards;
-    }
-    @keyframes enter{
-      to{opacity:1; transform: translateY(0);}
-    }
-
-    .brand{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.2px}
-    .dot{width:10px;height:10px;border-radius:50%;background:var(--accent); box-shadow: 0 0 0 6px rgba(185,243,107,.12)}
-    .pill{
-      border:1px solid rgba(255,255,255,.22);
-      padding:8px 12px;border-radius:999px;font-size:13px;opacity:.95;
-      background: rgba(255,255,255,.04);
-    }
-
-    /* Layout */
-    .layout{
-      display:grid;
-      grid-template-columns: 1.18fr .82fr;
-      gap:16px;
-      align-items:stretch;
-    }
-    @media(max-width:920px){.layout{grid-template-columns:1fr}}
-
-    .card{
-      background:var(--glass);
-      border:1px solid var(--border);
-      border-radius:var(--radius);
-      padding:16px;
-      backdrop-filter: blur(10px);
+    .glass{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
       box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
     }
 
-    /* Hero Image with gentle hover + subtle parallax */
-    .heroImg{
-      width:100%;
-      aspect-ratio: 16/10;
-      border-radius:16px;
-      border:1px solid rgba(255,255,255,.14);
-      overflow:hidden;
-      background: rgba(0,0,0,.20);
-      position:relative;
-      transform: translateZ(0);
-      isolation:isolate;
+    .glass-soft{
+      background: var(--card2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      backdrop-filter: blur(10px);
     }
-    .heroImg::after{
+
+    .nav-pill{
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,.04);
+      border-radius: 999px;
+      padding: 8px 12px;
+      font-weight: 650;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .brand-dot{
+      width: 10px; height: 10px; border-radius: 999px;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(79,140,255,.18);
+    }
+
+    .title{
+      letter-spacing: -0.9px;
+      line-height: 1.05;
+    }
+
+    .lead-ux{
+      color: var(--muted);
+      line-height: 1.85;
+    }
+
+    .hero-img{
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 16/10;
+      background: rgba(0,0,0,.25);
+    }
+    .hero-img img{
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transform: scale(1.02);
+      transition: transform .8s cubic-bezier(.2,.8,.2,1);
+      display:block;
+    }
+    .hero-img:hover img{ transform: scale(1.06); }
+    .hero-img::after{
       content:"";
       position:absolute; inset:0;
-      background: linear-gradient(180deg, rgba(0,0,0,.10), rgba(0,0,0,.45));
+      background: linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.00) 50%, rgba(0,0,0,.35));
       pointer-events:none;
-      opacity:.9;
-      z-index:2;
-    }
-    .heroImg img{
-      width:100%; height:100%;
-      object-fit:cover;
-      display:block;
-      transform: scale(1.03) translateY(var(--imgShift, 0px));
-      filter: saturate(1.05) contrast(1.03);
-      transition: transform .9s cubic-bezier(.2,.8,.2,1), filter .3s ease;
-      will-change: transform;
-      z-index:1;
-      position:relative;
-    }
-    .heroImg:hover img{
-      transform: scale(1.08) translateY(var(--imgShift, 0px));
-      filter: saturate(1.08) contrast(1.06);
     }
 
-    /* fallback message if image fails */
-    .imgFail{
-      position:absolute;
-      inset:0;
-      display:none;
-      align-items:center;
-      justify-content:center;
-      padding:16px;
-      text-align:center;
-      color:rgba(255,255,255,.9);
-      font-weight:700;
-      z-index:3;
-    }
-    .imgFail code{
-      display:inline-block;
-      margin-top:8px;
-      padding:6px 10px;
-      border-radius:10px;
-      background: rgba(0,0,0,.35);
-      border:1px solid rgba(255,255,255,.14);
-      font-weight:700;
+    .btn-primary{
+      --bs-btn-bg: var(--accent);
+      --bs-btn-border-color: var(--accent);
+      --bs-btn-hover-bg: #3b82f6;
+      --bs-btn-hover-border-color: #3b82f6;
+      --bs-btn-active-bg: #2563eb;
+      --bs-btn-active-border-color: #2563eb;
+      font-weight: 800;
+      border-radius: 14px;
+      padding: 12px 14px;
+      box-shadow: 0 18px 40px rgba(79,140,255,.18);
     }
 
-    /* Titles */
-    .title{
-      font-size:42px;
-      line-height:1.05;
-      margin:12px 0 10px;
-      letter-spacing:-.9px;
+    .btn-outline-light{
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-weight: 750;
+      border-color: rgba(255,255,255,.22);
+      color: rgba(255,255,255,.92);
     }
-    @media(max-width:520px){.title{font-size:32px}}
-
-    .subtitle{
-      font-size:16px;
-      line-height:1.7;
-      margin:0 0 14px;
-      color:var(--muted);
+    .btn-outline-light:hover{
+      background: rgba(255,255,255,.08);
+      border-color: rgba(255,255,255,.28);
     }
 
-    /* Buttons */
-    .cta{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-    .btn{
-      display:inline-flex;align-items:center;justify-content:center;
-      padding:12px 14px;border-radius:12px;text-decoration:none;
-      font-weight:850;border:0;cursor:pointer;
-      transition: transform .18s ease, filter .18s ease;
-      user-select:none;
+    .kpi{
+      display:flex; gap:10px; flex-wrap:wrap;
     }
-    .btn:hover{ transform: translateY(-1px); filter: brightness(1.03); }
-    .btn:active{ transform: translateY(0px) scale(.99); }
-
-    .btn.primary{background:var(--accent);color:#0b0b0b}
-    .btn.secondary{
-      background:transparent;color:#fff;
-      border:1px solid rgba(255,255,255,.25);font-weight:650;
+    .kpi .item{
+      flex:1 1 160px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: rgba(0,0,0,.18);
     }
-
-    /* KPI */
-    .mini{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:10px;
-      margin-top:14px;
+    .kpi .label{
+      font-size: 12px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.65);
+      margin-bottom: 4px;
+      font-weight: 800;
     }
-    @media(max-width:920px){.mini{grid-template-columns:1fr}}
-
-    .miniBox{
-      background:var(--glass2);
-      border:1px solid rgba(255,255,255,.14);
-      border-radius:16px;
-      padding:12px;
-      transform: translateY(6px);
-      opacity:0;
-      animation: rise .7s ease forwards;
-    }
-    .miniBox:nth-child(1){animation-delay:.05s}
-    .miniBox:nth-child(2){animation-delay:.12s}
-    .miniBox:nth-child(3){animation-delay:.19s}
-    @keyframes rise{
-      to{transform: translateY(0); opacity:1;}
-    }
-    .miniBox b{display:block;font-size:14px;margin-bottom:6px}
-    .miniBox span{font-size:13px;opacity:.9;line-height:1.4}
-
-    .sideTitle{font-size:12px;letter-spacing:.16em;text-transform:uppercase;opacity:.9;margin:0 0 10px}
-    .shareRow{display:flex;flex-wrap:wrap;gap:10px;margin-top:10px}
-
-    .linkBox{
-      display:flex;gap:10px;flex-wrap:wrap;align-items:center;
-      padding:12px;border-radius:14px;border:1px solid rgba(255,255,255,.18);
-      background:rgba(0,0,0,.16);
-    }
-    input{
-      flex:1;min-width:220px;
-      padding:10px 12px;border-radius:10px;border:1px solid rgba(255,255,255,.18);
-      background:rgba(255,255,255,.06);
-      color:#fff;font-size:14px;
-      outline:none;
+    .kpi .value{
+      font-weight: 850;
+      font-size: 14px;
+      color: rgba(255,255,255,.90);
     }
 
-    /* White section */
-    .white{
-      margin-top:16px;
-      background:#fff;color:#0b0b0b;border-radius:var(--radius);
-      padding:18px;box-shadow: var(--shadow);
-      border:1px solid rgba(0,0,0,.06);
-      opacity:0;
-      transform: translateY(12px);
-      transition: opacity .7s ease, transform .7s ease;
+    .fineprint{
+      color: rgba(255,255,255,.62);
+      font-size: 13px;
+      line-height: 1.7;
     }
-    .white.reveal{ opacity:1; transform: translateY(0); }
 
-    h2{margin:0 0 10px;font-size:20px}
-    p{margin:0 0 10px;line-height:1.75}
-    .mutedB{color:#555}
-    .list{margin:10px 0 0;padding-left:18px;line-height:1.75}
-    .footer{display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:14px}
-    .copy{font-size:12px;color:#666}
+    .section-title{
+      font-weight: 900;
+      letter-spacing: -0.2px;
+    }
 
-    /* Small fade in for cards */
-    .fadeUp{
-      opacity:0;
+    /* Animations */
+    .reveal{
+      opacity: 0;
       transform: translateY(10px);
-      animation: enter .7s ease forwards;
+      transition: opacity .6s ease, transform .6s ease;
     }
-    .fadeUp.delay1{animation-delay:.05s}
-    .fadeUp.delay2{animation-delay:.12s}
-
-    /* Toast (instead of alert) */
-    .toast{
-      position:fixed;
-      left:50%;
-      bottom:18px;
-      transform: translateX(-50%) translateY(10px);
-      background: rgba(0,0,0,.55);
-      border:1px solid rgba(255,255,255,.18);
-      color:#fff;
-      padding:10px 12px;
-      border-radius:12px;
-      font-weight:650;
-      opacity:0;
-      pointer-events:none;
-      transition: opacity .18s ease, transform .18s ease;
-      z-index:9999;
-      backdrop-filter: blur(8px);
-    }
-    .toast.show{
-      opacity:1;
-      transform: translateX(-50%) translateY(0);
+    .reveal.on{
+      opacity: 1;
+      transform: translateY(0);
     }
 
-    /* Respect reduced motion */
-    @media (prefers-reduced-motion: reduce){
-      *{animation:none!important;transition:none!important}
-      .bgGlow{display:none}
+    /* Mobile spacing */
+    @media (max-width: 576px){
+      .title{ font-size: 34px !important; }
     }
   </style>
 </head>
 
 <body>
-  <div class="bgGlow"></div>
-  <div class="toast" id="toast">Link copiado ✅</div>
+  <div class="grid-bg"></div>
 
-  <div class="wrap">
-    <div class="top">
-      <div class="brand"><span class="dot"></span> Donaciones para tratamiento</div>
-      <div class="pill">Donación segura vía GoFundMe</div>
+  <div class="container position-relative" style="z-index:1;">
+    <!-- Top bar -->
+    <div class="d-flex align-items-center justify-content-between py-3">
+      <div class="d-flex align-items-center gap-2">
+        <span class="brand-dot"></span>
+        <div class="fw-bold">Campaña de apoyo</div>
+      </div>
+      <div class="nav-pill d-none d-sm-inline-flex">Donación segura en GoFundMe (no se paga aquí)</div>
     </div>
 
-    <div class="layout">
-      <!-- IZQUIERDA -->
-      <div class="card fadeUp delay1">
-        <div class="heroImg" id="hero">
-          <!-- ✅ Ruta correcta (mismo formato que el archivo real) -->
-          <img id="pandaImg" src="./assets/cover.webp" alt="Foto de Panda" />
-          <div class="imgFail" id="imgFail">
-            No se pudo cargar la imagen.<br>
-            Revisa que exista:
-            <br><code>assets/cover.webp</code>
+    <!-- Main -->
+    <div class="row g-3">
+      <!-- Left -->
+      <div class="col-lg-7">
+        <div class="glass p-3 p-md-4 reveal">
+          <div class="hero-img mb-3">
+            <!-- ✅ SOLO CAMBIA ESTA RUTA SI TU IMAGEN TIENE OTRO NOMBRE -->
+            <img src="./assets/cover.webp" alt="Foto de Panda" />
+          </div>
+
+          <h1 class="title display-5 fw-bold mb-2">Apoyemos a nuestro amigo Panda</h1>
+          <p class="lead-ux mb-3">
+            Creamos esta página para que cualquier persona pueda entender el contexto en 30 segundos
+            y llegar al <b>enlace oficial</b> para donar.
+            <b>No recibimos donaciones aquí</b>: el pago se realiza directamente en GoFundMe.
+          </p>
+
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <a class="btn btn-primary" href="https://gofund.me/246906993" target="_blank" rel="noopener">
+              Donar en GoFundMe
+            </a>
+            <a class="btn btn-outline-light" href="#contexto">Leer contexto</a>
+            <a class="btn btn-outline-light" href="#verificar">Cómo verificar</a>
+          </div>
+
+          <div class="kpi">
+            <div class="item">
+              <div class="label">Objetivo</div>
+              <div class="value">$500,000 MXN</div>
+            </div>
+            <div class="item">
+              <div class="label">Destino</div>
+              <div class="value">Tratamiento, estudios, medicamentos, traslados</div>
+            </div>
+            <div class="item">
+              <div class="label">Seguridad</div>
+              <div class="value">Pago externo en GoFundMe</div>
+            </div>
+          </div>
+
+          <div class="mt-3 fineprint">
+            Recomendación: comparte siempre el mismo enlace oficial para evitar confusión.
           </div>
         </div>
-
-        <h1 class="title">Apoyemos a nuestro amigo Panda</h1>
-        <p class="subtitle">
-          Estamos recaudando fondos para apoyar su tratamiento médico.
-          Tu ayuda —donando o compartiendo— hace una diferencia real.
-        </p>
-
-        <div class="cta">
-          <a class="btn primary" href="https://gofund.me/246906993" target="_blank" rel="noopener">Donar ahora</a>
-          <a class="btn secondary" href="#historia">Historia</a>
-          <a class="btn secondary" href="#compartir">Compartir</a>
-        </div>
-
-        <div class="mini">
-          <div class="miniBox"><b>Meta</b><span>$500,000 MXN</span></div>
-          <div class="miniBox"><b>Recaudación</b><span>Actualizada en GoFundMe</span></div>
-          <div class="miniBox"><b>Transparencia</b><span>Actualizaciones periódicas</span></div>
-        </div>
       </div>
 
-      <!-- DERECHA -->
-      <div class="card fadeUp delay2">
-        <p class="sideTitle">Link oficial</p>
-        <div class="linkBox">
-          <input id="fundLink" value="https://gofund.me/246906993" readonly />
-          <button class="btn primary" style="padding:10px 12px;" onclick="copyLink()">Copiar</button>
-        </div>
+      <!-- Right -->
+      <div class="col-lg-5">
+        <div class="glass p-3 p-md-4 reveal" style="transition-delay:.08s;">
+          <div class="d-flex align-items-start justify-content-between gap-2 mb-2">
+            <div>
+              <div class="text-uppercase fw-bold" style="letter-spacing:.14em;font-size:12px;color:rgba(255,255,255,.70);">
+                Enlace oficial
+              </div>
+              <div class="fw-bold" style="font-size:14px;color:rgba(255,255,255,.90);">
+                Único link para donar
+              </div>
+            </div>
+            <span class="nav-pill d-inline-flex d-sm-none">GoFundMe</span>
+          </div>
 
-        <p class="sideTitle" id="compartir" style="margin-top:14px;">Compartir</p>
-        <div class="shareRow">
-          <a class="btn secondary" id="wa" target="_blank" rel="noopener">WhatsApp</a>
-          <a class="btn secondary" id="fb" target="_blank" rel="noopener">Facebook</a>
-          <a class="btn secondary" id="x" target="_blank" rel="noopener">X</a>
-        </div>
+          <div class="glass-soft p-2 mb-3">
+            <div class="d-flex gap-2 flex-wrap">
+              <input id="fundLink" class="form-control" value="https://gofund.me/246906993" readonly
+                style="background: rgba(255,255,255,.05); border-color: rgba(255,255,255,.14); color: rgba(255,255,255,.92); border-radius: 14px; padding: 12px;">
+              <button class="btn btn-primary" style="padding:12px 14px;" onclick="copyLink()">Copiar</button>
+            </div>
+            <div class="fineprint mt-2">
+              Si recibes un enlace distinto, compáralo con este antes de donar.
+            </div>
+          </div>
 
-        <p class="subtitle" style="margin-top:14px; margin-bottom:0;">
-          Si no puedes donar, compartir el enlace ayuda muchísimo.
-        </p>
+          <div class="text-uppercase fw-bold mb-2" style="letter-spacing:.14em;font-size:12px;color:rgba(255,255,255,.70);">
+            Compartir
+          </div>
+          <div class="d-flex flex-wrap gap-2 mb-3">
+            <a class="btn btn-outline-light" id="wa" target="_blank" rel="noopener">WhatsApp</a>
+            <a class="btn btn-outline-light" id="fb" target="_blank" rel="noopener">Facebook</a>
+            <a class="btn btn-outline-light" id="x" target="_blank" rel="noopener">X</a>
+          </div>
+
+          <div class="glass-soft p-3">
+            <div class="section-title mb-2">Uso de los fondos</div>
+            <ul class="mb-0" style="color:rgba(255,255,255,.72); line-height:1.85;">
+              <li>Consultas y seguimiento médico</li>
+              <li>Estudios y tratamiento</li>
+              <li>Medicamentos</li>
+              <li>Traslados y logística</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="white" id="historia">
-      <h2>Historia</h2>
-      <p class="mutedB">
-        En 2022 se le detectó un tumor y posteriormente se confirmó cáncer con metástasis.
-        El tratamiento se ha elevado considerablemente y hoy necesitamos apoyo para cubrir
-        consultas, estudios, medicamentos y traslados.
-      </p>
-      <p class="mutedB">
-        Panda se mantiene fuerte y estable, enfrentando la situación con mucha valentía.
-        Gracias por sumar con tu donación o compartiendo el enlace.
-      </p>
-
-      <h2 style="margin-top:14px;">¿En qué se usará la ayuda?</h2>
-      <ul class="list">
-        <li>Tratamiento y consultas</li>
-        <li>Estudios y seguimiento</li>
-        <li>Medicamentos</li>
-        <li>Traslados y logística médica</li>
-      </ul>
-
-      <div class="footer">
-        <a class="btn primary" href="https://gofund.me/246906993" target="_blank" rel="noopener">Donar ahora</a>
-        <div class="copy">Gracias por apoyar 🤍</div>
+    <!-- Context sections -->
+    <div class="row g-3 mt-1">
+      <div class="col-lg-7">
+        <div id="contexto" class="glass p-3 p-md-4 reveal">
+          <h2 class="section-title h4 mb-2">¿Por qué existe esta página?</h2>
+          <p class="lead-ux mb-2">
+            Porque en redes sociales los mensajes se recortan y se pierden detalles importantes.
+            Esta página reúne el contexto, y dirige al enlace oficial para donar de forma segura.
+          </p>
+          <p class="lead-ux mb-0">
+            <b>No procesamos pagos</b>. La donación se realiza directamente en GoFundMe.
+          </p>
+        </div>
       </div>
+
+      <div class="col-lg-5">
+        <div id="verificar" class="glass p-3 p-md-4 reveal" style="transition-delay:.06s;">
+          <h2 class="section-title h4 mb-2">Cómo verificar (en 10 segundos)</h2>
+          <ol class="mb-0" style="color:rgba(255,255,255,.72); line-height:1.85;">
+            <li>El dominio debe ser <b>gofund.me</b>.</li>
+            <li>No te pedimos datos personales aquí.</li>
+            <li>El pago se completa dentro de GoFundMe.</li>
+            <li>Evita links acortados o “alternativos”.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mt-1">
+      <div class="col-12">
+        <div class="glass p-3 p-md-4 reveal">
+          <h2 class="section-title h4 mb-2">Historia (resumen)</h2>
+          <p class="lead-ux mb-2">
+            En 2022 se detectó un tumor y posteriormente se confirmó cáncer con metástasis,
+            lo que elevó considerablemente los costos médicos. Estamos recaudando fondos para cubrir
+            consultas, estudios, tratamientos, medicamentos y traslados.
+          </p>
+          <div class="d-flex flex-wrap gap-2 mt-3">
+            <a class="btn btn-primary" href="https://gofund.me/246906993" target="_blank" rel="noopener">Donar en GoFundMe</a>
+            <button class="btn btn-outline-light" onclick="copyLink()">Copiar link oficial</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="py-4 text-center fineprint">
+      Hecho con cariño. Gracias por apoyar. 🤍
     </div>
   </div>
 
+  <!-- Bootstrap JS (toast helper no requerido, pero ok) -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
   <script>
     const fund = "https://gofund.me/246906993";
-    const msg = encodeURIComponent("Ayúdanos a apoyar el tratamiento de Panda. Donación segura aquí: " + fund);
+    const msg = encodeURIComponent("Apoyemos a Panda. Enlace oficial para donar: " + fund);
 
     document.getElementById("wa").href = "https://wa.me/?text=" + msg;
     document.getElementById("fb").href = "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(fund);
     document.getElementById("x").href = "https://twitter.com/intent/tweet?text=" + msg;
 
-    // Toast helper
-    const toast = document.getElementById("toast");
-    function showToast(text){
-      toast.textContent = text;
-      toast.classList.add("show");
-      clearTimeout(window.__toastTimer);
-      window.__toastTimer = setTimeout(()=> toast.classList.remove("show"), 1400);
-    }
-
     async function copyLink(){
       const el = document.getElementById("fundLink");
       try{
         await navigator.clipboard.writeText(el.value);
-        showToast("Link copiado ✅");
+        miniToast("Link copiado ✅");
       }catch(e){
-        // Fallback: select text
         el.select(); el.setSelectionRange(0, 99999);
-        showToast("Copia manualmente el link");
+        miniToast("Copia el link manualmente");
       }
     }
 
-    // Reveal animation for the white section when it enters viewport
-    const target = document.querySelector(".white");
-    const io = new IntersectionObserver((entries)=>{
-      entries.forEach(e=>{
-        if(e.isIntersecting){
-          target.classList.add("reveal");
-          io.disconnect();
-        }
-      });
-    }, {threshold: 0.15});
-    io.observe(target);
-
-    // Image error fallback
-    const img = document.getElementById("pandaImg");
-    img.addEventListener("error", () => {
-      document.getElementById("imgFail").style.display = "flex";
-    });
-
-    // Subtle parallax on hero (desktop only)
-    const hero = document.getElementById("hero");
-    const prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    if(!prefersReduced && window.innerWidth > 920){
-      window.addEventListener("scroll", () => {
-        const rect = hero.getBoundingClientRect();
-        const viewH = window.innerHeight || 800;
-        const progress = Math.min(1, Math.max(0, (viewH - rect.top) / (viewH + rect.height)));
-        const shift = (progress - 0.5) * 10; // -5px to +5px
-        hero.style.setProperty("--imgShift", `${shift}px`);
-      }, {passive:true});
+    // Minimal toast (UX sin alert)
+    function miniToast(text){
+      let t = document.getElementById("__toast");
+      if(!t){
+        t = document.createElement("div");
+        t.id="__toast";
+        t.style.position="fixed";
+        t.style.left="50%";
+        t.style.bottom="18px";
+        t.style.transform="translateX(-50%) translateY(10px)";
+        t.style.background="rgba(255,255,255,.96)";
+        t.style.color="#0b1220";
+        t.style.border="1px solid rgba(15,23,42,.12)";
+        t.style.boxShadow="0 18px 50px rgba(0,0,0,.25)";
+        t.style.padding="10px 12px";
+        t.style.borderRadius="12px";
+        t.style.fontWeight="900";
+        t.style.opacity="0";
+        t.style.transition="opacity .18s ease, transform .18s ease";
+        t.style.zIndex="9999";
+        document.body.appendChild(t);
+      }
+      t.textContent = text;
+      t.style.opacity="1";
+      t.style.transform="translateX(-50%) translateY(0)";
+      clearTimeout(window.__toastT);
+      window.__toastT = setTimeout(()=>{
+        t.style.opacity="0";
+        t.style.transform="translateX(-50%) translateY(10px)";
+      }, 1200);
     }
+
+    // Reveal on load
+    const items = document.querySelectorAll(".reveal");
+    requestAnimationFrame(()=>{
+      items.forEach((el,i)=>{
+        el.style.transitionDelay = el.style.transitionDelay || (i * 60) + "ms";
+        el.classList.add("on");
+      });
+    });
   </script>
 </body>
 </html>
