@@ -1,28 +1,18 @@
 <div class="row g-4 align-items-stretch">
-  <!-- LEFT -->
   <div class="col-lg-7 fadeUp d1">
     <div class="cardX p-3 p-md-4 h-100">
-      <!-- HERO IMAGE BLOCK -->
       <div class="hero mb-3">
         <img src="assets/cover.webp" alt="Portada de la campaña">
-
-        <!-- ✅ Badge completo clickeable -->
-        <a class="trustBadge trustBadgeLink"
-           href="https://gofund.me/246906993"
-           target="_blank"
-           rel="noopener"
-           aria-label="Dona en GoFundMe (abre en una nueva pestaña)">
+        <div class="trustBadge">
           <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
             <path d="M12 2l7 4v6c0 5-3 9-7 10C8 21 5 17 5 12V6l7-4Z" stroke="#0b1220" stroke-width="1.5" />
             <path d="M9.2 12.2l1.8 1.8 3.8-4" stroke="#16a34a" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" />
           </svg>
-          <span>Dona en GoFundMe</span>
-        </a>
+          <a href="https://gofund.me/246906993" target="_blank" rel="noopener">Dona en Go Fund me</a>
+        </div>
       </div>
-      <!-- /HERO IMAGE BLOCK -->
 
       <h1 class="title display-6 mb-2">Rifa solidaria — Apoyemos a Panda</h1>
-
       <p class="muted mb-3" style="line-height:1.7">
         Esta página existe para dar contexto y organizar la rifa de forma clara.
         <b>La participación cuenta sólo con donación validada</b>.
@@ -66,6 +56,7 @@
       <div class="divider"></div>
 
       <div class="d-flex gap-2 flex-wrap" id="participar">
+        <!-- IMPORTANTE: este id debe coincidir con el del modal -->
         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalRegistro">
           Participar / Registrar donación
         </button>
@@ -81,7 +72,6 @@
     </div>
   </div>
 
-  <!-- RIGHT -->
   <div class="col-lg-5 fadeUp d2">
     <div class="stickySide">
       <div class="cardX p-3 p-md-4">
