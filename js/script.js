@@ -6,7 +6,7 @@
 const GOAL_MXN = 500000;
 const TICKET_PRICE = 500;
 
-const CONTACT_WA = "+52 1 415 215 7587";
+const CONTACT_WA = "+52 415 215 7587";
 const CONTACT_EMAIL = "hbcasamorena@gmail.com";
 
 const APPS_SCRIPT_WEBAPP =
@@ -88,7 +88,11 @@ function initShare() {
     "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " + base
   );
 
-  if (exists("btnWA")) $("btnWA").href = "https://wa.me/?text=" + msg;
+    if (exists("btnWA")) {
+    $("btnWA").href = isMobile()
+      ? "https://wa.me/?text=" + msg
+      : "https://web.whatsapp.com/send?text=" + msg;
+  }
   if (exists("btnFB"))
     $("btnFB").href =
       "https://www.facebook.com/sharer/sharer.php?u=" +
