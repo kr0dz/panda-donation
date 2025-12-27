@@ -240,3 +240,26 @@
         background: rgba(255, 255, 255, .65);
         backdrop-filter: blur(10px)
     }
+
+    .prizeImg{
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: #0b1220;
+  aspect-ratio: 16/10;
+}
+.prizeImg img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.carousel-control-prev,
+.carousel-control-next{
+  width: 18%;
+  opacity: .85;
+}
+.carousel-control-prev:hover,
+.carousel-control-next:hover{
+  opacity: 1;
+}
