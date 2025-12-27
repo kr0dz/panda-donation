@@ -511,3 +511,153 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 100);
   });
 });
+
+/* =========================
+   DRAW OVERLAY (COUNTDOWN + CONFETTI)
+   ========================= */
+
+const __drawUI = {
+  overlay: null,
+  num: null,
+  hint: null,
+  reveal: null,
+  winnerLine: null,
+  winnerMeta: null,
+  running: false,
+  t: null,
+};
+
+function initDrawOverlayUI() {
+  __drawUI.overlay = document.getElementById("drawOverlay");
+  __drawUI.num = document.getElementById("countNum");
+  __drawUI.hint = document.getElementById("countHint");
+  __drawUI.reveal = document.getElementById("winnerReveal");
+  __drawUI.winnerLine = document.getElementById("winnerLine");
+  __drawUI.winnerMeta = document.getElementById("winnerMeta");
+
+  if (!__drawUI.overlay) return;
+
+  // Click to close (only after reveal)
+  __drawUI.overlay.addEventListener("click", () => {
+    if (__drawUI.reveal?.classList.contains("show")) closeDrawOverlay();
+  });
+
+  // ESC to close
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && __drawUI.reveal?.classList.contains("show")) {
+      closeDrawOverlay();
+    }
+  });
+}
+
+function openDrawOverlay() {
+  if (!__drawUI.overlay) initDrawOverlayUI();
+  if (!__drawUI.overlay) return;
+
+  __drawUI.overlay.classList.add("show");
+  __drawUI.overlay.setAttribute("aria-hidden", "false");
+}
+
+function closeDrawOverlay() {
+  if (!__drawUI.overlay) return;
+  __drawUI.overlay.classList.remove("show");
+  __drawUI.overlay.setAttribute("aria-hidden", "true");
+  __drawUI.reveal?.classList.remove("show");
+  __drawUI.num && (__drawUI.num.textContent = "");
+  __drawUI.hint && (__drawUI.hint.textContent = "");
+  __drawUI.running = false;
+  if (__drawUI.t) clearTimeout(__drawUI.t);
+}
+
+function sleep(ms) {
+  return new Promise((res) => setTimeout(res, ms));
+}
+
+function confettiBurst(durationMs = 2500) {
+  if (typeof confetti !== "function") return;
+
+  const end = Date.now() + durationMs;
+
+  (function frame() {
+    confetti({
+      particleCount: 6,
+      spread: 70,
+      startVelocity: 42,
+      origin: { x: Math.random(), y: 0.15 },
+    });
+    confetti({
+      particleCount: 4,
+      spread: 110,
+      startVelocity: 36,
+      origin: { x: Math.random(), y: 0.2 },
+    });
+
+    if (Date.now() < end) requestAnimationFrame(frame);
+  })();
+}
+
+/**
+ * winnerPayload ejemplo:
+ * {
+ *   name: "Juan Pérez",
+ *   folio: "A-1029",
+ *   tickets: 4,
+ *   amount: 2000,
+ *   fingerprint: "abc123...",
+ *   raw: { ... } // opcional
+ * }
+ */
+async function showCountdownAndRevealWinner(winnerPayload, seconds = 10) {
+  if (__drawUI.running) return;
+  __drawUI.running = true;
+
+  openDrawOverlay();
+
+  // Reset UI
+  __drawUI.reveal.classList.remove("show");
+  __drawUI.hint.textContent = "Iniciando conteo…";
+  __drawUI.winnerLine.textContent = "—";
+  __drawUI.winnerMeta.textContent = "";
+
+  // Countdown
+  for (let s = seconds; s >= 1; s--) {
+    __drawUI.num.textContent = String(s);
+    __drawUI.num.classList.remove("pop");
+    // reflow para re-disparar animación
+    void __drawUI.num.offsetWidth;
+    __drawUI.num.classList.add("pop");
+
+    __drawUI.hint.textContent = "Sorteando (ponderado por boletos)…";
+    await sleep(1000);
+  }
+
+  // Reveal winner
+  __drawUI.num.textContent = "🎉";
+  __drawUI.num.classList.remove("pop");
+  void __drawUI.num.offsetWidth;
+  __drawUI.num.classList.add("pop");
+
+  const safeName = winnerPayload?.name ?? "Ganador/a";
+  const safeFolio = winnerPayload?.folio ? ` — Folio ${winnerPayload.folio}` : "";
+  __drawUI.winnerLine.textContent = `${safeName}${safeFolio}`;
+
+  const metaParts = [];
+  if (winnerPayload?.tickets != null) metaParts.push(`Boletos: ${winnerPayload.tickets}`);
+  if (winnerPayload?.amount != null) metaParts.push(`Monto: ${winnerPayload.amount}`);
+  if (winnerPayload?.fingerprint) metaParts.push(`Huella: ${winnerPayload.fingerprint}`);
+
+  __drawUI.winnerMeta.textContent = metaParts.join("  •  ");
+
+  __drawUI.reveal.classList.add("show");
+  confettiBurst(2600);
+
+  // Auto-close opcional después de 8s (puedes quitarlo si no quieres)
+  __drawUI.t = setTimeout(() => {
+    closeDrawOverlay();
+  }, 8000);
+
+  __drawUI.running = false;
+}
+
+// Llama init al cargar (por si dashboard.js ya usa DOMContentLoaded, no pasa nada)
+document.addEventListener("DOMContentLoaded", initDrawOverlayUI);
