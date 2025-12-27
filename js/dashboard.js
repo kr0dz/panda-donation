@@ -316,12 +316,12 @@ function renderRanking(list) {
   const html = `
     <ol class="mb-0">
       ${list
-        .map((x) => {
-          const name = x.name ?? x.nombre ?? "—";
-          const amount = Number(x.amount ?? x.monto ?? 0) || 0;
-          const tickets = Number(x.tickets ?? x.boletos ?? 0) || 0;
+      .map((x) => {
+        const name = x.name ?? x.nombre ?? "—";
+        const amount = Number(x.amount ?? x.monto ?? 0) || 0;
+        const tickets = Number(x.tickets ?? x.boletos ?? 0) || 0;
 
-          return `
+        return `
             <li class="mb-2">
               <div style="font-weight:800;">${esc(name)}</div>
               <div class="text-secondary small">
@@ -330,8 +330,8 @@ function renderRanking(list) {
               </div>
             </li>
           `;
-        })
-        .join("")}
+      })
+      .join("")}
     </ol>
   `;
   $("ranking").innerHTML = html;
@@ -397,6 +397,25 @@ async function drawWinner() {
   const seed = `${when}|${w.id}|${pool.length}|${idx}`;
   const hash = simpleHash(seed);
 
+  // Guarda resultado (igual que antes)
+  window.__raffleResult = { winner: w, when, hash, poolSize: pool.length, index: idx };
+
+  // ✅ Animación fullscreen (conteo 10s + reveal + confetti)
+  // Nota: showCountdownAndRevealWinner debe existir (el bloque que te pasé antes)
+  if (typeof showCountdownAndRevealWinner === "function") {
+    showCountdownAndRevealWinner(
+      {
+        name: w.name,
+        folio: w.id, // usamos tu id como "folio" para la pantalla
+        tickets: Number(w.tickets) || 0,
+        amount: mxn(Number(w.amount) || 0), // aquí ya lo mandamos formateado
+        fingerprint: hash,
+      },
+      10
+    );
+  }
+
+  // ✅ UI normal en winnerBox (tu misma estructura, sin cambios de lógica)
   if (exists("winnerBox")) {
     $("winnerBox").innerHTML = `
       <div class="d-flex justify-content-between flex-wrap gap-2">
@@ -421,7 +440,6 @@ async function drawWinner() {
     `;
   }
 
-  window.__raffleResult = { winner: w, when, hash, poolSize: pool.length, index: idx };
   toast("Sorteo realizado ✅");
 }
 
@@ -438,7 +456,7 @@ function copyResult() {
   if (!r) return alert("Primero realiza el sorteo.");
 
   const text =
-`Resultado sorteo — Rifa Panda
+    `Resultado sorteo — Rifa Panda
 Ganador: ${r.winner.name} (${r.winner.id})
 Donación: ${r.winner.amount} MXN
 Boletos: ${r.winner.tickets}
