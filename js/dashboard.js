@@ -82,7 +82,7 @@ function __jsonpFallback(url) {
 const jsonp = window.jsonp || __jsonpFallback;
 
 // Normalizer fallback
-function __normalizeValidatedRowFallback(row, ticketPrice = 500) {
+function __normalizeValidatedRowFallback(row, ticketPrice = 200) {
   const amount = Number(row.amount ?? row.monto ?? row.monto_mxn ?? 0) || 0;
   let tickets = Number(row.tickets ?? row.boletos ?? 0) || 0;
   if (!tickets && amount >= ticketPrice) tickets = Math.floor(amount / ticketPrice);
@@ -97,7 +97,7 @@ function __normalizeValidatedRowFallback(row, ticketPrice = 500) {
   };
 }
 const normalizeValidatedRow =
-  window.normalizeValidatedRow || ((row) => __normalizeValidatedRowFallback(row, window.TICKET_PRICE || 500));
+  window.normalizeValidatedRow || ((row) => __normalizeValidatedRowFallback(row, window.TICKET_PRICE || 200));
 
 // ====== CONFIG / STORAGE ======
 const LS_TOKEN = "ADMIN_TOKEN";
@@ -107,8 +107,8 @@ const LS_WEBAPP = "WEBAPP_BASE";
 const DEFAULT_WEBAPP_BASE =
   "https://script.google.com/macros/s/AKfycbzdvpnb3-JtRcVoK4Z2BdDNnfafj-i2RaqIdmkMPky8qpgbo22kdGRGpplMqeSaGkWG/exec";
 
-// Precio de boleto (si existe global, úsalo; si no, 500)
-const TICKET_PRICE = window.TICKET_PRICE || 500;
+// Precio de boleto (si existe global, úsalo; si no, 200)
+const TICKET_PRICE = window.TICKET_PRICE || 200;
 
 // Estado (si existe global validated úsalo; si no, crea uno)
 let validated = Array.isArray(window.validated) ? window.validated : [];

@@ -4,7 +4,7 @@
 
 // ====== CONFIG ======
 const GOAL_MXN = 500000;
-const TICKET_PRICE = 500;
+const TICKET_PRICE = 200;
 
 const CONTACT_WA = "+52 415 215 7587";
 const CONTACT_EMAIL = "hbcasamorena@gmail.com";
@@ -85,7 +85,7 @@ function initShare() {
   $("shareLink").value = base;
 
   const msg = encodeURIComponent(
-    "Rifa solidaria — Apoyemos a Panda. 1 boleto=$500. Premios: estancias en hoteles. Participa aquí: " +
+    "Rifa solidaria — Apoyemos a Panda. 1 boleto=$200. Premios: estancias en hoteles. Participa aquí: " +
       base
   );
 
@@ -286,7 +286,7 @@ async function submitRegistration() {
   if (!ok) { __submitting = false; return alert("Confirma que enviarás evidencia por WhatsApp o correo."); }
 
   const amount = Number(String(amountRaw).replace(/[^\d.]/g, "")) || 0;
-  if (amount < TICKET_PRICE) { __submitting = false; return alert("El monto mínimo para 1 boleto es $500 MXN."); }
+  if (amount < TICKET_PRICE) { __submitting = false; return alert("El monto mínimo para 1 boleto es $200 MXN."); }
 
   const btn = $("btnSend");
   btn.disabled = true;
