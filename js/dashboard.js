@@ -110,6 +110,9 @@ const DEFAULT_WEBAPP_BASE =
 // Precio de boleto (si existe global, úsalo; si no, 200)
 const TICKET_PRICE = window.TICKET_PRICE || 200;
 
+// Día oficial de la rifa (para mensajes / auditoría)
+const RAFFLE_DATE = "10 de febrero";
+
 // Estado (si existe global validated úsalo; si no, crea uno)
 let validated = Array.isArray(window.validated) ? window.validated : [];
 window.__raffleResult = null;
@@ -397,25 +400,24 @@ async function drawWinner() {
   const seed = `${when}|${w.id}|${pool.length}|${idx}`;
   const hash = simpleHash(seed);
 
-  // Guarda resultado (igual que antes)
+  // Guarda resultado
   window.__raffleResult = { winner: w, when, hash, poolSize: pool.length, index: idx };
 
-  // ✅ Animación fullscreen (conteo 10s + reveal + confetti)
-  // Nota: showCountdownAndRevealWinner debe existir (el bloque que te pasé antes)
+  // Animación fullscreen
   if (typeof showCountdownAndRevealWinner === "function") {
     showCountdownAndRevealWinner(
       {
         name: w.name,
-        folio: w.id, // usamos tu id como "folio" para la pantalla
+        folio: w.id,
         tickets: Number(w.tickets) || 0,
-        amount: mxn(Number(w.amount) || 0), // aquí ya lo mandamos formateado
+        amount: mxn(Number(w.amount) || 0),
         fingerprint: hash,
       },
       10
     );
   }
 
-  // ✅ UI normal en winnerBox (tu misma estructura, sin cambios de lógica)
+  // UI normal en winnerBox
   if (exists("winnerBox")) {
     $("winnerBox").innerHTML = `
       <div class="d-flex justify-content-between flex-wrap gap-2">
@@ -455,12 +457,17 @@ function copyResult() {
   const r = window.__raffleResult;
   if (!r) return alert("Primero realiza el sorteo.");
 
+  const amountStr = mxn(Number(r.winner.amount) || 0);
+
   const text =
-    `Resultado sorteo — Rifa Panda
+`Resultado sorteo — Rifa Panda
+Día oficial de la rifa: ${RAFFLE_DATE}
+Momento de ejecución: ${r.when}
+
 Ganador: ${r.winner.name} (${r.winner.id})
-Donación: ${r.winner.amount} MXN
+Donación: ${amountStr}
 Boletos: ${r.winner.tickets}
-Fecha/Hora: ${r.when}
+
 Pool: ${r.poolSize} (index ${r.index})
 Huella: ${r.hash}`;
 
@@ -669,7 +676,7 @@ async function showCountdownAndRevealWinner(winnerPayload, seconds = 10) {
   __drawUI.reveal.classList.add("show");
   confettiBurst(2600);
 
-  // Auto-close opcional después de 8s (puedes quitarlo si no quieres)
+  // Auto-close opcional después de 8s
   __drawUI.t = setTimeout(() => {
     closeDrawOverlay();
   }, 8000);
@@ -677,5 +684,5 @@ async function showCountdownAndRevealWinner(winnerPayload, seconds = 10) {
   __drawUI.running = false;
 }
 
-// Llama init al cargar (por si dashboard.js ya usa DOMContentLoaded, no pasa nada)
+// init overlay
 document.addEventListener("DOMContentLoaded", initDrawOverlayUI);
