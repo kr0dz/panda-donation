@@ -10,7 +10,7 @@ const CONTACT_WA = "+52 415 215 7587";
 const CONTACT_EMAIL = "hbcasamorena@gmail.com";
 
 const APPS_SCRIPT_WEBAPP =
-  "https://script.google.com/macros/s/AKfycbzdvpnb3-JtRcVoK4Z2BdDNnfafj-i2RaqIdmkMPky8qpgbo22kdGRGpplMqeSaGkWG/exec";
+  "https://script.google.com/macros/s/AKfycbxZ1tT1cWw5jDuOqlQEAiMwoLrDbr9M3GSQih4q9oRM5_FyQaA9_HWtmIBAsQdiS0eI/exec";
 
 const SITE_URL = "";
 
